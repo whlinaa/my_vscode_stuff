@@ -1,0 +1,77 @@
+{
+	// Place your snippets for python here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"py_print": {
+		"prefix": "xyz",
+		"body": [
+			"print(${0:${SELECTION}})"
+		],
+		"description": "py_print"
+	},
+
+	"py_fprint": {
+		"prefix": "xyzw",
+		"body": [
+			"print(f\"{${0:${SELECTION}} = }\")"
+		],
+		"description": "py_fprint"
+	},
+	
+	"py_fprint_nl": {
+		"prefix": "xyzw",
+		"body": [
+			"print(f\"\"\"{${0:${SELECTION}} = \n}\"\"\")"
+		],
+		"description": "py_fprint_nl"
+	},
+
+
+"py_function": {
+	"prefix": "zxvxs",
+	"body": [
+		"$1(${2:${SELECTION}})"
+	],
+	"description": "py_function"
+},
+
+"py_codeCell": {
+	"prefix": "codeCell",
+	"body": [
+		"# %%\n"
+
+	],
+	"description": "py_codeCell"
+},
+
+"py_markdownCell": {
+	"prefix": "markdownCell",
+	"body": [
+		"# %% [markdown] \n# "
+
+	],
+	"description": "markdownCell"
+},
+
+"for_loop_range": {
+   "prefix": "for",
+   "body": [
+    //    "for ${1:item} in ${2:sequence}:",
+       "for ${1:item} in range(${2:10}):",
+       "\t${3:// do something with item}"
+   ],
+   "description": "Python for loop"
+}
+
+
+}

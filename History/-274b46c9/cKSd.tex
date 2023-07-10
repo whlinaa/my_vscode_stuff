@@ -1,0 +1,256 @@
+\documentclass[10pt, oneside]{article}   
+% \usepackage{MyStyle}
+\usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/MyStyle}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+% \usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\title{Additional Tutorial Exercise 1}
+\author{Wing-Ho Lin}
+\date{}
+
+\begin{document}
+    \maketitle 
+    \begin{table}
+        \centering
+        \caption{my captions}
+        \begin{tabular}{lrrrr}
+        \toprule
+         & A & B & C & D \\
+        \midrule
+        0 & 1.7641 & 0.4002 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 0.9787 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 2.2409 \\
+        1 & 1.8676 & \color{red} -0.9773 & 0.9501 & \color{red} -0.1514 \\
+        2 & \color{red} -0.1032 & 0.4106 & 0.1440 & 1.4543 \\
+        3 & 0.7610 & 0.1217 & 0.4439 & 0.3337 \\
+        4 & 1.4941 & \color{red} -0.2052 & 0.3131 & \color{red} -0.8541 \\
+        5 & \color{red} -2.5530 & 0.6536 & 0.8644 & \color{red} -0.7422 \\
+        6 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 2.2698 & \color{red} -1.4544 & 0.0458 & \color{red} -0.1872 \\
+        7 & 1.5328 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 1.4694 & 0.1549 & 0.3782 \\
+        8 & \color{red} -0.8878 & \color{red} -1.9808 & \color{red} -0.3479 & 0.1563 \\
+        9 & 1.2303 & 1.2024 & \color{red} -0.3873 & \color{red} -0.3023 \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+
+        
+    \begin{table}
+        \centering
+        \caption{my captions}
+        \begin{tabular}{lrrrr}
+        \toprule
+         & A & B & C & D \\
+        \midrule
+        0 & 1.7641 & 0.4002 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 0.9787 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 2.2409 \\
+        1 & 1.8676 & \color{red} -0.9773 & 0.9501 & \color{red} -0.1514 \\
+        2 & \color{red} -0.1032 & 0.4106 & 0.1440 & 1.4543 \\
+        3 & 0.7610 & 0.1217 & 0.4439 & 0.3337 \\
+        4 & 1.4941 & \color{red} -0.2052 & 0.3131 & \color{red} -0.8541 \\
+        5 & \color{red} -2.5530 & 0.6536 & 0.8644 & \color{red} -0.7422 \\
+        6 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 2.2698 & \color{red} -1.4544 & 0.0458 & \color{red} -0.1872 \\
+        7 & 1.5328 & \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} \color{white} {\cellcolor{blue}} 1.4694 & 0.1549 & 0.3782 \\
+        8 & \color{red} -0.8878 & \color{red} -1.9808 & \color{red} -0.3479 & 0.1563 \\
+        9 & 1.2303 & 1.2024 & \color{red} -0.3873 & \color{red} -0.3023 \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+        
+
+        
+    \begin{table}
+        \caption{my captions}
+        \begin{tabular}{lrrrr}
+        {} & {A} & {B} & {C} & {D} \\
+        0 & 1.7641 & 0.4002 & 0.9787 & 2.2409 \\
+        1 & 1.8676 & \color{red} -0.9773 & 0.9501 & \color{red} -0.1514 \\
+        2 & \color{red} -0.1032 & 0.4106 & 0.1440 & 1.4543 \\
+        3 & 0.7610 & 0.1217 & 0.4439 & 0.3337 \\
+        4 & 1.4941 & \color{red} -0.2052 & 0.3131 & \color{red} -0.8541 \\
+        5 & \color{red} -2.5530 & 0.6536 & 0.8644 & \color{red} -0.7422 \\
+        6 & 2.2698 & \color{red} -1.4544 & 0.0458 & \color{red} -0.1872 \\
+        7 & 1.5328 & 1.4694 & 0.1549 & 0.3782 \\
+        8 & \color{red} -0.8878 & \color{red} -1.9808 & \color{red} -0.3479 & 0.1563 \\
+        9 & 1.2303 & 1.2024 & \color{red} -0.3873 & \color{red} -0.3023 \\
+        \end{tabular}
+        \end{table}
+
+    \begin{table}
+        \caption{my captions}
+        \begin{tabular}{lrrrr}
+        {} & {A} & {B} & {C} & {D} \\
+        0 & 1.7641 & 0.4002 & 0.9787 & 2.2409 \\
+        1 & 1.8676 & -0.9773 & 0.9501 & -0.1514 \\
+        2 & -0.1032 & 0.4106 & 0.1440 & 1.4543 \\
+        3 & 0.7610 & 0.1217 & 0.4439 & 0.3337 \\
+        4 & 1.4941 & -0.2052 & 0.3131 & -0.8541 \\
+        5 & -2.5530 & 0.6536 & 0.8644 & -0.7422 \\
+        6 & 2.2698 & -1.4544 & 0.0458 & -0.1872 \\
+        7 & 1.5328 & 1.4694 & 0.1549 & 0.3782 \\
+        8 & -0.8878 & -1.9808 & -0.3479 & 0.1563 \\
+        9 & 1.2303 & 1.2024 & -0.3873 & -0.3023 \\
+        \end{tabular}
+        \end{table}
+
+
+        \begin{tabular}{lrrrr}
+            \toprule
+            {} &         A &         B &         C &         D \\
+            \midrule
+            0 &  1.764052 &  0.400157 &  0.978738 &  2.240893 \\
+            1 &  1.867558 & -0.977278 &  0.950088 & -0.151357 \\
+            2 & -0.103219 &  0.410599 &  0.144044 &  1.454274 \\
+            3 &  0.761038 &  0.121675 &  0.443863 &  0.333674 \\
+            4 &  1.494079 & -0.205158 &  0.313068 & -0.854096 \\
+            5 & -2.552990 &  0.653619 &  0.864436 & -0.742165 \\
+            6 &  2.269755 & -1.454366 &  0.045759 & -0.187184 \\
+            7 &  1.532779 &  1.469359 &  0.154947 &  0.378163 \\
+            8 & -0.887786 & -1.980796 & -0.347912 &  0.156349 \\
+            9 &  1.230291 &  1.202380 & -0.387327 & -0.302303 \\
+            \bottomrule
+            \end{tabular}
+        
+        
+    % \begin{tabular}{lrrl}
+    %     {} & {Integers} & {Floats} & {Strings} \\
+    %     ix1 & 1 & 2.200000 & \cellcolor[HTML]{FFFF00} \color{red} \textit{\textbf{dogs}} \\
+    %     ix2 & \cellcolor[HTML]{FFFF00} \color{red} \textit{\textbf{3}} & 4.400000 & cats \\
+    %     ix3 & 2 & \cellcolor[HTML]{FFFF00} \color{red} \textit{\textbf{6.600000}} & cows \\
+    %     \end{tabular}
+
+
+    \begin{table}[h]
+        \centering
+        \caption{Styled LaTeX Table}
+        \label{table:5}
+        \begin{tabular}{rrrrr}
+        \toprule
+        {} & {} & \multicolumn{2}{r}{Numeric} & {Non-Numeric} \\
+        {} & {} & {Integers} & {Floats} & {Strings} \\
+        \midrule
+        \multirow[t]{2}{*}{L0} & ix1 & 1 & 2.200000 & \cellcolor[HTML]{FFFF00} \color{red} \itshape \bfseries dogs \\
+         & ix2 & \cellcolor[HTML]{FFFF00} \color{red} \itshape \bfseries 3 & 4.400000 & cats \\
+        L1 & ix3 & 2 & \cellcolor[HTML]{FFFF00} \color{red} \itshape \bfseries 6.600000 & cows \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+
+    % \begin{longtable}{llrrrr}
+    %     \caption[short cap]{full cap}
+    %     \label{my label}\\
+    %     \toprule
+    %            & \textbf{smoker} & \multicolumn{2}{c}{Yes} & \multicolumn{2}{c}{No} \\
+    %            & \textbf{time} & Lunch & Dinner & Lunch & Dinner \\
+    %     \textbf{sex} & \textbf{size} &       &        &       &        \\
+    %     \midrule
+    %     \endfirsthead
+    %     \caption[]{full cap} \\
+    %     \toprule
+    %            & \textbf{smoker} & \multicolumn{2}{c}{Yes} & \multicolumn{2}{c}{No} \\
+    %            & \textbf{time} & Lunch & Dinner & Lunch & Dinner \\
+    %     \textbf{sex} & \textbf{size} &       &        &       &        \\
+    %     \midrule
+    %     \endhead
+    %     \midrule
+    %     \multicolumn{6}{r}{{Continued on next page}} \\
+    %     \midrule
+    %     \endfoot
+        
+    %     \bottomrule
+    %     \endlastfoot
+    %     \multirow{6}{*}{\textbf{Male}} & \textbf{1} &  8.58 &     NA &    NA &     NA \\
+    %            & \textbf{2} & 17.80 &  19.94 & 15.26 &  15.51 \\
+    %            & \textbf{3} & 18.71 &  31.93 & 22.82 &  21.86 \\
+    %            & \textbf{4} & 20.53 &  30.36 & 27.20 &  27.53 \\
+    %            & \textbf{5} &    NA &  29.30 & 41.19 &  20.69 \\
+    %            & \textbf{6} &    NA &     NA & 34.30 &  48.17 \\
+    %     \cline{1-6}
+    %     \multirow{6}{*}{\textbf{Female}} & \textbf{1} &    NA &   3.07 & 10.07 &   7.25 \\
+    %            & \textbf{2} & 14.34 &  16.13 & 13.17 &  17.57 \\
+    %            & \textbf{3} & 16.47 &  27.88 & 17.31 &  19.86 \\
+    %            & \textbf{4} & 43.11 &  30.14 & 29.45 &  28.07 \\
+    %            & \textbf{5} &    NA &     NA &    NA &  29.85 \\
+    %            & \textbf{6} &    NA &     NA & 28.43 &     NA \\
+    %     \end{longtable}
+        
+
+        
+    % \begin{table}
+    %     \centering
+    %     \caption[short cap]{full cap}
+    %     \label{my label}
+    %     \begin{tabular}{lcccc}
+    %     \toprule
+    %     \textbf{smoker} & \multicolumn{2}{c}{Yes} & \multicolumn{2}{c}{No} \\
+    %     \textbf{time} &      Lunch &     Dinner &      Lunch &     Dinner \\
+    %     \textbf{size} &            &            &            &            \\
+    %     \midrule
+    %     \textbf{1   } &   8,580.00 &   3,070.00 &  10,070.00 &   7,250.00 \\
+    %     \textbf{2   } & 292,780.00 & 892,300.00 & 481,330.00 & 899,480.00 \\
+    %     \textbf{3   } &  35,180.00 & 303,120.00 &  57,440.00 & 488,810.00 \\
+    %     \textbf{4   } &  63,640.00 & 273,060.00 &  86,110.00 & 635,890.00 \\
+    %     \textbf{5   } &       0.00 &  58,610.00 &  41,190.00 &  50,540.00 \\
+    %     \textbf{6   } &       0.00 &       0.00 &  91,150.00 &  48,170.00 \\
+    %     \bottomrule
+    %     \end{tabular}
+    %     \end{table}
+
+
+    % \begin{table}
+    %     \centering
+    %     \caption[short cap]{full cap}
+    %     \label{my label}
+    %     \begin{tabular}{lrrllllrl}
+    %     \toprule
+    %     {} &  total\_bill &  tip &     sex & smoker &  day &    time &  size & decile \\
+    %     \midrule
+    %     \textbf{0 } &       16.99 & 1.01 &  Female &     No &  Sun &  Dinner &     2 &      5 \\
+    %     \textbf{1 } &       10.34 & 1.66 &    Male &     No &  Sun &  Dinner &     3 &      1 \\
+    %     \textbf{2 } &       21.01 & 3.50 &    Male &     No &  Sun &  Dinner &     3 &      7 \\
+    %     \textbf{3 } &       23.68 & 3.31 &    Male &     No &  Sun &  Dinner &     2 &      8 \\
+    %     \textbf{4 } &       24.59 & 3.61 &  Female &     No &  Sun &  Dinner &     4 &      8 \\
+    %     \textbf{5 } &       25.29 & 4.71 &    Male &     No &  Sun &  Dinner &     4 &      8 \\
+    %     \textbf{6 } &        8.77 & 2.00 &    Male &     No &  Sun &  Dinner &     2 &      1 \\
+    %     \textbf{7 } &       26.88 & 3.12 &    Male &     No &  Sun &  Dinner &     4 &      9 \\
+    %     \textbf{8 } &       15.04 & 1.96 &    Male &     No &  Sun &  Dinner &     2 &      4 \\
+    %     \textbf{9 } &       14.78 & 3.23 &    Male &     No &  Sun &  Dinner &     2 &      4 \\
+    %     \textbf{10} &       10.27 & 1.71 &    Male &     No &  Sun &  Dinner &     2 &      1 \\
+    %     \textbf{11} &       35.26 & 5.00 &  Female &     No &  Sun &  Dinner &     4 &     10 \\
+    %     \textbf{12} &       15.42 & 1.57 &    Male &     No &  Sun &  Dinner &     2 &      4 \\
+    %     \textbf{13} &       18.43 & 3.00 &    Male &     No &  Sun &  Dinner &     4 &      6 \\
+    %     \textbf{14} &       14.83 & 3.02 &  Female &     No &  Sun &  Dinner &     2 &      4 \\
+    %     \bottomrule
+    %     \end{tabular}
+    %     \end{table}
+
+    % \begin{table}
+    %     \centering
+    %     \caption[short cap]{full cap}
+    %     \label{my label}
+    %     \begin{tabular}{llrrrr}
+    %     \toprule
+    %            & \textbf{smoker} & \multicolumn{2}{c}{Yes} & \multicolumn{2}{c}{No} \\
+    %            & \textbf{time} & Lunch & Dinner & Lunch & Dinner \\
+    %     \textbf{sex} & \textbf{size} &       &        &       &        \\
+    %     \midrule
+    %     \textbf{Male} & \textbf{1} &  8.58 &     NA &    NA &     NA \\
+    %            & \textbf{2} & 17.80 &  19.94 & 15.26 &  15.51 \\
+    %            & \textbf{3} & 18.71 &  31.93 & 22.82 &  21.86 \\
+    %            & \textbf{4} & 20.53 &  30.36 & 27.20 &  27.53 \\
+    %            & \textbf{5} &    NA &  29.30 & 41.19 &  20.69 \\
+    %            & \textbf{6} &    NA &     NA & 34.30 &  48.17 \\
+    %     \textbf{Female} & \textbf{1} &    NA &   3.07 & 10.07 &   7.25 \\
+    %            & \textbf{2} & 14.34 &  16.13 & 13.17 &  17.57 \\
+    %            & \textbf{3} & 16.47 &  27.88 & 17.31 &  19.86 \\
+    %            & \textbf{4} & 43.11 &  30.14 & 29.45 &  28.07 \\
+    %            & \textbf{5} &    NA &     NA &    NA &  29.85 \\
+    %            & \textbf{6} &    NA &     NA & 28.43 &     NA \\
+    %     \bottomrule
+    %     \end{tabular}
+    %     \end{table}
+    
+\end{document}

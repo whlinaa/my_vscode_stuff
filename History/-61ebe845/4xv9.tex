@@ -1,0 +1,269 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,9pt,addpoints]{exam}
+\usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2241}
+\newcommand{\term}{Fall 2020}
+\newcommand{\examnum}{Assignment 2}
+% \newcommand{\examdate}{1/1/2014}
+\newcommand{\dueTime}{25 Nov (Wed) 5:00pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+\textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\item You may use the facts and theorems introduced in lectures and tutorials. All other facts/theorems that are not covered must be rigorously proved before being used. 
+\end{itemize}
+
+\subsection*{Submission guidelines}
+\begin{itemize}
+\item \textbf{\c{DO NOT convert this .pdf file to any other file format, such as .word.}}
+\item Submit your work to Moodle. Email submission is NOT accepted. 
+\item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+\item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+\item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+\item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+% \item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. 
+%In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% \item You may type your solutions using a computer.
+
+\item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+\item Name your file by your full English name. For example, if your name is Chan Tai Man, then your file name is Chan Tai Man.
+\item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+\item The maximum submission size is 20MB.
+% \item The maximum submission size is 20MB. A well-scanned submission should have a size well below that limit. 
+\end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+\begin{questions}
+
+\question[25] 
+\begin{parts} 
+  \part A relation $R$ is defined on $\Z$ by $xRy$ if $11x-5y$ is even. Determine whether $R$ has the following properties. \textbf{For each sub-question below, first circle either True or False for each question. Then explain.}
+  \begin{subparts}
+    \subpart reflexive.\\
+    True ~/~ False
+    \vspace*{\stretch{1}}
+
+
+
+    % \subpart irreflexive.
+    \subpart symmetric.\\
+    True ~/~ False
+    \vspace*{\stretch{1}}
+    % \subpart antisymmetric.
+    \newpage
+    \subpart transitive.\\
+    True ~/~ False
+    \vspace*{\stretch{1}}
+    \end{subparts}
+    \part A relation $R$ is defined on $\R$ by $xRy$ if $|x-y|\le 1$. Determine whether $R$ has the following properties. \textbf{For each sub-question below, first circle either True or False for each question. Then explain.}
+    \begin{subparts}
+      \subpart reflexive.\\
+      True ~/~ False
+      \vspace*{\stretch{1}}
+      \newpage
+      % \subpart irreflexive.
+      \subpart symmetric.\\
+      True ~/~ False
+      \vspace*{\stretch{1}}
+      % \subpart antisymmetric.
+      \subpart transitive.\\
+      True ~/~ False
+      \vspace*{\stretch{1}}
+      \end{subparts}
+  % \part Determine whether the following relations is a function. 
+  % \begin{subparts}
+  %   \subpart $R$ is defined on $\R$ by $xRy$ if and only if $4x^2 + 3y^2 = 1$.
+  %   \subpart $R$ is defined from $\N$ to $\Q$ by $aRb$ if and only if $3x + 5y = 1$.
+  %       \end{subparts}
+\end{parts}
+% Consider the given graph.
+% \begin{figure}[htbp] %[tb]
+%   \center
+%   \includegraphics[width=0.3\linewidth]{MST.jpg}
+%   %\caption{dd} \label{fig:}
+%   \end{figure}
+% \begin{parts}
+%   \part Run Kruskal's minimum spanning tree algorithm on the graph. Follow the format introduced in class to represent your answers. Specifically, use a table with three columns to represent your answers. The first column is the step. The second column is the edge chosen. The third column is the weight of the edge chosen. Refer to the following table as template. 
+  
+%   \begin{table}[h]
+%     \centering
+%   \begin{tabular}{p{0.1\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+%   Step& Edge& weight\\
+%   \hline 
+%   % \dots&\dots&\dots&\dots\\
+%   % \dots&\dots&\dots&\dots
+%   \end{tabular}
+%   \end{table}
+%   \newpage 
+%   \part Run Prim's minimum spanning tree algorithm on the same graph. Start at vertex  . Follow the format introduced in class to represent your answers. Specifically, use a table with three columns to represent your answers. The first column is the step. The second column is the edge chosen. The third column is the weight of the edge chosen. Refer to the following table as template. 
+%   \begin{table}[h]
+%     \centering
+%   \begin{tabular}{p{0.1\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+%   Step& Edge& weight\\
+%   \hline 
+%   % \dots&\dots&\dots&\dots\\
+%   % \dots&\dots&\dots&\dots
+%   \end{tabular}
+%   \end{table}
+
+
+
+  \newpage 
+% \end{parts}
+
+\question[25]Determine whether the two graphs below are isomorphic. If it is, provide a one-to-one and onto mapping between the vertices of the two graphs and show that their adjacency matrices are equal. If it is not, explain why.
+\begin{figure}[htbp] %[tb]
+  \center
+  \includegraphics[width=0.5\linewidth]{iso.jpg}
+  %\caption{dd} \label{fig:}
+  \end{figure}
+
+\newpage
+\question[25]
+There are 9 fish $F_1,F_2,\dots,F_{9}$ and we want to put these 9 fish into tanks. However, some fish cannot be put into the same tank because they may kill each other. The list below indicates the fish that cannot be put in the same tank as $F_i$, where $i=1,2,\dots,9$.
+
+$F_1: F_2, F_3, F_4, F_5, F_6, F_8$\\
+$F_2:F_1,F_3,F_6,F_7$\\
+$F_3:F_1,F_2,F_6,F_7$ \\
+$F_4: F_1, F_5, F_8, F_9$\\
+$F_5:F_1,F_4,F_8,F_9$\\
+$F_6:F_1,F_2,F_3,F_7$\\
+$F_7: F_2, F_3, F_6$\\
+% $F_7: F_2, F_3, F_6, F_9$\\
+$F_8:F_1,F_4,F_5,F_9$\\
+$F_9:F_4,F_5,F_8$
+% $F_9:F_4,F_5,F_7,F_8$
+
+
+% $F_1: F_2, F_3, F_4, F_5, F_6, F_8 \qquad F_2:F_1,F_3,F_6,F_7\qquad F_3:F_1,F_2,F_6,F_7$\\
+% $F_4: F_1, F_5, F_8, F_9 \qquad F_5:F_1,F_4,F_8,F_9\qquad F_6:F_1,F_2,F_3,F_7$\\
+
+% \begin{figure}[htbp] %[tb]
+%   \center
+%   \includegraphics[width=0.6\linewidth]{coloring.png}
+%   %\caption{dd} \label{fig:}
+%   \end{figure}
+ Find the minimum number of tanks required using graph theory. Show your steps clearly.
+
+ \newpage
+
+
+
+\question[25]
+Run Dijkstra's algorithm on the graph to compute a shortest path from $x$ to $y$. Use the table as template. At the end, write down the shortest path you found and its weight.
+\begin{figure}[h] %[tb]
+  \center
+  \includegraphics[width=0.4\linewidth]{SP.jpg}
+  %\caption{dd} \label{fig:}
+  \end{figure}
+\begin{table}[h]
+  \centering
+% \begin{tabular}{cccc}
+\begin{tabular}{p{0.1\textwidth}p{0.3\textwidth}p{0.3\textwidth}p{0.2\textwidth}}
+Step& Edge& Vertex& Path weight\\
+\hline 
+% \dots&\dots&\dots&\dots\\
+% \dots&\dots&\dots&\dots
+\end{tabular}
+\end{table}
+
+
+
+\end{questions}
+
+
+
+
+
+\end{document}

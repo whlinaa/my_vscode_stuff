@@ -1,0 +1,264 @@
+year,category,nominee,movie,winner,id
+2010,actor in a leading role,James Franco,127 Hours,False,648
+2003,actor in a supporting role,Benicio Del Toro,21 Grams,False,139
+2003,actress in a leading role,Naomi Watts,21 Grams,False,1119
+2001,actress in a supporting role,Jennifer Connelly,A Beautiful Mind,True,710
+2001,actor in a leading role,Russell Crowe,A Beautiful Mind,False,1315
+2011,actor in a leading role,Demi�n Bichir,A Better Life,False,306
+2005,actor in a supporting role,William Hurt,A History of Violence,False,1532
+2009,actor in a leading role,Colin Firth,A Single Man,False,272
+2002,actor in a leading role,Jack Nicholson,About Schmidt,False,624
+2002,actress in a supporting role,Kathy Bates,About Schmidt,False,871
+2002,actor in a supporting role,Chris Cooper,Adaptation,True,243
+2002,actress in a supporting role,Meryl Streep,Adaptation,False,1062
+2002,actor in a leading role,Nicolas Cage,Adaptation,False,1132
+2011,actress in a leading role,Glenn Close,Albert Nobbs,False,511
+2011,actress in a supporting role,Janet McTeer,Albert Nobbs,False,686
+2001,actor in a supporting role,Jon Voight,Ali,False,798
+2001,actor in a leading role,Will Smith,Ali,False,1517
+2000,actress in a supporting role,Frances McDormand,Almost Famous,False,429
+2000,actress in a supporting role,Kate Hudson,Almost Famous,False,848
+2007,actress in a supporting role,Ruby Dee,American Gangster,False,1310
+2012,actress in a leading role,Emmanuelle Riva,Amour,False,401
+2009,actress in a leading role,Carey Mulligan,An Education,False,192
+2010,actress in a supporting role,Jacki Weaver,Animal Kingdom,False,632
+2012,actor in a supporting role,Alan Arkin,Argo,False,23
+2007,actress in a supporting role,Saoirse Ronan,Atonement,False,1338
+2007,actress in a leading role,Julie Christie,Away from Her,False,837
+2006,actress in a supporting role,Adriana Barraza,Babel,False,3
+2006,actress in a supporting role,Rinko Kikuchi,Babel,False,1253
+2012,actress in a leading role,Quvenzhan_ Wallis,Beasts of the Southern Wild,False,1216
+2000,actor in a leading role,Javier Bardem,Before Night Falls,False,692
+2011,actor in a supporting role,Christopher Plummer,Beginners,True,250
+2004,actress in a leading role,Annette Bening,Being Julia,False,86
+2000,actress in a supporting role,Julie Walters,Billy Elliot,False,840
+2010,actor in a leading role,Javier Bardem,Biutiful,False,694
+2010,actress in a leading role,Natalie Portman,Black Swan,True,1122
+2006,actor in a supporting role,Djimon Hounsou,Blood Diamond,False,333
+2006,actor in a leading role,Leonardo DiCaprio,Blood Diamond,False,927
+2010,actress in a leading role,Michelle Williams,Blue Valentine,False,1087
+2011,actress in a supporting role,Melissa McCarthy,Bridesmaids,False,1043
+2001,actress in a leading role,Ren_e Zellweger,Bridget Jones's Diary,False,1230
+2005,actor in a leading role,Heath Ledger,Brokeback Mountain,False,550
+2005,actor in a supporting role,Jake Gyllenhaal,Brokeback Mountain,False,636
+2005,actress in a supporting role,Michelle Williams,Brokeback Mountain,False,1086
+2005,actress in a supporting role,Catherine Keener,Capote,False,211
+2005,actor in a leading role,Philip Seymour Hoffman,Capote,True,1207
+2000,actor in a leading role,Tom Hanks,Cast Away,False,1457
+2002,actor in a supporting role,Christopher Walken,Catch Me If You Can,False,252
+2008,actress in a leading role,Angelina Jolie,Changeling,False,57
+2007,actor in a supporting role,Philip Seymour Hoffman,Charlie Wilson's War,False,1208
+2002,actress in a supporting role,Catherine Zeta-Jones,Chicago,True,212
+2002,actor in a supporting role,John C. Reilly,Chicago,False,769
+2002,actress in a supporting role,Queen Latifah,Chicago,False,1214
+2002,actress in a leading role,Ren_e Zellweger,Chicago,False,1231
+2000,actress in a supporting role,Judi Dench,Chocolat,False,814
+2000,actress in a leading role,Juliette Binoche,Chocolat,False,842
+2005,actor in a supporting role,Paul Giamatti,Cinderella Man,False,1160
+2004,actor in a supporting role,Clive Owen,Closer,False,269
+2004,actress in a supporting role,Natalie Portman,Closer,False,1121
+2003,actor in a leading role,Jude Law,Cold Mountain,False,811
+2003,actress in a supporting role,Ren_e Zellweger,Cold Mountain,True,1232
+2004,actor in a supporting role,Jamie Foxx,Collateral,False,665
+2005,actor in a supporting role,Matt Dillon,Crash,False,1026
+2009,actor in a leading role,Jeff Bridges,Crazy Heart,True,707
+2009,actress in a supporting role,Maggie Gyllenhaal,Crazy Heart,False,961
+2012,actor in a supporting role,Christoph Waltz,Django Unchained,True,248
+2008,actress in a supporting role,Amy Adams,Doubt,False,44
+2008,actress in a leading role,Meryl Streep,Doubt,False,1064
+2008,actor in a supporting role,Philip Seymour Hoffman,Doubt,False,1209
+2008,actress in a supporting role,Viola Davis,Doubt,False,1488
+2006,actor in a supporting role,Eddie Murphy,Dreamgirls,False,361
+2006,actress in a supporting role,Jennifer Hudson,Dreamgirls,True,711
+2007,actor in a leading role,Viggo Mortensen,Eastern Promises,False,1485
+2007,actress in a leading role,Cate Blanchett,Elizabeth: The Golden Age,False,206
+2000,actor in a supporting role,Albert Finney,Erin Brockovich,False,31
+2000,actress in a leading role,Julia Roberts,Erin Brockovich,True,826
+2004,actress in a leading role,Kate Winslet,Eternal Sunshine of the Spotless Mind,False,853
+2011,actor in a supporting role,Max von Sydow,Extremely Loud & Incredibly Close,False,1032
+2002,actress in a leading role,Julianne Moore,Far from Heaven,False,829
+2004,actor in a leading role,Johnny Depp,Finding Neverland,False,793
+2012,actor in a leading role,Denzel Washington,Flight,False,314
+2002,actress in a leading role,Salma Hayek,Frida,False,1328
+2008,actor in a leading role,Frank Langella,Frost/Nixon,False,432
+2008,actress in a leading role,Melissa Leo,Frozen River,False,1041
+2002,actor in a leading role,Daniel Day-Lewis,Gangs of New York,False,286
+2000,actor in a supporting role,Joaquin Phoenix,Gladiator,False,757
+2000,actor in a leading role,Russell Crowe,Gladiator,True,1314
+2007,actress in a supporting role,Amy Ryan,Gone Baby Gone,False,49
+2005,actor in a leading role,David Strathairn,"Good Night, and Good Luck.",False,293
+2001,actress in a supporting role,Helen Mirren,Gosford Park,False,556
+2001,actress in a supporting role,Maggie Smith,Gosford Park,False,968
+2006,actor in a leading role,Ryan Gosling,Half Nelson,False,1319
+2004,actor in a leading role,Don Cheadle,Hotel Rwanda,False,335
+2004,actress in a supporting role,Sophie Okonedo,Hotel Rwanda,False,1381
+2003,actor in a leading role,Ben Kingsley,House of Sand and Fog,False,137
+2003,actress in a supporting role,Shohreh Aghdashloo,House of Sand and Fog,False,1363
+2005,actor in a leading role,Terrence Howard,Hustle & Flow,False,1428
+2001,actor in a leading role,Sean Penn,I Am Sam,False,1344
+2007,actress in a supporting role,Cate Blanchett,I'm Not There,False,207
+2003,actor in a supporting role,Djimon Hounsou,In America,False,332
+2003,actress in a leading role,Samantha Morton,In America,False,1334
+2001,actress in a supporting role,Marisa Tomei,In the Bedroom,False,989
+2001,actress in a leading role,Sissy Spacek,In the Bedroom,False,1377
+2001,actor in a leading role,Tom Wilkinson,In the Bedroom,False,1460
+2007,actor in a leading role,Tommy Lee Jones,In the Valley of Elah,False,1464
+2009,actor in a supporting role,Christoph Waltz,Inglourious Basterds,True,247
+2007,actor in a supporting role,Hal Holbrook,Into the Wild,False,542
+2009,actor in a supporting role,Matt Damon,Invictus,False,1025
+2009,actor in a leading role,Morgan Freeman,Invictus,False,1116
+2001,actor in a supporting role,Jim Broadbent,Iris,True,736
+2001,actress in a leading role,Judi Dench,Iris,False,815
+2001,actress in a supporting role,Kate Winslet,Iris,False,852
+2009,actress in a leading role,Meryl Streep,Julie & Julia,False,1065
+2005,actress in a supporting role,Amy Adams,Junebug,False,43
+2007,actress in a leading role,Ellen Page,Juno,False,391
+2004,actress in a supporting role,Laura Linney,Kinsey,False,898
+2007,actress in a leading role,Marion Cotillard,La Vie en Rose,True,986
+2012,actress in a supporting role,Anne Hathaway,Les Mis_rables,True,78
+2012,actor in a leading role,Hugh Jackman,Les Mis_rables,False,576
+2012,actor in a leading role,Daniel Day-Lewis,Lincoln,True,288
+2012,actress in a supporting role,Sally Field,Lincoln,False,1325
+2012,actor in a supporting role,Tommy Lee Jones,Lincoln,False,1465
+2006,actor in a supporting role,Jackie Earle Haley,Little Children,False,634
+2006,actress in a leading role,Kate Winslet,Little Children,False,854
+2006,actress in a supporting role,Abigail Breslin,Little Miss Sunshine,False,1
+2006,actor in a supporting role,Alan Arkin,Little Miss Sunshine,True,22
+2003,actor in a leading role,Bill Murray,Lost in Translation,False,155
+2004,actress in a leading role,Catalina Sandino Moreno,Maria Full of Grace,False,202
+2007,actor in a leading role,George Clooney,Michael Clayton,False,477
+2007,actress in a supporting role,Tilda Swinton,Michael Clayton,True,1442
+2007,actor in a supporting role,Tom Wilkinson,Michael Clayton,False,1461
+2008,actor in a supporting role,Josh Brolin,Milk,False,805
+2008,actor in a leading role,Sean Penn,Milk,True,1346
+2004,actor in a leading role,Clint Eastwood,Million Dollar Baby,False,268
+2004,actress in a leading role,Hilary Swank,Million Dollar Baby,True,566
+2004,actor in a supporting role,Morgan Freeman,Million Dollar Baby,True,1115
+2011,actor in a leading role,Brad Pitt,Moneyball,False,168
+2011,actor in a supporting role,Jonah Hill,Moneyball,False,799
+2003,actress in a leading role,Charlize Theron,Monster,True,234
+2001,actress in a leading role,Halle Berry,Monster's Ball,True,544
+2001,actress in a leading role,Nicole Kidman,Moulin Rouge,False,1133
+2005,actress in a leading role,Judi Dench,Mrs. Henderson Presents,False,816
+2011,actor in a supporting role,Kenneth Branagh,My Week with Marilyn,False,879
+2011,actress in a leading role,Michelle Williams,My Week with Marilyn,False,1088
+2003,actress in a supporting role,Marcia Gay Harden,Mystic River,False,974
+2003,actor in a leading role,Sean Penn,Mystic River,True,1345
+2003,actor in a supporting role,Tim Robbins,Mystic River,True,1443
+2009,actress in a supporting role,Pen_lope Cruz,Nine,False,1185
+2007,actor in a supporting role,Javier Bardem,No Country for Old Men,True,693
+2005,actress in a leading role,Charlize Theron,North Country,False,235
+2005,actress in a supporting role,Frances McDormand,North Country,False,430
+2006,actress in a supporting role,Cate Blanchett,Notes on a Scandal,False,205
+2006,actress in a leading role,Judi Dench,Notes on a Scandal,False,817
+2003,actress in a supporting role,Patricia Clarkson,Pieces of April,False,1154
+2003,actor in a leading role,Johnny Depp,Pirates of the Caribbean: The Curse of the Black Pearl,False,792
+2000,actor in a leading role,Ed Harris,Pollock,False,356
+2000,actress in a supporting role,Marcia Gay Harden,Pollock,True,973
+2009,actress in a leading role,Gabourey Sidibe,Precious: Based on the Novel 'Push' by Sapphire,False,441
+2009,actress in a supporting role,Mo'Nique,Precious: Based on the Novel 'Push' by Sapphire,True,1105
+2005,actress in a leading role,Keira Knightley,Pride & Prejudice,False,875
+2000,actor in a leading role,Geoffrey Rush,Quills,False,468
+2010,actress in a leading role,Nicole Kidman,Rabbit Hole,False,1135
+2008,actress in a leading role,Anne Hathaway,Rachel Getting Married,False,77
+2004,actor in a leading role,Jamie Foxx,Ray,True,664
+2000,actress in a leading role,Ellen Burstyn,Requiem for a Dream,False,389
+2008,actor in a supporting role,Michael Shannon,Revolutionary Road,False,1081
+2002,actor in a supporting role,Paul Newman,Road to Perdition,False,1173
+2001,actor in a supporting role,Ben Kingsley,Sexy Beast,False,136
+2000,actor in a supporting role,Willem Dafoe,Shadow of the Vampire,False,1520
+2004,actor in a supporting role,Thomas Haden Church,Sideways,False,1439
+2004,actress in a supporting role,Virginia Madsen,Sideways,False,1490
+2012,actor in a leading role,Bradley Cooper,Silver Linings Playbook,False,169
+2012,actress in a supporting role,Jacki Weaver,Silver Linings Playbook,False,633
+2012,actress in a leading role,Jennifer Lawrence,Silver Linings Playbook,True,718
+2012,actor in a supporting role,Robert De Niro,Silver Linings Playbook,False,1263
+2003,actress in a leading role,Diane Keaton,Something's Gotta Give,False,323
+2007,actor in a leading role,Johnny Depp,Sweeney Todd The Demon Barber of Fleet Street,False,794
+2005,actor in a supporting role,George Clooney,Syriana,True,476
+2011,actress in a supporting role,B_r_nice Bejo,The Artist,False,140
+2011,actor in a leading role,Jean Dujardin,The Artist,True,697
+2007,actor in a supporting role,Casey Affleck,The Assassination of Jesse James by the Coward Robert Ford,False,201
+2004,actor in a supporting role,Alan Alda,The Aviator,False,19
+2004,actress in a supporting role,Cate Blanchett,The Aviator,True,204
+2004,actor in a leading role,Leonardo DiCaprio,The Aviator,False,926
+2009,actress in a leading role,Sandra Bullock,The Blind Side,True,1336
+2005,actress in a supporting role,Rachel Weisz,The Constant Gardener,True,1219
+2000,actor in a supporting role,Jeff Bridges,The Contender,False,706
+2000,actress in a leading role,Joan Allen,The Contender,False,740
+2003,actor in a supporting role,Alec Baldwin,The Cooler,False,32
+2008,actor in a leading role,Brad Pitt,The Curious Case of Benjamin Button,False,167
+2008,actress in a supporting role,Taraji P. Henson,The Curious Case of Benjamin Button,False,1420
+2008,actor in a supporting role,Heath Ledger,The Dark Knight,True,551
+2006,actor in a supporting role,Mark Wahlberg,The Departed,False,995
+2011,actor in a leading role,George Clooney,The Descendants,False,479
+2006,actress in a leading role,Meryl Streep,The Devil Wears Prada,False,1063
+2010,actress in a supporting role,Amy Adams,The Fighter,False,45
+2010,actor in a supporting role,Christian Bale,The Fighter,True,245
+2010,actress in a supporting role,Melissa Leo,The Fighter,True,1042
+2011,actress in a leading role,Rooney Mara,The Girl with the Dragon Tattoo,False,1301
+2011,actress in a supporting role,Jessica Chastain,The Help,False,724
+2011,actress in a supporting role,Octavia Spencer,The Help,True,1142
+2011,actress in a leading role,Viola Davis,The Help,False,1489
+2002,actor in a supporting role,Ed Harris,The Hours,False,357
+2002,actress in a supporting role,Julianne Moore,The Hours,False,830
+2002,actress in a leading role,Nicole Kidman,The Hours,True,1134
+2009,actor in a leading role,Jeremy Renner,The Hurt Locker,False,721
+2012,actress in a leading role,Naomi Watts,The Impossible,False,1120
+2011,actress in a leading role,Meryl Streep,The Iron Lady,True,1066
+2010,actress in a leading role,Annette Bening,The Kids Are All Right,False,87
+2010,actor in a supporting role,Mark Ruffalo,The Kids Are All Right,False,994
+2010,actor in a leading role,Colin Firth,The King's Speech,True,273
+2010,actor in a supporting role,Geoffrey Rush,The King's Speech,False,469
+2010,actress in a supporting role,Helena Bonham Carter,The King's Speech,False,560
+2006,actor in a leading role,Forest Whitaker,The Last King of Scotland,True,426
+2003,actor in a supporting role,Ken Watanabe,The Last Samurai,False,877
+2009,actor in a supporting role,Christopher Plummer,The Last Station,False,249
+2009,actress in a leading role,Helen Mirren,The Last Station,False,558
+2001,actor in a supporting role,Ian McKellen,The Lord of the Rings: The Fellowship of the Ring,False,584
+2009,actor in a supporting role,Stanley Tucci,The Lovely Bones,False,1393
+2012,actress in a supporting role,Amy Adams,The Master,False,46
+2012,actor in a leading role,Joaquin Phoenix,The Master,False,759
+2012,actor in a supporting role,Philip Seymour Hoffman,The Master,False,1210
+2009,actor in a supporting role,Woody Harrelson,The Messenger,False,1539
+2002,actor in a leading role,Adrien Brody,The Pianist,True,4
+2006,actor in a leading role,Will Smith,The Pursuit of Happyness,False,1518
+2006,actress in a leading role,Helen Mirren,The Queen,True,557
+2002,actor in a leading role,Michael Caine,The Quiet American,False,1072
+2008,actress in a leading role,Kate Winslet,The Reader,True,855
+2007,actress in a leading role,Laura Linney,The Savages,False,899
+2012,actress in a supporting role,Helen Hunt,The Sessions,False,554
+2010,actor in a leading role,Jesse Eisenberg,The Social Network,False,723
+2010,actor in a supporting role,Jeremy Renner,The Town,False,722
+2008,actor in a leading role,Richard Jenkins,The Visitor,False,1250
+2008,actress in a supporting role,Marisa Tomei,The Wrestler,False,990
+2008,actor in a leading role,Mickey Rourke,The Wrestler,False,1093
+2007,actor in a leading role,Daniel Day-Lewis,There Will Be Blood,True,287
+2003,actress in a supporting role,Holly Hunter,Thirteen,False,570
+2011,actor in a leading role,Gary Oldman,Tinker Tailor Soldier Spy,False,450
+2000,actor in a supporting role,Benicio Del Toro,Traffic,True,138
+2001,actor in a leading role,Denzel Washington,Training Day,True,313
+2001,actor in a supporting role,Ethan Hawke,Training Day,False,407
+2005,actress in a leading role,Felicity Huffman,Transamerica,False,423
+2008,actor in a supporting role,Robert Downey Jr.,Tropic Thunder,False,1267
+2010,actress in a supporting role,Hailee Steinfeld,True Grit,False,540
+2010,actor in a leading role,Jeff Bridges,True Grit,False,708
+2002,actress in a leading role,Diane Lane,Unfaithful,False,327
+2009,actress in a supporting role,Anna Kendrick,Up in the Air,False,65
+2009,actor in a leading role,George Clooney,Up in the Air,False,478
+2009,actress in a supporting role,Vera Farmiga,Up in the Air,False,1482
+2006,actor in a leading role,Peter O'Toole,Venus,False,1201
+2004,actress in a leading role,Imelda Staunton,Vera Drake,False,586
+2008,actress in a supporting role,Pen_lope Cruz,Vicky Cristina Barcelona,True,1184
+2006,actress in a leading role,Pen_lope Cruz,Volver,False,1183
+2005,actor in a leading role,Joaquin Phoenix,Walk the Line,False,758
+2005,actress in a leading role,Reese Witherspoon,Walk the Line,True,1229
+2011,actor in a supporting role,Nick Nolte,Warrior,False,1130
+2003,actress in a leading role,Keisha Castle-Hughes,Whale Rider,False,876
+2010,actress in a leading role,Jennifer Lawrence,Winter's Bone,False,717
+2010,actor in a supporting role,John Hawkes,Winter's Bone,False,776
+2000,actress in a leading role,Laura Linney,You Can Count on Me,False,897
+2012,actress in a leading role,Jessica Chastain,Zero Dark Thirty,False,725
+1952,actress in a supporting role,Colette Marchand,Moulin Rouge,False,271
+1952,actor,Jos_ Ferrer,Moulin Rouge,False,802
+1969,actor,John Wayne,True Grit,True,791

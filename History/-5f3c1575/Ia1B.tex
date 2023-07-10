@@ -1,0 +1,524 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,10pt,addpoints]{exam}
+
+
+% IMPORTANT: comment this out to not show the answers of MC
+\printanswers 
+
+% \usepackage{examStyle}
+\usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+\usepackage{enumerate}% http://ctan.org/pkg/enumerate
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2311}
+\newcommand{\term}{Spring 2023}
+\newcommand{\examnum}{final}
+% \newcommand{\examdate}{1/1/2014}
+% \newcommand{\dueTime}{23 Mar 5:00pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+% \textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\item You may use the facts and theorems introduced in lectures and tutorials. All other facts/theorems that are not covered must be rigorously proved before being used. 
+\item Unless otherwise stated, all answers are to be presented in 4 decimal places or in simplest fraction.
+\end{itemize}
+
+% \subsection*{Submission guidelines}
+% \begin{itemize}
+% \item DO NOT convert this .pdf file to any other file format, such as .word.
+% \item Submit your work to Moodle. Email submission is NOT accepted. 
+% \item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+% \item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+% \item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+% \item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+% % \item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. 
+% %In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% % \item You may type your solutions using a computer.
+
+% \item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+% \item Name your file by your full English name. For example, if your name is Chan Tai Man, then your file name is Chan Tai Man.
+% \item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+% \item The maximum submission size is 20MB.
+% % \item The maximum submission size is 20MB. A well-scanned submission should have a size well below that limit. 
+% \end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+
+\section{MC questions}
+Questions 1-4 are based on the following: in a certain lottery, a cash prize of $\$ 30000$ is to be awarded to the lottery winner(s). If there are two or more winners, the prize will be shared equally among the winners. The number of winners $X$ in the lottery has a probability function given by
+$$
+f(x)=\left\{\begin{array}{cl}
+5 c^x & \text { for } x=1,2,3, \dots \\
+0 & \text { otherwise. }
+\end{array}\right.
+$$
+\begin{questions}
+
+\question Find $c$.
+\begin{choices}
+  \choice 1
+  \choice 1/3
+  \correctchoice 1/6
+  \choice 1/10
+  \choice None of the above.
+\end{choices}
+\question Find $E(X)$
+\begin{choices}
+  \choice 1
+  \choice 7/5
+  \choice 8/5
+  \choice 4/5
+  \correctchoice 6/5
+\end{choices}
+\question Find the probability that there will be two or more winners in the lottery.
+\begin{choices}
+  \choice 1/7
+  \correctchoice 1/6
+  \choice 2/6
+  \choice 3/6
+  \choice 1/8
+\end{choices}
+
+\question Find the expected amount of money won by a winner, giving your answer correct to the nearest dollar.
+
+Note: You may use the identity
+$$
+\sum_{i=1}^{\infty}(-1)^{i-1} \frac{x^i}{i}=\ln (1+x) \text { for }|x|<1
+$$
+\begin{choices}
+  \choice 29123
+  \choice 27312
+  \correctchoice 27348
+  \choice 31253
+  \choice 43112
+\end{choices}
+
+% Questons 5-7 are based on the following: the manager of a bank wants to estimate the average time for serving a customer in hotline service. The service time is known to be normally distributed with mean $\mu$ minutes. A random sample of service times for 9 individual customers is collected as follows (in minutes):
+
+% $\begin{array}{lllllllll}2.4 & 3.2 & 3.4 & 2.6 & 2.7 & 2.9 & 3.2 & 3.5 & 3.1\end{array}$
+
+% \question Find the length of a $95 \%$ confidence interval for $\mu$.
+% \begin{choices}
+%   \choice A
+%   \choice A
+%   \choice A
+%   \choice A
+%   \choice A
+% \end{choices}
+% \question The manager suggests using a larger sample in order that the width of the $95 \%$ confidence interval is at most $0.5$ minute. Find the minimum sample size required.
+% \begin{choices}
+%   \choice A
+%   \choice A
+%   \choice A
+%   \choice A
+%   \choice A
+% \end{choices}
+% \question Using the original sample size, the manager constructs a $k \%$ confidence interval of width $0.5$ minute. Find the value of $k$ correct to 2 decimal places.
+% \begin{choices}
+%   \choice A
+%   \choice A
+%   \choice A
+%   \choice A
+%   \choice A
+% \end{choices}
+
+
+\question Which of the following statement(s) is/are true?
+\begin{choices}
+  \choice When conducting sign test for paired samples, the null hypothesis is that the two populations have the same median
+  \choice Sign test requires normality assumption
+  \choice When conducting rank sum test, the ranking is based on the absolute values of the data
+  \choice All of the above
+  \correctchoice None of the above
+\end{choices}
+
+\question Suppose $X$ is an unbiased estimator of the parameter $\beta$. Which of the following statment(s) is/are always true?
+\begin{enumerate}[I.]
+  \item $X = \beta$
+  \item $Var(X) = Var(\beta)$
+  \item $E(1069X+2311) = 1069\beta+2311$
+\end{enumerate}
+\begin{choices}
+  \choice I and II only
+  \choice II and III only
+  \choice II only
+  \correctchoice III only
+  \choice All statements are true
+  \end{choices}
+
+
+\question Which of the following statement(s) is/are true?
+\begin{enumerate}[I.]
+  \item Sample standard deviation is an unbiased estimator of the population standard deviation.
+  \item Sample variance is an unbiased estimator of the population variance.
+  \item $\frac{\hat{p}(1-\hat{p})}{n}$ is an unbiased estimator of $Var(\hat{p})$.
+\end{enumerate}
+\begin{choices}
+  \choice I and II only
+  \correctchoice II only
+  \choice III only
+  \choice II and III only
+  \choice All of the given statements are true
+  \end{choices}
+
+\question Which of the following statement(s) is/are true?
+\begin{enumerate}[I.]
+  \item An unbiased estimator of a parameter is always a better estimator than a biased estimator of the same parameter.
+  \item A confidence interval must be based on an unbiased estimator of the population parameter that the confidence interval is constructed for.
+  \item $\frac{1}{n}\sum_{i=1}^n(X_i - \mu)^2$ is an unbiased estimator of $\sigma^2$.
+\end{enumerate}
+\begin{choices}
+  \choice I and II only
+  \choice II only
+  \correctchoice III only
+  \choice II and III only
+  \choice All of the given statements are true.
+  \end{choices}
+
+  \question Which of the following statement(s) is/are true?
+  \begin{enumerate}[I.]
+    \item A Poisson distribution with large $\lambda$ will become approximately normal, because of Central Limit Theorem.
+    \item A binomial distribution with large $n$ will become approximately normal, because of Central Limit Theorem.
+    \item An exponential distribution with large $\lambda$ will become approximately normal, because of Central Limit Theorem.
+  \end{enumerate}
+  \begin{choices}
+    \correctchoice I and II only
+    \choice II only
+    \choice III only
+    \choice II and III only
+    \choice All of the given statements are true.
+    \end{choices}
+
+\question Peter, a professional statistician, says that it is 90\% confident that the true mean age of Hong Kong people is between 40 and 44. Which of the following is true?
+\begin{choices}
+  \choice There is a 5\% chance that a randomly selected Hong Kong person will be more than 40 years old.
+  \choice 90\% of the people in Hong Kong are between 40 and 44 years old
+  \choice There is a probability of 0.9 that the mean age of Hong Kong people is equal to 42.
+  \choice All of the above.
+  \correctchoice None of the above.
+\end{choices}
+
+
+\question What is the minimum sample size needed if we want to construct a 95\% confidence interval to get within 0.01 of the true proportion of left-handed people? It is found from past study that the true proportion at that time is 0.045.
+\begin{choices}
+  \choice 117
+  \choice 125
+  \choice 2141
+  \choice 1321
+  \correctchoice 1651
+\end{choices}
+
+% \question A random sample of 15 students is selected to estimate HKCC students' mean number of assignments per month, which is known to be normally distributed. If the sample mean is 10 and sample variance is 4, Find the length of a 99\% confidence interval for the true mean. Correct your answer to 4 decimal places.
+% \begin{choices}
+%   \choice A
+%   \choice B
+%   \choice C
+%   \choice D
+%   \choice E
+% \end{choices}
+
+\question Suppose a random sample of 16 is obtained from a population that is normally distributed with mean 300 and standard deviation 109. Find the probability that the sample variance is less than 150\% of the population variance. 
+\begin{choices}
+  \choice 0.8
+  \choice 0.7
+  \choice 0.5
+  \correctchoice 0.9
+  \choice None of the above
+\end{choices}
+
+\question Suppose that a population follows normal distribution with mean 100 and standard deviation 27. We select a random sample of size 100 from this population. Find the interquartile range of the sample mean. 
+\begin{choices}
+  \choice 29.12
+  \correctchoice 36.18
+  \choice 42.18
+  \choice 55.21
+  \choice None of the above
+\end{choices}
+
+
+\question Which of the statement(s) about the sampling distribution of sample mean are always true?
+\begin{enumerate}[I.]
+  \item If you increase the sample size, the sample mean will get closer to the population mean.
+  \item The standard deviation of the sample mean is the same as the standard deviation of the original population.
+  \item the sample mean follows a normal distribution.
+\end{enumerate}
+\begin{choices}
+  \choice I and II only
+  \choice II and III only
+  \choice II only
+  \choice III only
+  \correctchoice None of the statements is true
+\end{choices}
+
+
+\question If we decrease the sample size and decrease the confidence level, what is the effect to the length of a confidence interval?
+\begin{choices}
+  \choice the length will increase
+  \choice the length will decrease
+  \choice the length will be the same
+  \choice the length can be the same or decrease, but cannot increase
+  \correctchoice It cannot be determined
+\end{choices}
+
+\question Suppose that in a hypothesis test, we will reject $H_0$ if the sample statistics is greater than some threshold $c$. If the sample size is increased, then 
+\begin{choices}
+  \choice type-1 error will decrease, and type-2 error will remain the same.
+  \correctchoice type-1 error will decrease, and type-2 error will decrease.
+  \choice type-1 error will remain the same, and type-2 error will decrease.
+  \choice type-1 error will remain the same, and type-2 error will remain the same.
+  \choice type-1 error will decrease, and type-2 error may decrease or remain the same.
+\end{choices}
+
+\question Which of the following statement is true?
+\begin{choices}
+  \choice The p-value is the probability the null hypothesis is correct.
+  \choice The p-value is the probability the alternative hypothesis is correct.
+  \choice The p-value is 1 $-$ (the probability the alternative hypothesis is correct).
+  \choice If the p-value is large it indicates we did not calculate the test statistic correctly.
+  \correctchoice None of the above.
+  % \choice if p-value is $c$, then we will reject the null hypothesis at any significant level lower than $c$.
+\end{choices}
+
+\question Which of the following statement is true?
+\begin{enumerate}[I.]
+  \item In constructing a confidence interval for the population variance, if the population isn't normally distributed but sample size is large, the confidence interval is still valid due to Central Limit Theorem.
+  \item If $X$ follows a chi-squared distribution, then $X$ will approximately follow a normal distribution if the degree of freedom is large.
+  \item $t$-distribution will become standard normal distribution as its degree of freedom tends to infinity. 
+\end{enumerate}
+\begin{choices}
+  \choice I and II only.
+  \correctchoice II and III only
+  \choice II only
+  \choice III only
+  \choice all statements are true
+  \end{choices}
+
+
+\question Suppose that Peter has developed a new algorithm to solve linear systems. He wants to know if his algorithm can run faster than Guassian elimination. To this end, he records the time needed to solve linear systems of order 100, 200, 300, 400, and 500, for each of the two algorithms. Which of the following is the best hypothesis test to conduct for Peter?
+\begin{choices}
+  \choice two sample t-test.
+  \correctchoice signed-rank test with paired samples.
+  \choice two sample rank-sum test.
+  \choice t-test with paired samples.
+  \choice None of the above is appropriate.
+\end{choices}
+
+
+\question Suppose that there are two brands of cigareettes and we want to test whether there is a difference in the nicotine contents of the two brands. For each of the two brands, we select 10 cigareettes and record the nicotine content of each cigareette. Which of the following is the best hypothesis test to conduct?
+\begin{choices}
+  \choice two sample t-test.
+  \choice signed-rank test with paired samples.
+  \correctchoice two sample rank-sum test.
+  \choice t-test with paired samples.
+  \choice None of the above is appropriate.
+\end{choices}
+
+\question It is claimed that a college senior can increase his or her score in the major field area of the graduate record examination (GRE) by at least 50 points if he or she is provided with sample problems in advance. To test this claim, 20 college seniors are divided into 10 pairs such that the students in each matched pair have almost the same overall grade-point averages for their first 3 years in college. Sample problems and answers are provided at random to one member of each pair 1 week prior to the examination. Suppose we want to test that sample problems increase scores by 50 points against the alternative hypothesis that the increase is less than 50 points. Which of the following is the best hypothesis test to conduct?
+\begin{choices}
+  \choice two sample t-test.
+  \correctchoice signed-rank test with paired samples.
+  \choice two sample rank-sum test.
+  \choice t-test with paired samples.
+  \choice None of the above is appropriate.
+\end{choices}
+
+\question We have a coin and we want to test whether it is biased or not. Which of the followin test(s) can be used?
+\begin{enumerate}[I.]
+  \item One sample proportion test.
+  \item Chi-squared goodness test of independence.
+  \item Chi-squared goodness of fit test.
+\end{enumerate}
+\begin{choices}
+  \choice II only
+  \choice II and III only
+  \choice I only
+  \correctchoice I and III only
+  \choice All of the tests
+\end{choices}
+
+
+\end{questions}
+
+
+
+\section{Compulsory questions}
+\begin{questions}
+\question[20]~
+Let $f(x)=\left\{\begin{array}{cl}k|m-x| & 0 \leq x \leq 4, \\ 0 & \text { otherwise, }\end{array}\right.$
+
+where $k>0$ and $0<m<4$.
+
+Suppose $f$ is the probability density function of the random variable $X$ and $m$ is its median. 
+
+\begin{parts}
+\part[7] Find the values of $m$ and $k$.
+% \part[5] Find $E(X^r)$, where $r$ is a positive integer.
+\part[7] Find the cumulative distribution function of $X$.
+\part[6] Find $E(X^2)$.
+% \part[5] Find $Var(X^2)$.
+% \part[5] Suppose that $X$ is sampled $n$ times. Determine the samllest possible value of $n$ if the probability that the absolute difference between the sample mean of the $n$ samples and the true mean is more than 0.01 is 0.02. State any statistical assumptions you have made in your solution.
+\end{parts}
+% \vspace*{\stretch{1}}
+% \newpage
+
+
+% \question[10]~
+% \begin{parts}
+% % \part Prove or disprove: $\frac{1}{n}\sum_i^n(X_i - \mu)^2$ is an unbiased estimator of $\sigma^2$.
+% \part Let $\mu$ and $\sigma^2>0$ be the population mean and variance, respecitvely, and $X_1,X_2,...,X_n$ be a random sample from the population. Prove or disprove: The sample standard deviation $S$ is an unbiased estimator of $\sigma$.
+% \end{parts}
+
+\question[20] ~ 
+\begin{parts}
+  \part A factory used to purchase battieries from $\mathrm{Mr}$ Wong. The life of the batteries is known to follow a normal distribution with mean 1000 hours and standard deviation 100 hours. Mr Lee claims that he can supply the same kind of battery with a longer mean life and the same standard deviation. They factory manager carries out a statistical test to decide whether Mr Lee's claim of longer mean life can be accepted. He inspects a random sample of 15 batteries supplied by Mr Lee.
+\begin{subparts}
+\subpart[4] The manager limits $\alpha$, the probability of committing a Type I error, to $0.05$, and decides to reject the null hypothesis whenever the sample mean is greater than $C$ hours. Determine $C$.
+\subpart[4] Suppose that true mean life of the batteries supplied by Mr Lee is 1050 hours. If the manager applies the same decision rule as in (i), find $\beta$, the probability of committing a Type II error.
+\subpart[6] Suppose that true mean life of the batteries supplied by Mr Lee is 1050 hours. In order to make $\alpha=0.05$ and $\beta = 0.05$ for the above test, find the minimum sample size required.
+\end{subparts}
+
+% ex 16.5
+
+\part[6] Two large investment companies have each presented a MPF plan to the management of a corporation. To obtain employees' attitude toward the two investment plans, the personnel officer randomly selected 10 employees from the employee registry. Both investment plans were explained in detail to each employee in the sample. The employees were then asked to rate each plan on a ten-point Likert scale, with `1' indicating the plan is completely unacceptable; and `10' indicating it is perfectly acceptable. The recorded responses are shown in the table below:
+
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\hline Employee & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline Plan A & $9.0$ & $8.5$ & $8.0$ & $9.5$ & $10.0$ & $10.0$ & $9.5$ & $9.0$ & $7.5$ & $7.0$ \\
+\hline Plan B & $6.0$ & $5.0$ & $10.0$ & $8.5$ & $9.0$ & $8.0$ & $7.0$ & $8.5$ & $9.0$ & $7.0$ \\
+\hline
+\end{tabular}
+
+Using the normal approximation to the binomial distribution, perform a sign test at the 0.05 level of significance to test whether employees' median ratings for the two plans are equal or not. 
+
+
+% \part The nicotine content of two brands of cigarettes, measured in milligrams, was found to be as follows:
+
+% \begin{tabular}{c|cccccccccc} 
+%   Brand $A$ & $2.1$ & $4.0$ & $6.3$ & $5.4$ & $4.8$ & $3.7$ & $6.1$ & $3.3$ & & \\
+%   \hline Brand $B$ & $4.1$ & $0.6$ & $3.1$ & $2.5$ & $4.0$ & $6.2$ & $1.6$ & $2.2$ & $1.9$ & $5.4$
+% \end{tabular}
+
+% Test the hypothesis, at the $0.05$ level of significance, that the median nicotine contents of the two brands are equal against the alternative that they are unequal.
+\end{parts}
+
+\question[20]
+An experiment was performed to compare the abrasive wear of two different laminated materials. Twelve pieces of material 1 were tested by exposing each piece to a machine measuring wear. Ten pieces of material 2 were similarly tested. In each case, the depth of wear was observed. The samples of material 1 gave an average (coded) wear of 85 units with a sample standard deviation of 4, while the samples of material 2 gave an average of 81 with a sample standard deviation of 5. 
+
+\begin{parts}
+% ex 10.6
+\part[10] Can we conclude at the $0.05$ level of significance that the abrasive wear of material 1 exceeds that of material 2 by more than 2 units? Assume the populations to be approximately normal with equal variances.
+% ex 10.13
+\part[10] In testing for the difference in the abrasive wear of the two materials in (a), we assumed that the two unknown population variances were equal. Were we justified in making this assumption? Use a $0.10$ level of significance.
+\end{parts}
+
+
+\end{questions}
+\section{Elective questions}
+
+\begin{questions}
+\question[10] A vote is to be taken among the residents of a town and the surrounding county to determine whether a proposed chemical plant should be constructed. The construction site is within the town limits, and for this reason many voters in the county believe that the proposal will pass because of the large proportion of town voters who favor the construction. To determine if there is a significant difference in the proportions of town voters and county voters favoring the proposal, a poll is taken. If 120 of 200 town voters favor the proposal and 240 of 500 county residents favor it, would you agree that the proportion of town voters favoring the proposal is higher than the proportion of county voters? Compute the p-value and use it to draw a conclusion at $\alpha=0.05$ level of significance.
+
+\question[10] Let $\Phi(x)$ be the cdf of a standard normal random variable and let $X\sim N(0,1)$. Find $E(\Phi(X))$.
+
+% Let $Z\sim N(0, 1)$.
+% \begin{parts}
+%   \part find $E(Z^4)$
+%   \part find $E(Z^{2311})$
+% \end{parts}
+
+\end{questions}
+
+
+\end{document}
+
+
+

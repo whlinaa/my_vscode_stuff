@@ -1,0 +1,282 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,10pt,addpoints]{exam}
+
+% \usepackage{examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2241}
+\newcommand{\term}{Fall 2020}
+\newcommand{\examnum}{Assignment 1}
+% \newcommand{\examdate}{1/1/2014}
+\newcommand{\dueTime}{30 Oct (Fri) 5:00pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+\textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\item You may use the facts and theorems introduced in lectures and tutorials. All other facts/theorems that are not covered must be rigorously proved before being used. 
+\end{itemize}
+
+\subsection*{Submission guidelines}
+\begin{itemize}
+\item DO NOT convert this .pdf file to any other file format, such as .word.
+\item Submit your work to Moodle. Email submission is NOT accepted. 
+\item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+\item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+\item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+\item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+% \item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. 
+%In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% \item You may type your solutions using a computer.
+
+\item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+\item Name your file by your full English name. For example, if your name is Chan Tai Man, then your file name is Chan Tai Man.
+\item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+\item The maximum submission size is 20MB.
+% \item The maximum submission size is 20MB. A well-scanned submission should have a size well below that limit. 
+\end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+\begin{questions}
+\question[20]~
+
+\begin{parts}
+\part fill in the truth table below for the statement $(r\rightarrow (p \wedge \sim q)) \leftrightarrow ((\sim r\vee q)\oplus\sim p )$. Then, determine whether the statement is a tautology, contradiction, or contingency. 
+
+\begin{tabular}{|c|c|c|P{11cm}|}
+\hline
+\LARGE{$p$} &\LARGE{$q$}& \LARGE{$r$} & \LARGE{$(r\rightarrow (p \wedge \sim q)) \leftrightarrow ((\sim r\vee q)\oplus\sim p )$}\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+&&&\\
+\hline
+\end{tabular}
+\vspace{2cm}
+% \begin{tabular}{c|c|c|p{10cm}}
+% $p$ &$q$& $r$ &\\
+% \hline
+% T&T&T&\\
+% \hline
+% T&T&F&\\
+% \hline
+% T&F&T&\\
+% \hline
+% T&F&F&\\
+% \hline
+% F&T&T&\\
+% \hline
+% F&T&F&\\
+% \hline
+% F&F&T&\\
+% \hline
+% F&F&F&\\
+% \end{tabular}
+% \fillwithlines{4in}
+% \makeemptybox{\stretch{1}}
+% \makeemptybox{3in}
+% \vspace*{\stretch{1}}
+\part Use a truth table to determine the validity of the following argument. \textbf{In your truth table, order the atomic variables alphabetically. (I.e., the first column of your truth table should be $p$)}
+\begin{enumerate}
+  \item $(p\oplus q)\leftrightarrow r$
+  \item $q$
+  \item $s\vee r$ /$\therefore~ \sim(p\wedge \sim r)$
+  % \item $s\vee r$ /$\therefore~ \sim(p\wedge \sim r)$
+\end{enumerate}
+\vspace*{\stretch{1}}
+\newpage
+
+% \makeemptybox{5in}
+\part Determine the validity of the following argument. If it is valid, use the logical rules introduced in class to prove that it is valid. If it is invalid, give a set of truth values for the variables to show that it is invalid. 
+\begin{enumerate}
+  \item $(o\rightarrow r)\rightarrow s$
+  \item $(p\rightarrow r)\rightarrow \sim s$ /$\therefore~\sim r$
+  % \item $s\vee r$ /$\therefore~ \sim(p\wedge \sim r)$
+\end{enumerate}
+% \makeemptybox{3in}
+\vspace*{\stretch{1}}
+\end{parts}
+\newpage
+% \newpage
+\question[20]~
+\begin{parts}
+% Q10, ex3.7, CZ
+\part Prove that if $a$ and $b$ are positive real numbers, then $\sqrt{a}+\sqrt{b} \neq \sqrt{a+b}$. State clearly what proof method you employ before you begin your proof. 
+\vspace*{\stretch{1}}
+\newpage
+% \fillwithlines{4in}
+\part Prove that $\sqrt{2}+\sqrt{37460123}$ is an irrational number. Do not assume that $\sqrt{37460123}$ is irrational or rational. You may, however, take for granted that $\sqrt{2}$ is irrational, since this has been proved in class. 
+\vspace*{\stretch{1}}
+% \part Prove that $\sqrt{2}+\sqrt{37460123+d_7+d_8}$ is an irrational number or rational number, where $d_7$ and $d_8$ are the 7th and 8th digits of your student ID. Do not assume that $\sqrt{37460123}$ is irrational or rational. You may, however, take for granted that $\sqrt{2}$ is irrational, since this has been proved in class. 
+% \fillwithlines{4in}
+% \part Prove that there is no rational solution for the equation $x^3+x^2+999=0$.
+% \fillwithlines{4in}
+\end{parts}
+\newpage
+
+\question[20]~
+\begin{parts}
+\part Determine whether each of the following statements is true or false. In this question, $R$ is the last digit of your student ID (e.g., if your student ID is 17023586A, then your $R=6$ ), and $A$ is a nonempty set. Note that we define $A^{0}$ to be the empty set $\emptyset$. \textbf{Circle either True or False for each question}. No explanation is required. 
+\begin{subparts}
+  \subpart $\{a, b\} \in\{a, b, c,\{a, b\}, R\}$ \hspace{\fill} True ~/~ False
+  \subpart $\{a, b\} \subseteq\{a, b,\{a, b\}, R\}$ \hspace{\fill} True ~/~ False
+  \subpart $\{a, b\} \subseteq P(\{a, b,\{a, b\}, R\})$ \hspace{\fill} True ~/~ False
+  \subpart $\{\{a, b\}\} \in P(\{a, b,\{a, b\}, R\})$ \hspace{\fill} True ~/~ False
+  \subpart $\{a, b,\{a, b\}\}-\{a, b\}=\{a, b\}$ \hspace{\fill} True ~/~ False
+  \subpart $ A^{R+3}=A^{R+1} \times A^{2}$ \hspace{\fill} True ~/~ False
+  \subpart $ \emptyset \in \emptyset \times A^{R}$ \hspace{\fill} True ~/~ False
+  \subpart $ \emptyset=\emptyset \times \emptyset^{R}$   \hspace{\fill} True ~/~ False
+\end{subparts} 
+
+\part  Let $A, B,$ and $C$ be sets. Prove the following statement by showing that each side is a subset of the other side by \textbf{logical rules}: 
+\[A-(B \cup C)=(A-B) \cap(A-C).\]
+\vspace*{\stretch{1}}
+% \fillwithlines{4in}
+\end{parts}
+\newpage
+
+
+
+
+\question[20]~
+
+\begin{parts}
+  \part Let $f: \mathbb{R}-\{0\} \rightarrow \mathbb{R}$ be defined by $f(x)=\frac{1}{2 x} .$ 
+  \begin{subparts}
+    \subpart Is $f$ one-to-one?
+    \vspace*{\stretch{1}}
+    \subpart Is $f$ onto?
+    \vspace*{\stretch{1}}
+  \end{subparts}
+  \newpage
+  \part Let $f: \R\times\R\rightarrow\R\times\R$ be defined by $f(x,y)=(3y,-5x^3)$.
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \vspace*{\stretch{1}}
+  \subpart Is $f$ onto?
+  \vspace*{\stretch{1}}
+\end{subparts}
+\end{parts}
+\newpage
+
+\question[20]~
+\begin{parts}
+\part Prove by mathematical induction that $\frac{1}{\sqrt[3]{1}}+\frac{1}{\sqrt[3]{2}}+\cdots+\frac{1}{\sqrt[3]{n}}>(n+1)^{2/3}$ for every integer $n\ge 4$. % Q13, CZ
+\vspace*{\stretch{1}}
+\newpage
+\part Prove by mathematical induction that $(7n+1)6^n+(-1)^{(n+1)}$ is divisible by 49, for all $n\in\Z^+$.
+% \part Prove by mathematical induction that $n^4+2n^3-n^2+14n$ is divisible by 8, where $n\in\Z^+$.
+\vspace*{\stretch{1}}
+% \fillwithlines{4in}
+% \fillwithlines{4in}
+\end{parts}
+
+
+
+\end{questions}
+
+
+
+
+
+\end{document}

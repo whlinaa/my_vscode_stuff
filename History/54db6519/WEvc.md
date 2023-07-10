@@ -1,0 +1,2815 @@
+# project to do
+- implement the following models:
+	- kNN
+	- naive bayes
+	- decision tree
+	- k-means 
+	- find VIF
+	- generate pair noncorrelated, but multicollinearity 
+	- exponential MA
+	- plot the residual plot
+	- show that the higher the variance, the higher the standardized coefficients
+	- plot a figure to show the running time
+	- do manual gradient boosting
+
+
+# questions to ask
+- how decision tree find optimal threshold for continuous value?
+- average precision = AUC of PR curve?
+- x^(3/2) = -2 => x = 2^(2/3)?
+- how to find the coordinate of a point in a line between two points
+- why for normal distirbution, sample mean and sample variance are independent?
+- QUESTION: suppose we run two algorithms on several datasets, record the running time. Should we use signed-rank test or rank-sum test?
+    - are the two population dependent? If so, use signed-rank test
+- in K-fold cross validation, is it true that each training example gets tested on once, and used for training k-1 times? I.e., in the hold-out set once, and in the train set k-1 times?
+    - yes!
+- exponential vs log normal?
+- we have that if X ~ U(0,1) then 1-X has the same distribution. Can we write X = 1-X?
+    - No, they are equal in distribution, not equal!
+    - http://prob140.org/sp18/textbook/notebooks-md/3_03_Equality.html
+- in linear regression, do we actually assume y is normal distributed? I suppose we assume only that y|x is normally distributed?
+    - No, we don't assume y is normally distributed!
+- suppose p-value = 0.01 and we reject the null hypothesis if p-value is less than 0.05. What is the type 1 error?
+
+# reminder
+- recall = P(predict correct | a positive example) = the probability of predicting just the positive class
+- precision = P(correct | positive prediction) = the probability of a positive prediction being correct,
+    - proportion of true positive prediction among the positive predictions
+    - TP / (TP + FP)
+- remember the shortcut: TPR = 1- FNR (just negate T and P)
+- not many supervised learning algorithms can handle multi-output. But neural network can handle it easily.
+- IMPORTANT: for binary classification, y=1 always represents the rarer class (e.g., have cancer)
+- A common approach to finding the right hyperparameter values is to use grid search (see Chapter 2). It is often faster to first do a very coarse grid search, then a finer grid search around the best values found. Having a good sense of what each hyperparameter actually does can also help you search in the right part of the hyperparameter space.
+    - remember to do coarse grid search, then do finer grid search around the best value found in coarse grid search
+- shuffling the data is often a good idea, but not for time series!
+- drawback of recursive algorithm: cannot do parallel computing!!
+- for unsupervised learning algorithms, there is no obvious performance measure to help you select the best kernel and hyperparameter values. 
+- when accuracy increases from 97% to 98%, the percentage point increase is only 1%. But we can report the error rate decrease! this percentage decrease is 33%!
+- isotropic Gaussian: https://math.stackexchange.com/questions/1991961/gaussian-distribution-is-isotropic
+    - note: covariance matrix of a Gaussian, if it is diagonal, then indeed the random variables are independent. But keep in mind that in general, being diagonal doesn't imply indp. 
+- resolution problems: when we say that the screen resolution is 1920*1080, we mean that the screen is divided into a matrix with 1080 rows and 1920 columns, and each entry of this matrix is a pixel 
+    - https://microscope-microscope.org/microscope-info/image-resolution/#:~:text=Resolution%20refers%20to%20the%20number,pixels%20(or%203.1%20Megapixels).
+    - confusion: in linear algebra, we measure a matrix first by its height and then width. But when we're talking about image and screen, we measure first by its width and then height
+- PPI: pixel per inch. 
+    - total pixel / diagonal length 
+- In short, the more dimensions the training set has, the greater the risk of overfitting it.
+
+
+# potential syllabus for ML for DS course
+- consistency, efficiency,
+- MLE
+- function of RV
+- method of moment
+- intro to bayesian
+- MGF
+- PCA
+- vector space
+- eigenvalues
+- linear function
+- positive definiteness
+
+# notation
+- Andrew's notation: (i) is example index, [i] is layer index, {i} is mini-batch index
+- remember that X is (n,m) in the deep learning course..
+
+# things to learn
+- balanced accuracy
+- how to deal with out-of-memory problem
+- the difference between joins
+- recommender system?
+- qlikview vs qlik sense vs tableau vs power bi
+- find the expected length of a CI. see 7.1-14 of Hogg
+
+
+# train-dev-test
+- our workflow:
+    - train = 70%. When doing parameter tunning for each model, we use k-fold cross validation to pick the best parameter setting for each model.
+    - after each model's tunning is done, we do evaluation on test set
+    - this workflow may be problematic, since our final model is the one performing best on the test set only, and so can't ensure the real performance is like this.
+- better workflow: train, dev, test
+    - dev set basically become the test set, and test set here really is used for evluating the final model
+- holdout validation: hold out part of the dataset as validation set, and each model is validated on this set. This is different from k-fold cross validation, because in k-fold, the validation is not fixed!
+    - dev set (development set) = validation set = hold-out cross validation set
+    - you train multiple models with various hyperparameters on the reduced training set (i.e., the full training set minus the validation set), and you select the model that performs best on the validation set. After this holdout validation process, you train the best model on the full training set (including the validation set), and this gives you the final model. Lastly, you evaluate this final model on the test set to get an estimate of the generalization error
+    - the error on test set is still representative of the model's true error
+- should we retrain our final model using testset? https://stackoverflow.com/questions/59851467/should-i-retrain-the-model-with-the-whole-dataset-after-using-a-train-test-split
+- https://stats.stackexchange.com/questions/184095/should-final-production-ready-model-be-trained-on-complete-data-or-just-on-tra
+    - if we do so, then can no longer come back to test the performance of new models! 
+- generalization error: The error rate on new cases is called the generalization error (or out-of-sample error), and by evaluating your model on the test set, you get an estimate of this error. This value tells you how well your model will perform on instances it has never seen before.
+- k-fold cross-validation
+    - remember that we need to first shuffle the whole dataset before dividing it into k folds, because the labels may have been sorted beforehand. 
+    - why we use it instead of just validation set?
+    - holdout validation usually works quite well. However, if the validation set is too small, then model evaluations will be imprecise: you may end up selecting a suboptimal model by mistake. Conversely, if the validation set is too large, then the remaining training set will be much smaller than the full training set. Why is this bad? Well, since the final model will be trained on the full training set, it is not ideal to compare candidate models trained on a much smaller training set. It would be like selecting the fastest sprinter to participate in a marathon. One way to solve this problem is to perform repeated cross-validation, using many small validation sets. Each model is evaluated once per validation set after it is trained on the rest of the data. By averaging out all the evaluations of a model, you get a much more accurate measure of its performance. There is a drawback, however: the training time is multiplied by the number of validation sets.
+- remember that after validation, we should train our chosen final model using the whole train set.
+- k-fold cross-validation: select a portion of the train set to do testing on each round.
+- because we fit our model to the dev set (i.e., based on the dev set, we select the best model), the accuracy on dev set is no longer an unbiased estimator on generalization error. 
+- when test set is absent, some people mistakenly call the dev set as test set. 
+- Andrew NG CS229: we should use k-fold CV only if we have a small dataset, because k-fold is computationally very expensive
+- leave-one-out CV: k=m
+- in deep learning, we almost never use k-fold!!
+
+
+# bias, variance, overfitting, underfitting, regularization
+## overfitting and underfitting
+- Complex models such as deep neural networks can detect subtle patterns in the data, but if the training set is noisy, or if it is too small (which introduces sampling noise), then the model is likely to detect patterns in the noise itself.
+- say you feed your life satisfaction model many more attributes, including uninformative ones such as the country’s name. In that case, a complex model may detect patterns like the fact that all countries in the training data with a w in their name have a life satisfaction greater than 7: New Zealand (7.3), Norway (7.4), Sweden (7.2), and Switzerland (7.5). How confident are you that the w-satisfaction rule generalizes to Rwanda or Zimbabwe? Obviously this pattern occurred in the training data by pure chance, but the model has no way to tell whether a pattern is real or simply the result of noise in the data.
+- If a model performs well on the training data but generalizes poorly according to the cross-validation metrics, then your model is overfitting. If it performs poorly on both, then it is underfitting. This is one way to tell when a model is too simple or too complex. 
+
+## over/under fitting diagnostics:
+- check the difference of train and validation (or generalization) errors. If 
+    - train error low, generalization error high => overfitting
+    - train error high, generalization error high => underfitting
+
+## solution to overfitting/underfitting
+- to deal with overfitting (high variance)
+    - if overfitting, train error << validation error
+	- too little data so fitting noise? get more data
+        - suppose we just have two data points, and one of them is a outlier. Then we'll fit a line that connects these two points. But if we now add one extra point that is not outlier, then the line will be less affected
+	- increase regularization if possible
+	- reduce the noise in the data (some error input)
+        - fix data errors and remove outliers
+	- change to a less complex model
+- to deal with underfitting (high bias)
+    - both train and validation error will be high
+	- decrease regularization
+	- use a more complex model, with more paramegters
+	- feed better, more relevant features to the model (feature engineering)
+	- increase sample size can only have limit effect for dealing with underfitting
+
+## regularization
+- regularization -> to alleviate over-fitting (i.e., reduce variance). So stronger regularization means getting a simpler model.
+- NOTE: in SVC, it's penalizing error, whereas in regression and neural networks, it's penalizing weight matrix
+- for `SVC`, C is low => simpler model => stronger regularization 
+    - sklearn doc: The strength of the regularization is inversely proportional to C. Must be strictly positive. The penalty is a squared l2 penalty.
+- for `LogisticRegression` in sklearn: same as SVC: smaller C means stronger regularization
+    - Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.
+- for `Ridge`: unlike `SVC`, larger alpha means stronger regularization
+    - Regularization strength; must be a positive float. Regularization improves the conditioning of the problem and reduces the variance of the estimates. Larger values specify stronger regularization. Alpha corresponds to 1 / (2C) in other linear models such as LogisticRegression or LinearSVC. If an array is passed, penalties are assumed to be specific to the targets. Hence they must correspond in number.
+ - remember to scale the data! (p136)
+- we usually don't regularize bias term, because of the negligible effect
+- suppose we have many features. Then regularization means giving smaller weight to each feature
+- regularization constant increases => weight matrix down => z will be small => activation (e.g., tanh, sigmod) becomes almost linear 
+
+## error (bias, variance, irreducible error)
+- generalization error can be expressed as the sum of three kinds of errors (i.e., `generalization error = bias + variance + irreducible error`)
+    - bias
+        - this part of the generalization error is due to wrong assumptions, such as assuming that the data is linear when it is actually quadratic. A high-bias model is most likely to underfit the training data.
+        - Bias are the simplifying assumptions made by a model to make the target function easier to learn.
+        - Generally, linear algorithms have a high bias making them fast to learn and easier to understand but generally less flexible. In turn, they have lower predictive performance on complex problems that fail to meet the simplifying assumptions of the algorithms bias.
+        - Low Bias: Suggests less assumptions about the form of the target function.
+        - High Bias: Suggests more assumptions about the form of the target function.
+        - Examples of low-bias machine learning algorithms include: Decision Trees, k-Nearest Neighbors and Support Vector Machines.
+        - Examples of high-bias machine learning algorithms include: Linear Regression, Linear Discriminant Analysis and Logistic Regression.
+    - variance
+        - This part is due to the model’s excessive sensitivity to small variations in the training data. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data.
+    - irreducible error
+        - This part is due to the noisiness of the data itself. The only way to reduce this part of the error is to clean up the data (e.g., fix the data sources, such as broken sensors, or detect and remove outliers).
+- increase model complexity => increase variance, decrease bias
+- decrease model complexity => decrease variance, increase bias
+- the more model parameters (degrees of freedom), the more likely to overfit, the higher the variance 
+    - increase # model parameters => reduce bias, increase variance 
+- in the deep learning era, people talk less about the trade-off between bias and variance
+    - in the pre deep learning era, we didn't have that many tools that can just reduce one error and keep the other more or less the same. 
+    - EG: getting bigger network and more data will reduce bias, without hurting variance 
+    - that is one reason why deep learning is so useful 
+    - as long as we regularize our deep learning model appropriately, training a bigger network almost never hurts, and the only cost is training time will be longer
+- high bias => underfitting
+- high variance => overfitting
+- if train error = 15%, and dev error = 16%, can we say we have a high bias problem? No, because we still need to look at the Bayes error or human-level error. It's possible that the problem is so hard that human-level error is also 15%
+- we can have both high bias and high variance (e.g., train =15%, dev = 30%, and human=1%)
+- if train error = 1%, and dev error = 10%, can we say we have a high variance problem? No, because the train and dev sets may come from different distributions
+- A model's performance can be better than human-level performance but it can never be better than Bayes error
+
+
+# evaluation metrics
+## evaluation reminder
+- Do not use AUC-ROC when your data is heavily imbalanced. As mentioned before, it was discussed extensively in this article by Takaya Saito and Marc Rehmsmeier but the intuition is the following: since PR AUC focuses mainly on the positive class (PPV and TPR) it cares less about the frequent negative class.
+when you care more about positive than negative class. If you care more about the positive class and hence PPV and TPR you should go with Precision-Recall curve and PR AUC (average precision).
+- For the four rates (TPR, TNR, FPR, FNR), to determine the denominator, think of the true class of the numerator: e.g., if numerator is FP => true class is negative => denominator contains all negative cases 
+- memory tricks for tpr, fpr, tnr, fnr:
+    - for tpr, just write tp/(tp + ?) first, then negate tp => fn
+- recall of positive class = sensitivity
+- recall of negative class = specificity
+- for highly imbalanced dataset, prefer PR curve to ROC curve!
+    - https://www.kaggle.com/lct14558/imbalanced-data-why-you-should-not-use-roc-curve
+    - While the blue, w=1, line performed poorly in both charts, the black, w=10000, line performed "well" in the ROC but poorly in the PR curve. This is due to the high class imbalance in our data. ROC curve is not a good visual illustration for highly imbalanced data, because the False Positive Rate ( False Positives / Total Real Negatives ) does not drop drastically when the Total Real Negatives is huge.
+    - Whereas Precision ( True Positives / (True Positives + False Positives) ) is highly sensitive to False Positives and is not impacted by a large total real negative denominator.
+- sensitivity = recall = hit rate = tpr
+- specificity = selectivity = tnr
+- In medical diagnosis, test sensitivity is the ability of a test to correctly identify those with the disease (true positive rate), whereas test specificity is the ability of the test to correctly identify those without the disease (true negative rate). If 100 patients known to have a disease were tested, and 43 test positive, then the test has 43% sensitivity. If 100 with no disease are tested and 96 return a completely negative result, then the test has 96% specificity.
+    - https://en.wikipedia.org/wiki/Sensitivity_and_specificity#:~:text=of%20the%20test.-,Medical%20usage,disease%20(true%20negative%20rate)
+- when we think of `rate`, for example, `true negative rate`, we should think of the population size (i.e, the denominator). Our task is now to predict the negative cases, and so the population should be all negative cases
+    - for `fpr`, the population should be negative classes, since we are asking among the negative cases, there are two possibilities: tn and fp. We want to know fp ratio
+    - remember: tn and fp are subsets of negative cases
+    - remember: tp and fn are subsets of positive cases
+- threshold up => precision up, recall down
+- threshold down => precision down, recall up
+- precision may sometimes go down when threshold up (although in general it will go up)
+- recall must go down when threshold up
+- remember in sklearn we can increase recall by decreasing the threshold for decision function value. Similarly, the higher the threshold, the higher the precision. 
+- based on `model.decision_function` value. 
+```python
+y_scores = model.decision_function(X)
+y_pred = y_scores > threshold # threshold to be found by drawing graphs
+```
+- `sklearn.metrics.precision_recall_curve`
+```python
+import numpy as np
+from sklearn.metrics import precision_recall_curve
+y_true = np.array([0, 0, 1, 1])
+y_scores = np.array([0.1, 0.4, 0.35, 0.8])
+
+precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
+
+print(precision)
+
+print(recall)
+
+print(thresholds)
+```
+
+## cosine similarity
+- remember, a vector is characterized by both length and direction
+- dot product allows us to know the direction only. The two vectors may have very different length, and increasing the length of one vector will not affect the cosine. 
+- IMPORTANT: correlation is the cosine between the two demean vector!
+- if x and y are close together, we may expect their dot product to be large (think when their angle is 0, then dot product will be maximized). Conversely, if they are far apart, we expect dot product to be small (think of 90 degree, then dot product = 0)
+- Gaussian radial basis function (RBF): exp(-||x-z||^2/gamma)
+- Similarity could be calculated by different metrics such as Cosine Similarity, Euclidean Distance and L2 form. The default configuration uses cosine similarity.
+
+## regression evaluation
+- for `L-p` norm, the higher p is (i.e., the higher the norm index), the more it focuses on large values and neglects small ones. This is why the RMSE is more sensitive to outliers than the MAE. But when outliers are exponentially rare (like in a bell-shaped curve), the RMSE performs very well and is generally preferred.
+- if we have lots of outliers, then we prefer MAE over MSE
+- Minkowski distance = L-p distance. the term Minkowski distance is used in sklearn
+- for R^2 (coefficient of determination), the value is in `(-inf, 1]`! That is, it can go down below 0! (https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html)
+    - when the regression model doesn't have an intercept, then R^2 can go below 0!
+- `R-squared (coefficient of determination)`: measures the proportion of variation in Y (i.e., variance of Y) that is explained by a regression model.
+    - we must be very careful when using r-squared for cross validation, since if `y` is mostly the same, then it's possible that in a particular test set, all `y` is of the same value, and so we have `nan` error!!!! I encountered this problem when working at MM!
+    - https://stackoverflow.com/questions/65231877/sklearn-cross-val-score-returns-nan-values-when-i-use-r2-as-scoring
+    - 1 - SSE / SST
+    - R2 refers to the coefficient of determination and measures how well a model performs compared to a baseline predictor in the form of a simple mean value
+    - SSR/SST = 1- SSE/SST, where SST is the variance of y
+    - check how well the regression line explains variance of y 
+    - also, we can view the variance as: if I use the mean of y to explain y, then the variance is the SSE! 
+    - if R^2 = 0.1 => SSE = 0.9 SST => error using the linear model is 90% that of using mean as prediction 
+    - R^2 can be less than 0, if your model is worse than the base line model, which uses the mean of y to predict y 
+    - IMPORTANT: R^2 as an evaluation metric can be negative!
+        - when we derive the SST decomposition into (SST=SSR+SSE), this is based on the fact that the model is linear regression model. If the model isn't regression model, this no longer holds true!
+        - also, even when we're using regression model, we may still find R^2 negative, due to train-test split!
+        - https://towardsdatascience.com/explaining-negative-r-squared-17894ca26321
+- `Adjusted R-squared`: is a modified version of R-squared that has been adjusted for the number of predictors in the model. The adjusted R-squared increases when the new term improves the model more than would be expected by chance. It decreases when a predictor improves the model by less than expected. Typically, the adjusted R-squared is positive, not negative. It is always lower than the R-squared.
+    - recall that SSE always decreases (at least on train set) if we add more features to it. Adjusted R-squared is to account for this problem 
+
+## classification evaluation
+### effect when changing threshold
+- summary: as threshold increases
+    - trace the roc curve and pr curve from right to left
+        - since fpr decreases as threshold increases
+        - since recall decreases as threshold increases
+- think of the extreme: 
+    - if threshold = -inf
+        - everyone is positive
+        - TP = n_pos
+        - FN = 0
+        - TN = 0
+        - FP = n_neg
+        - so, TPR is high, FPR is high => on the top right of ROC curve
+    - if threshold = inf
+        - everyone is negative
+        - TP = 0
+        - FN = n_pos
+        - TN = n_neg
+        - FP = 0 
+        - so, TPR is low, FPR is low
+- when threshold decrease (easier to predict +ve):
+    - TP: rise
+    - FP: rise
+    - TN: fall
+    - FN: fall
+    - TPR: rise
+    - FPR: rise
+    - TNR: fall
+    - FNR: fall
+- when threshold increases (harder to predict +ve):
+    - TP: fall
+    - FP: fall
+    - TN: rise
+    - FN: rise
+    - TPR: fall
+    - FPR: fall
+    - TNR: rise
+    - FNR: rise
+- remember that for roc curve, when threshold is large, we are at the right hand side of the curve, not left hand side!
+
+### cross entropy (as cost function)
+- IMPORTANT: In the cross entropy cost function formula, the logistic one is just a special case! Just need to remember `y_k*log(p_k)`, where `y_k` is an indicator whether the kth instance belongs to class k or not. 
+- sparse cross entropy vs cross entropy: https://stats.stackexchange.com/questions/326065/cross-entropy-vs-sparse-cross-entropy-when-to-use-one-over-the-other
+    - if y is one-hot encoded, use `categorical_crossentropy`
+        - ex: for 3-class, we have `[1,0,0],[0,1,0],[0,0,1]`
+    - if y is an integer, use `sparse_categorical_crossentropy`
+        - ex: for 3-class, we have `0,1,2`
+- entropy: the average amount of info you can learn from knowing the outcome of an uncertain event. 
+    - Or more generally, the avg amount of info that you get from one sample drawn from a given probability distribution p. It tells you how unpredictable that prob distribution is. 
+    - entropy of a random variable measures how random a variable is. 
+- cross entropy: the average message length 
+
+- `false discovery rate (FDR)`: FDR = FP / (FP + TP)
+    - among the positives you predict, how many are false
+    - among the significant results, how many are type I error?
+    - not the same as FPR!
+        - FPR = FP / (FP + TN)
+        - among the negatives, how many are false positive
+- `accuracy`: (TP+TN)/(TP+TN+FP+FN) = (TP+TN)/m
+- `misclassification error`: (FP+FN)/m = error rate = 1-precision
+- `precision` (focus on positive class) 
+    = (TP)/(TP+FP) 
+    = # examples correctly predicted as positive / # examples predicted as positive
+- `recall` (focus on positive class) = true positive rate = sensitivity: how many positive examples you can "recall"
+    = (TP)/(TP+FN)
+    = # examples correctly predicted as positive / # positive examples 
+- `F-score` = harmonic mean of precision and recall
+          = 2/(1/precision + 1/recall)
+- `TPR` (true positive rate) = TP/(TP+FN) 
+    - `TPR = recall = sensitivity`
+    - denominator = all positive
+    - % of positive cases identified (recalled)
+    - TP/(all positive)
+- `TNR` (true negative rate) = TN/(TN+FP) 
+    - `TNR = specificity`
+    - among all those negative cases, what is the percentage of being correctly classified as negative?
+    - denominator = all negative
+    - TN/(all negative)
+- `FPR` (false positive rate) = FP/(TN+FP)
+    - denominator = all negative
+    - clue: since FP means false positive, so it should be negative. So, the denominator is negative 
+    - FP/(all negative)
+- `FNR` (false negative rate) = FN/(TP+FN)
+    - denominator = all positive
+    - clue: since FN means false negative, so it should be positive. So, the denominator is positive 
+    - FN/(all positive)
+- `TNR + FPR = 1`. They have the same denominator, and numerator becomes (TN+FP) = all negative
+- `TPR + FNR = 1`. They have the same denominator, and numerator becomes (TP+FN) = all positive
+```python
+np.random.seed(1)
+y_true = np.random.randint(0,2, 10)
+y_pred = np.random.randint(0,2, 10)
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_true, y_pred, labels=[0, 1])
+
+# array([[2, 1],
+#        [4, 3]], dtype=int64)
+tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel()
+tn, fp, fn, tp # (2, 1, 4, 3)
+
+tpr = tp/(tp+fn)
+tnr = tn/(tn+fp)
+fpr = fp/(tn+fp)
+fnr = fn/(tp+fn)
+tpr, tnr, fpr, fnr
+# (0.42857142857142855,
+#  0.6666666666666666,
+#  0.3333333333333333,
+#  0.5714285714285714)
+
+tnr + fpr  # 1.0
+tpr + fnr  # 1.0
+```
+- `balanced_accuracy_score`:
+- `roc curve`: 
+- `mean_poisson_deviance`:
+- 
+- `mean_gamma_deviance`:
+- 
+- `mean_tweedie_deviance`:
+- 
+- `d2_tweedie_score`:
+- 
+- ``:
+- ``:
+- ``:
+
+### deviance in statistics
+- https://thestatsgeek.com/2014/04/26/deviance-goodness-of-fit-test-for-poisson-regressiond
+- https://en.wikipedia.org/wiki/Deviance_(statistics)#cite_note-5
+- In statistics, deviance is a goodness-of-fit statistic for a statistical model; it is often used for statistical hypothesis testing. It is a generalization of the idea of using the sum of squares of residuals (RSS) in ordinary least squares to cases where model-fitting is achieved by maximum likelihood. It plays an important role in exponential dispersion models and generalized linear models.
+- total deviance = \sum (unit deviance)
+
+
+### receiver operating characteristic (ROC curve)
+- the diagonal curve represents a random classifier
+- x-axis: false positive rate ( = FP/(TN+FP) )  = 1 - specificity
+- y-axis: recall (true positive rate)
+- The receiver operating characteristic (ROC) curve is another common tool used with binary classifiers. It is very similar to the precision/recall curve, but instead of plotting precision versus recall, the ROC curve plots the true positive rate (another name for recall) against the false positive rate (FPR). The FPR is the ratio of negative instances that are incorrectly classified as positive. It is equal to 1 – the true negative rate (TNR), which is the ratio of negative instances that are correctly classified as negative. The TNR is also called specificity. Hence, the ROC curve plots sensitivity (recall) versus 1 – specificity.
+
+## KS plot/curve (KS Statistic plot)
+- two curves showing the tradeoff of true positive rate and false positive rate with different thresholds, in a different way from ROC curve
+
+
+### Precision-recall curve
+
+
+## metrics for multiclass problem
+- remember, for multiclass, we can still use accuracy. 
+    - if want to use other metrics, we take weighted average of the metrics of each class.
+- `accuracy`: single number
+- `precision`: the precision of each class
+- `recall`: the recall of each class
+- `f1`: the f1 of each class
+- `macro average`: averaging the unweighted mean per label
+- `weight average`: averaging the support-weighted mean per label
+    - using this, the majority class will have too large an effect
+- `Micro average`: averaging the total true positives, false negatives and false positives. Only shown for multi-label or multi-class with a subset of classes, because it corresponds to accuracy otherwise and would be the same for all metrics.
+```python
+              precision    recall  f1-score   support
+
+     class 0       0.50      1.00      0.67         1
+     class 1       0.00      0.00      0.00         1
+     class 2       1.00      0.67      0.80         3
+
+    accuracy                           0.60         5
+   macro avg       0.50      0.56      0.49         5
+weighted avg       0.70      0.60      0.61         5
+```
+- `(0.5+0+1)/3 = 0.5`
+- `(0.5*1 + 0*1 + 1*3)/5 = 0.7`
+
+## misc evaluation
+- `top_k_accuracy_score`:
+- precision@k and recall@k: https://amitness.com/2020/08/information-retrieval-evaluation/
+    - how many top-k results are positive
+    - ground-truth: +,+,-,-,+,+,+ 
+    - predict:      +,+,+,+,-,+,+
+    - precision@1:  1/(1+0) = 1
+    - precision@2:  2/(2+0) = 1
+    - precision@3:  2/(2+1) = 2/3
+    - precision@4:  2/(2+2) = 2/4
+    - precision@5:  2/(2+2) = 2/4
+    - precision@6:  3/(3+2) = 3/5
+    - precision@7:  4/(4+2) = 4/6
+- `Bounce rate`: is an Internet marketing term used in web traffic analysis. It represents the percentage of visitors who enter the site and then leave rather than continuing to view other pages within the same site.
+- `Reach`: refers to the total number of people who have seen your ad or content. If 100 total people have seen your ad, that means your ad’s reach is 100.
+- `Impressions`: refer to the number of times your ad or content has been displayed on a screen. Let’s say that your ad from the previous example popped up on those people’s screens a total of 300 times. That means the number of impressions for that ad is 300.
+- `Click-through rate (CTR)` is the ratio of users who click on a specific link to the number of total users who view a page, email, or advertisement. 
+- `conversion rate`: Conversion rate is defined as the percentage of visitors that land on your website who complete a desired action. 
+- `churn rate` (客戶 流失率): the number of customers who decide to stop using a service offered by one company and to use another company, usually because it offers a better service or price
+- `latency`: for audio. 
+- `throughput`: for audio. How many queries we handle?
+
+
+# feature importance
+- when looking at the feature importance of a linear regression, we should divide it by SE, then we have t-statistics. This is because we need to take into account the variance of the coefficient
+## local surrogate (LIME; Local interpretable model-agnostic explanations)
+- local model = surrogate model
+- the idea is quite similar to Taylor series expansion. Taylor also tries to approximate a function locally, so that the function value at the center of the approximation matches that of the original function
+- idea: The idea is quite intuitive. First, forget about the training data and imagine you only have the black box model where you can input data points and get the predictions of the model. You can probe the box as often as you want. Your goal is to understand why the machine learn- ing model made a certain prediction. LIME tests what happens to the predictions when you give variations of your data into the machine learning model. LIME generates a new dataset consisting of perturbed samples and the corresponding predictions of the black box model. On this new dataset LIME then trains an interpretable model, which is weighted by the proximity of the sampled instances to the instance of interest. The interpretable model can be anything from the inter- pretable models chapter, for example Lasso or a decision tree. The learned model should be a good approximation of the machine learn- ing model predictions locally, but it does not have to be a good global approximation. This kind of accuracy is also called local fidelity.
+- Select your instance of interest for which you want to have an explanation of its black box prediction.
+- Perturb your dataset and get the black box predictions for these new points.
+- Weight the new samples according to their proximity to the instance
+of interest.
+- Train a weighted, interpretable model on the dataset with the variations.
+- Explain the prediction by interpreting the local model.
+- When using Lasso or short trees, the resulting explanations are short (= selective) and possibly contrastive. Therefore, they make human- friendly explanations. This is why I see LIME more in applications where the recipient of the explanation is a lay person or someone with very little time. It is not sufficient for complete attributions, so I do not see LIME in compliance scenarios where you might be legally re- quired to fully explain a prediction. Also for debugging machine learn- ing models, it is useful to have all the reasons instead of a few.
+## partial dependence plot
+- how each features affect the final predicted probability
+- to check how feature 1 affects the probability, in our dataset,  
+    - set all its values to 0 
+    - calculate the predicted probability to each sample, with the transformed dataset
+    - take average of those predicted probability
+    - repeat the above, but this time set the value to 1
+    - plot a graph, where x-axis is the value of the feature, y-axis is the average probability. This shows how the probability varies as the feature varies
+- we're changing each variable independently, hence the name
+- cons:
+    - assume features are independent
+- procedures
+    - suppose want to interpret feature `score`, which is between 0 and 10 (inclusive)
+    - for all the records, first replace the `score` value to 0. Then do prediction. Then take the average of those predictions. 
+        - the average is interpreted as: the average probability when `score == 0`.
+    - take repeat the above step by setting `score = 1,2,3..,10`.
+    - plot a graph to shows how the average probability varies as `score` increases.
+    - instead of line graph, we can create a box-plot to show the distribution of the probability
+
+## LIME (Local interpretable model-agnostic explanations; local surrogate)
+- LIME is a paper in which the authors propose a concrete implementation of local surro- gate models.
+- LIME tests what happens to the predictions when you give variations of your data into the machine learning model. LIME generates a new dataset consisting of perturbed samples and the corresponding predictions of the black box model. On this new dataset LIME then trains an interpretable model, which is weighted by the proximity of the sampled instances to the instance of interest. The interpretable model can be anything from the inter- pretable models chapter, for example Lasso or a decision tree. The learned model should be a good approximation of the machine learn- ing model predictions locally, but it does not have to be a good global approximation. This kind of accuracy is also called local fidelity.
+- 
+## permutation importance
+- IMPORTANT probability question: suppose for a binary variable, P(X=1) = p. Then on expectation, proportion of entries remained unchanged?
+- https://eli5.readthedocs.io/en/latest/blackbox/permutation_importance.html
+- The idea is the following: feature importance can be measured by looking at how much the score (accuracy, F1, R^2, etc. - any score we’re interested in) decreases when a feature is not available.
+- To do that one can remove feature from the dataset, re-train the estimator and check the score. But it requires re-training an estimator for each feature, which can be computationally intensive. Also, it shows what may be important within a dataset, not what is important within a concrete trained model.
+- To avoid re-training the estimator we can remove a feature only from the test part of the dataset, and compute score without using this feature. It doesn’t work as-is, because estimators expect feature to be present. So instead of removing a feature we can replace it with random noise - feature column is still there, but it no longer contains useful information. This method works if noise is drawn from the same distribution as original feature values (as otherwise estimator may fail). The simplest way to get such noise is to shuffle values for a feature, i.e. use other examples’ feature values - this is how permutation importance is computed.
+- The method is most suitable for computing feature importances when a number of columns (features) is not huge; it can be resource-intensive otherwise.
+- NOTE: like partial dependency plots, this method might generate records that are impossible to have in real-life situation.
+- the idea is that we want a particular feature to disappear, and then calculate the metric decrease, but at the same time we don't want to retrain a model with one fewer feature, since it will take lots of time
+    - if we retrain, then basically doing backward elimination
+- problem with permutation importance: 
+    - if some feature is binary and variance is low, after shuffling it, the effect is minimal 
+- `PermutationImportance` from ELI5
+- https://eli5.readthedocs.io/en/latest/autodocs/sklearn.html#module-eli5.sklearn.permutation_importance
+- `estimator, scoring=None, n_iter=5, random_state=None, cv='prefit', refit=True`
+- It's model-agnostic
+- The permutation feature importance is defined to be the decrease in a model score when a single feature value is randomly shuffled
+- The estimator is required to be a fitted estimator. X can be the data set used to train the estimator or a hold-out set. The permutation importance of a feature is calculated as follows. First, a baseline metric, defined by scoring, is evaluated on a (potentially different) dataset defined by the X. Next, a feature column from the validation set is permuted and the metric is evaluated again. The permutation importance is defined to be the difference between the baseline metric and metric from permutating the feature column.
+- can't deal with correlated features 
+- https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance_multicollinear.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-multicollinear-py
+- if the features are correlated, then all features are considered useless.
+- that's why we need to use RFE!
+- suppose we have two features: weight in kg and weight in g
+- weight in g is useless, since the information contained in it can be found from weight in kg, and vice versa.
+- so, when we find the permutation importance, we should not eliminated all the useless features at once. otherwise, correlated features will all be eliminated. 
+- https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance_multicollinear.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-multicollinear-py
+- We could set a low threshold and filter out features based on it. But we have to remember that even removing a single feature forces other coefficients to change. So, we have to eliminate them step-by-step, leaving out the lowest weighted feature by sorting the fitted model coefficients. Doing this manually for 98 features would be cumbersome, but thankfully Sklearn provides us with Recursive Feature Elimination — RFE class to do the task.
+
+
+## SHAP (Shapley value)
+- base_value = the value that would be predicted if we did not know any features for the current output" - which is just the mean prediction, or mean(yhat) = sum(yhat_i)/N for all rows x_i.
+    - not mean(y), but mean(y_hat)!
+- Each individual Shapley value, phi_ij for some feature j and some row x_i, is interpreted as follows: the feature value x_ij contributed phi_ij towards the prediction, yhat_i, for instance x_i compared to the average prediction for the dataset, i.e. mean(yhat).
+- We introduce the perspective of viewing any explanation of a model’s prediction as a model itself, which we term the explanation model.
+- for the most important feature, we say:
+    - across all samples in our dataset, the feature matters the most in explaining the difference between a given prediction and the mean prediction
+- for each record: how much each of the features contribute to the difference between the model prediction of this record and the mean prediction on the records by the model?
+- https://towardsdatascience.com/shap-explained-the-way-i-wish-someone-explained-it-to-me-ab81cc69ef30
+- in linear regression, the effect of a feature = (weight of feature) * (feature value)
+- shapley value tells us how to fairly distribute the contribution of each feature to the difference between the model prediction on the record and the average model prediction
+- interpretation: The interpretation of the Shapley value for feature value j is: The value of the j-th feature contributed 𝜙𝑗 to the prediction of this particular instance compared to the average prediction for the dataset.
+    - shapley value of a feature in a record: the shapley value of a feature tells us the contribution of that feature to the difference between the model prediction and the average model prediction
+- how to calculate shapley value of feature x? 
+    - We first select a coalition, which is a subset of the features, excluding the feature x. 
+        - add feature x to the coalition
+        - there are many possible coalitions, we just randomly choose one
+    - select a random sample and then use its feature values for the features that are not present in the coalition
+    - then sample a value for x, and form another vector
+        - this vector should differ from the first vector in only feature x
+- 
+- `contrastive explanations`: We get contrastive explanations that compare the prediction with the average prediction.
+    - average prediction = prediction without feature?
+- `players`: the feature values of the instance that collaborate to receive the gain (= predict a certain value). 
+- `game`: the prediction task for a single instance of the dataset.
+- `gain`: `y_pred - y_avg`
+- `payout`:  prediction
+    - Shapley value tells us how to fairly distribute the `payout` among the features
+- 
+- explain why our model predict such a value (i.e, explain the y prediction). 
+    - how much does each feature contribute to the difference `y_pred - y_avg`
+- it's model-agnostic (i.e., regardless of the model, we can interpret the features)
+- The Shapley value can be misinterpreted. The Shapley value of a feature value is not the difference of the predicted value after removing the feature from the model training. The interpretation of the Shapley value is: Given the current set of feature values, the contribution of a feature value to the difference between the actual prediction and the mean prediction is the estimated Shapley value.
+- The Shapley value, coined by Shapley (1953)63, is a method for assigning payouts to players depending on their contribution to the total payout. Players cooperate in a coalition and receive a certain profit from this cooperation.
+- Players? Game? Payout? What is the connection to machine learning predictions and interpretability? The “game” is the prediction task for a single instance of the dataset. The “gain” is the actual prediction for this instance minus the average prediction for all instances. The “players” are the feature values of the instance that collaborate to receive the gain (= predict a certain value). In our apartment example, the feature values park-nearby, cat-banned, area-50 and floor-2nd worked together to achieve the prediction of €300,000. Our goal is to explain the difference between the actual prediction (€300,000) and the average prediction (€310,000): a difference of -€10,000.
+
+### exact shap value calculation
+- game: reproducing the outcome of the model,
+- player: the features included in the model
+- What Shapley does is quantifying the contribution that each player brings to the game. What SHAP does is quantifying the contribution that each feature brings to the prediction made by the model.
+- It is important to stress that what we called a “game” concerns a single observation. One game: one observation. Indeed, SHAP is about local interpretability of a predictive model.
+- Shapley values are based on the idea that to determine the importance of a single player, the outcome of each possible combination (or coalition) of players should be considered.
+- As seen above, two nodes connected by an edge differ for just one feature, in the sense that the bottom one has exactly the same features of the upper one plus an additional feature that the upper one did not have. Therefore, the gap between the predictions of two connected nodes can be imputed to the effect of that additional feature. This is called “marginal contribution” of a feature.
+- As seen above, two nodes connected by an edge differ for just one feature, in the sense that the bottom one has exactly the same features of the upper one plus an additional feature that the upper one did not have. Therefore, the gap between the predictions of two connected nodes can be imputed to the effect of that additional feature. This is called “marginal contribution” of a feature.
+
+### interpretation of shapley value
+- local feature importance:
+    - The interpretation of the Shapley value for feature value j is: The value of the j-th feature contributed 𝜙𝑗 to the prediction of this particular instance compared to the average prediction for the dataset.
+- Be careful to interpret the Shapley value correctly: The Shapley value is the average contribution of a feature value to the prediction in differ- ent coalitions. The Shapley value is NOT the difference in prediction when we would remove the feature from the model.
+- Given the current set of feature values, the contribution of a feature value to the difference between the actual prediction and the mean prediction is the estimated Shapley value.
+- global feature importance:
+    - we take the absolute value of each shapley value, and then find the mean.
+    - SHAP feature importance measured as the mean absolute Shapley values. The number of years with hormonal contraceptives was the most important feature, changing the predicted absolute cancer probability on average by 2.4 percentage points (0.024 on x-axis).
+    - if shapely value is 0.1, then on average, the feature will change the predicted target output by 0.1 from the average model output
+- SHAP feature importance is an alternative to permutation feature importance. There is a big difference between both importance measures: Permutation feature importance is based on the decrease in model per- formance. SHAP is based on magnitude of feature attributions.
+
+
+### pros and cons of Shapley value
+- Like many other permutation-based interpretation methods, the Shapley value method suffers from inclusion of unrealistic data in- stances when features are correlated. 
+ 
+### example
+- features: `park-nearby`, `cat-banned`, `area-50` and `floor-2nd`
+
+### steps for shapley values
+- get random permutation of the features
+
+- predict # coins sold. Features 
+- temp (T), 
+- date of week (0-6) (D)
+- n_flights (F)
+- n_hours (open on a day) (H)
+- running example: [T, D, F, H] = [80, 1, 100, 4]
+    - in [F D T H] = [100 1 80 4]
+
+- idea: get some values from my vector, and some features from a random vector from our dataset.
+- Step 1: permute our features, and suppose we now care about T
+    - e.g., [F D T H]
+    - we're interested in `T`. We will pick the values after `T` from a randomly chosen sample (i.e., `H`)
+- Step 2: pick random samples from dataset, according to the permutation chosen 
+    - [F D T H] = [200, 5, 70, 8]
+- Step 3: form two random vectors x1 and x2 such that both are based on the example vector. I.e., 
+    - [T, D, F, H] = [80, 1, 100, 4]
+    - x1 = `[F D T H] = [100 1 80 8]` => `c_1 = 1500`
+        - F D T are from the original sample; H is from the random sample
+    - x2 = `[F D T H] = [100 1 70 8]` => `c_2 = 1400`
+        - T is from the random sample
+    - they are different only on the feature we care about.
+    - 
+### permutation step
+- suppose interested in feature T (temperature)
+- original record = (temp, dow, num_flights, n_hrs) = (80, 1, 100, 4)
+- random permutation 
+### shap package
+- https://slundberg.github.io/shap/notebooks/League%20of%20Legends%20Win%20Prediction%20with%20XGBoost.html
+- A SHAP value for a feature of a specific prediction represents how much the model prediction changes when we observe that feature
+- remember the following recipe:
+```python
+model = xgboost.XGBClassifier().fit(X, y)
+explainer = shap.Explainer(model, X) # use the given model to explain X
+shap_values = explainer(X) # get a ndarray-like object. The shape will be the same as X. Note that it includes the feature names, since X is assumed to be a df 
+
+# we can use use `shap_values` to plot various plots...
+shap.plots.waterfall(shap_values[0]) # plot a single example
+shap.plots.force(shap_values[0]) # display the info of waterfall plot differently
+shap.plots.beeswarm(shap_values) # show SHAP of all examples, not just one
+shap.plots.bar(shap_values) # show shap_values.abs.mean(0)
+shap.summary_plot(shap_values)
+```
+- to get the mean absolute value of the SHAP values for each feature, do shap_values.abs.mean(0)
+
+### kinds of explainers
+- `permutation` is best suited for tabular datasets
+- https://shap.readthedocs.io/en/latest/example_notebooks/api_examples/explainers/Permutation.html
+ 
+### SHAP dependence plot
+SHAP dependence plots are an alternative to partial dependence plots and accumulated local effects. While PDP and ALE plot show average effects, SHAP dependence also shows the variance on the y-axis. Espe- cially in case of interactions, the SHAP dependence plot will be much more dispersed in the y-axis. The dependence plot can be improved by highlighting these feature interactions.
+
+
+
+
+
+### SHAP vs Shapley values
+- SHAP has more components than 
+- The goal of SHAP is to explain the prediction of an instance x by com- puting the contribution of each feature to the prediction.
+
+
+
+
+
+# models 
+## decision tree
+- we should not use mean decrease in impurity (MDI) when:
+    - cardinality of the features differ
+    - when features are highly correlated
+- continuous and high cardinality variables are preferred in mean decrease in impurity importance rankings, even if they are equally uninformative compared to variables with less categories
+- Other algorithms work by first training the Decision Tree without restrictions, then pruning (deleting) unnecessary nodes. A node whose children are all leaf nodes is considered unnecessary if the purity improvement it provides is not statistically significant. Stan‐ dard statistical tests, such as the χ2 test (chi-squared test), are used to estimate the probability that the improvement is purely the result of chance (which is called the null hypothesis). If this proba‐ bility, called the p-value, is higher than a given threshold (typically 5%, controlled by a hyperparameter), then the node is considered unnecessary and its children are deleted. The pruning continues until all unnecessary nodes have been pruned.
+- for CART, how to determine cut-off points of a continuous feature? This is quite simple: CART takes a feature and determines which cut-off point minimizes the variance of y for a regression task or the Gini index of the class distribution of y for classification tasks. The variance tells us how much the y values in a node are spread around their mean value. The Gini index tells us how “impure” a node is, e.g. if all classes have the same frequency, the node is impure, if only one class is present, it is maximally pure. Variance and Gini index are minimized when the data points in the nodes have very similar values for y. As a consequence, the best cut-off point makes the two resulting subsets as different as possible with respect to the target outcome.
+    - we should think of impurity as the categorical version of variance
+- Actually, since the training algorithm used by Scikit-Learn is stochastic, you may get very different models even on the same training data (unless you set the random_state hyperparameter).
+Trees fail to deal with `linear relationships`. Any linear relationship be- tween an input feature and the outcome has to be approximated by splits, creating a step function. This is not efficient.
+This goes hand in hand with lack of smoothness. Slight changes in the input feature can have a big impact on the predicted outcome, which is usually not desirable. Imagine a tree that predicts the value of a house and the tree uses the size of the house as one of the split fea- ture. The split occurs at 100.5 square meters. Imagine user of a house price estimator using your decision tree model: They measure their house, come to the conclusion that the house has 99 square meters, enter it into the price calculator and get a prediction of 200 000 Euro. The users notice that they have forgotten to measure a small storage room with 2 square meters. The storage room has a sloping wall, so they are not sure whether they can count all of the area or only half of it. So they decide to try both 100.0 and 101.0 square meters. The results: The price calculator outputs 200 000 Euro and 205 000 Euro, which is rather unintuitive, because there has been no change from 99 square meters to 100.
+Trees are also quite unstable. A few changes in the training dataset can create a completely different tree. This is because each split depends on the parent split. And if a different feature is selected as the first split feature, the entire tree structure changes. It does not create con- fidence in the model if the structure changes so easily.
+Decision trees are very interpretable – as long as they are short. The number of terminal nodes increases quickly with depth. The more ter- minal nodes and the deeper the tree, the more difficult it becomes to understand the decision rules of a tree. A depth of 1 means 2 termi- nal nodes. Depth of 2 means max. 4 nodes. Depth of 3 means max. 8 nodes. The maximum number of terminal nodes in a tree is 2 to the power of the depth.
+
+
+### xgboost paper notes
+- xgboost is just a way to implement the decision ensemble idea!
+- 
+- sparsity-aware algorithm for sparse data 
+- weighted quantile sketch for approximate tree learning
+- cache access patterns, data compres- sion and sharding to build a scalable tree boosting system
+- pros over traditional tree algo
+    - The most important factor behind the success of XGBoost is its scalability in all scenarios. The system runs more than ten times faster than existing popular solutions on a single machine and scales to billions of examples in distributed or memory-limited settings.
+    - a novel tree learning algorithm is for handling sparse data; a theoretically justified weighted quantile sketch procedure enables handling instance weights in approximate tree learning. Parallel and distributed com- puting makes learning faster which enables quicker model ex- ploration.
+    - built-in regularizaton to prevent overfitting
+    - 
+
+## linear regression
+### linear regression remidner
+- remember that if we standardize features of a linear regression model, we can't interpret the coefficients easily! The interpretation will be in terms of standard deviation!
+- partial F test: to test if a subset of the parameters as a whole are significant or not.
+    - if we test a subset of parameters, we should not use t-test for each parameter, since we'll suffer from multiple testing problem!
+- total sum of squares = SST
+- regression sum of squares = SSR
+- residual sum of squares = SSE 
+- in linear regression, if we have two identical features, then both of them have the same coefficient
+    - if we have x, x/10, then the coefficient of x/10 is also divided by 10
+- Linear regression and logistic regression models fail in situations where the relationship between features and outcome is nonlinear or where features interact with each other. 
+- in linear regression, we assume Y follows a normal distribution with mean = beta*x, variance = sigma^2, and the relationship between E(Y) and X is linear
+- in logistic regression, we assume Y follows a Bernoulli distribution, and the relationship between the log-odds of Y and X is linear
+- some lessons learned after proving regression results:
+    - regression line always passes through the center point (x_mean, y_mean)
+        - useful for deriving beta_0^hat
+    - beta_1^hat = `r*q_y/q_x`, and they have the same sign
+    - R^2 = `r**2`
+    - parameters can be expressed as linear combination of Y_i
+        - in representer theorem, we are told that parameters can be expressed as linear combination of x_i, instead of Y_i
+    - if we don't know covariance, then when calculating variance, we need to express the variance as linear combination of Y_i
+        - think of beta and Y_hat
+    - knowing properties of projection matrix P and I-P is very useful. In particular
+        - they are idempotent, symmetric, and positive semidefinite
+    - knowing quadratic form is very useful:
+        - x'Ax = A_ii, if x = only has ith entry being 1
+    - to get V(Y_i), we need to know the diagonal entries of the covariance matrix
+        - for ABC, the (i,i) entry is `A_i: * B * C_:j`
+- why cov(Y_mean, beta_1^hat) is uncorrelated?
+    - beta_1^hat is linear combination of Y_i, how can it be uncorrelated with Y_mean?
+- `beta` is the correlation corefficient $(\rho)$ times the standard deviation of the dependent variable $\left(\sigma_y\right)$ divided by the standard deviation of the independent variable $\left(\sigma_x\right)$. In finance we would say `beta` is the $\rho$ times the volatility of the security $\left(\sigma_S\right)$ divided by the volatility of the $\operatorname{market}\left(\sigma_m\right)$.
+- One way to think about it is $\rho$ tells you the strength of the linear association between the two variables. That is independent of the units of measurement. `beta` tells you the size of the effect. Its units are the unit of measure of the dependent variable divided by the unit of measure of the independent variable.
+- For example, suppose your data are the amount of fertilizer given to plants in grams and the height the plant grows to in centimeters. You get a $\rho$ of $0.5$, which tells you fertilizer seems to increase height with a moderately strong association. $\rho$ has no units, it's a dimensionless number, between $-1$ and 1 . You can interpret it directly without reference to the units of measure or even what the subject of the study is.
+- But $\rho$ tells you nothing about how much plant height increases for each gram of fertilizer. For that you need `beta`. If `beta` is two, it means each gram of fertilizer is associated with a two centimeter increase in plant height. That tells you nothing about how strong the association is statistically, just how big it is. It could be that the relation is perfect $(\rho=1$ ) and each gram of fertilizer adds exactly two centimeters. Or there could be so much noise around the relation ( $\rho$ is near zero) that it's probably the result of chance.
+`beta` is measured in units of centimeters per gram. If you decided to measure fertilizer in kilograms instead of grams, `beta` would increase to 2,000 , but $\rho$ would remain at $0.5$.
+    - https://www.quora.com/What-is-the-difference-between-beta-and-correlation-coefficient
+- remember that linear regression assumes that y|x ~ N(x\beta, sigma), not y ~ N!
+    - because intuitively, two records with the same feature value x can have different response y (think of features are age and height, and y is the score in the exam. The exam score of those people with the same age and height follow a normal distribution)
+    - we are not assuming that the score will be normal; we are assuming that given a particular age and height, the score of this group of people follow a normal distribution
+    - if x is not normal, then y is unlikely to be normal
+- transforming data in linear regression
+    - making y normal not necessarily make it conform with the assumption.
+    - Transforming y will be more useful to reduce effect of outliers in estimation
+    - Same for x, transforming x closer to normal is not about assumption. It is to reduce outlier effects.
+- https://www.statisticshowto.com/residual-plot/
+- linear in parameters:
+    - https://datascience.stackexchange.com/questions/12274/what-does-linear-in-parameters-mean
+    - it just means the parameters are order of 1
+    - `b0 + b1*x1`
+        - both linear in parameter b and linear in variable
+    - `b0 + b1*x1^2`
+        - linear in parameter b only
+- to invert X^TX of size `(n+1)x(n+1)`, we need O(n^3) time. So, when there are many features, then definitely should not use normal equation! Notice that it doesn't depend on `m`, the number of examples! 
+- y = (A^TA)^-1A^Ty,
+- assume there is a true regression line, with beta. However, we can't draw this line, since we can't get the true value of beta
+    - the true regression line is the mean value of Y, given any x.
+- residual: y_i - y^hat_i
+- model error: the error term of the true relation between Y and x
+- why estimated beta hats are RV? Because the same x can result in different y!
+- we have the following tests/CI:
+    - CI/test for coefficients
+        - test whether the coefficient is 0 (i.e., useless)
+        - CI for the true coefficient
+    - CI for E(Y) and PI for Y
+
+### linear regression assumptions
+- https://quantifyinghealth.com/understand-linear-regression-assumptions/
+variance of response (Y) is constant wrt x. 
+    - for each given x, the variance is constant sigma 
+    - basically, assume the response given x is a normal distribution with mean `x'beta`, and variance `sigma^2`. And so the variance is independent of the value of x
+    - for logistic regression, it's unreasonable to assume the variance of response is constant, since the response is binary, meaning that the variance is p(1-p), and we model p = f(x,beta)!
+- There is a linear relationship between the dependent variables and the regressors, meaning the model you are creating actually fits the data
+- The errors or residuals of the data are normally distributed with N(0,sigma^2) and independent from each other
+    - in fact, some books do not assume error is normal. It only assumes zero mean and variance = sigma^2. 
+    - with the assumption that it's normal, then we have the sampling distribution of various parameters follow normal.
+    - the sigma must be constant with the predictors
+        - also, it means as time goes, the variance won't change 
+    - since errors are normal, the Y value is also normally distributed
+    - This assumption is violated in time series, spatial, and multilevel settings.
+    - For example, errors can be correlated when we are dealing with multiple measurements made on the same participants, or when cluster sampling is used.
+    - What happens when errors are not independent:
+        - Biased standard errors (smaller standard errors and confidence intervals)
+        - Biased p-values (smaller p-values)
+    - How to deal with correlated errors
+        - The fix depends on how the errors are correlated. You should use a data analysis method that is appropriate for your study design (for example, an ARIMA model can be used for time series data, and a multilevel model for nested data).
+- Homoscedasticity (aka homogeneous Variance): This means the variance around the regression line is the same for all values of the predictor variable. I.e., the variance doesn't change as the predictors change.
+    - The dispersion of the data around the regression line should be constant.
+    - The scatter plot is good way to check whether the data are homoscedastic (meaning the residuals are equal across the regression line)
+    - Homogeneous variance is an important assumption made in regression analysis. Violations can often be detected through the appearance of the residual plot. Increasing error variance with an increase in the regressor variable is a common condition in scientific data. Large error variance produces large residuals, and hence a residual plot like the one in Figure 11.22 is a signal of nonhomogeneous variance.
+- Nice to have: There is minimal multicollinearity between explanatory variables
+- Nice to have: auto-correlation
+
+#### errors vs residuals
+- In linear regression, the residual (which is the distance between an observed data point and the linear regression line) estimates the error (which is the distance between an observed data point and the true population value). Therefore, we can use residuals (which we can measure) instead of errors (which we cannot measure) to check the assumptions of a linear regression model.
+- error = E(Y) - Y
+
+### least squares
+- very often, when we have linear combination of something, we can normalize it by making them relative to the first object!
+    - in multi-objective optimization, the first objective has a weight of 1, and all other objectives are relative to it (e.g., if second one has weight 2, that means it's 2 times as important )
+- overdetermined system: more equations that unknown (i.e., m > n)
+    - A is tall 
+- remember that var(y) is the error when using a constant model. So, after we build our model, we should always compare it with var(y)!
+- when we A\y, it will give x or x_hat, depending on whether the system has exact solution or not
+    - this is because the method of solving linear system and least squares are the same, since both of them uses QR! 
+- look at the autoregressive time series model!
+    - AR(3) means the prediction at t is the linear comb of t-1, t-2, t-3!
+### total sum of squares (Partition of sums of squares)
+- https://en.wikipedia.org/wiki/Partition_of_sums_of_squares
+- https://en.wikipedia.org/wiki/Total_sum_of_squares
+- we use this technique in 
+    - find the distribution of sample variance (unrelated to regression)
+    - decompose SST into SSE and SSR in regression
+    - decompose SST into SSW and SSB in ANOVA
+- in regression analysis:
+    - `SST = SSR + SST`
+        - `\sum(y_i - y_mean) = \sum(predict_i - y_mean) + \sum(predict_i - y_i)`
+
+### collinearity or multicollinearity
+- multicollinearity: multiple predictors are correlated 
+    - possible case: cor(X,Y) is close to zero, but cor(X,Y,Z) is high
+        - that is, X and Y are not correlated, but if we consider three RV together, then their multicollinearity can be high
+        - ex: X_1, X_2,.., X_n are the scores of the assessments. Y = \sum X_i
+        - then cor(Y, X_i) may be low, since there are many assessments
+        - corr(Y, X_1, X_2,..., X_n) is high, since after knowing the X_i's, Y can be fully determined
+- Collinearity is a linear association between two predictors. Multicollinearity is a situation where two or more predictors are highly linearly related. In general, an absolute correlation coefficient of >0.7 among two or more predictors indicates the presence of multicollinearity. ‘Predictors’ is the point of focus here. Correlation between a ‘predictor and response’ is a good indication of better predictability. But, correlation ‘among the predictors’ is a problem to be rectified to be able to come up with a reliable model.
+- if have multicollinearity, 
+    - X.T@X almost singular, and thus can't use normal equation
+    - it will inflate the variance and covariance of the least squares estimators for the regression parameters.
+    - When multicollinearity exists, the usual interpretation of a regression parameter beta_j as `the change in the expected value of the response variable Y when the predictor variable xj is increased by one unit while the other predictor variables are held constant' may not be applicable.
+- Multicollinearity can be a problem in a regression model because we would not be able to distinguish between the individual effects of the independent variables on the dependent variable. For example, let’s assume that in the following linear equation:
+    Y = W0+W1*X1+W2*X2
+- Coefficient W1 is the increase in Y for a unit increase in X1 while keeping X2 constant. But since X1 and X2 are highly correlated, changes in X1 would also cause changes in X2 and we would not be able to see their individual effect on Y.
+- This makes the effects of X1 on Y difficult to distinguish from the effects of X2 on Y.
+- Multicollinearity may not affect the accuracy of the model as much. But we might lose reliability in determining the effects of individual features in your model – and that can be a problem when it comes to interpretability.
+#### consequence of having multicollinearity
+- the standard error of the coefficients are inflated
+- When multicollinearity exists, the usual interpretation of a regression parameter βj as ‘the change in the expected value of the response variable Y when the predictor variable xj is increased by one unit while the other predictor variables are held con- stant’ may not be applicable.
+- 
+
+#### checking of multicollinearity
+- https://www.statisticssolutions.com/free-resources/directory-of-statistical-analyses/assumptions-of-linear-regression/
+- https://statisticsbyjim.com/regression/standardize-variables-regression/
+- if our model contains interaction terms of the variables, it's likely we'll have high multicollinearity 
+- VIF formula for feature j: `1 / (1 - R_j^2)`, where `R_j^2` is the R^2 with dependent variable = x_j, and independent variables are the rest of the variables
+    - if R_j^2 is close to 0, then the remaining variables CANNOT predict on feature j, and so feature j is not correlated with the existing features
+    - if R_j^2 is close to 1, then the remaining variables CAN predict on feature j, and so feature j is correlated with the existing features, and so can be removed
+- Variance inflation factor (VIF) is a measure of the amount of multicollinearity in a set of multiple regression variables. Mathematically, the VIF for a regression model variable is equal to the ratio of the overall model variance to the variance of a model that includes only that single independent variable. This ratio is calculated for each independent variable. A high VIF indicates that the associated independent variable is highly collinear with the other variables in the model.
+- Variance Inflation Factor (VIF) – the variance inflation factor of the linear regression is defined as VIF = 1/T. With VIF > 5 there is an indication that multicollinearity may be present; with VIF > 10 there is certainly multicollinearity among the variables.
+- where R2_j is the coefficient of multiple determination obtained from the regression of xj on the other p - 2 predictor variables
+- https://online.stat.psu.edu/stat462/node/180/
+- If multicollinearity is found in the data, centering the data (that is deducting the mean of the variable from each score) might help to solve the problem. However, the simplest way to address the problem is to remove independent variables with high VIF values.
+- checking for pair-wise correlation cannot determine multicollinearity!  Examination of pairwise correlations alone does not reveal multicollinearity among the predictor variables. These coefficients may not be large in magnitude (each pair of predictor variables exhibits a moderate or weak linear relationship), whereas an Rj^2 is close to 1 (xj is strongly related to the other predictor variables). Because of this, we should also consider the VIFs.
+
+#### solution to multicollinearity
+- remove those features that have high VIF
+- IMPORTANT: standardizing the features will not help! It's used to derive some theoretical results only; it will not help with reducing multicollinearity
+- R_j^2: R^2 obtained from the regression of xj on the other p − 2 predictor variables
+- use L1 and L2 regularized linear regression 
+- PCA
+- QUESTION: standardization will reduce VIF, but does it reduce multicollinearity?
+
+#### multicollinearity vs autocorrelation
+- multicollinearity: features are correlated
+    - this does not violate model assumption!
+- autocorrelation: Y_1,Y_2,..., are correlated, and so Y_i's no longer independent
+    - in other words, the error terms no longer independent
+    - this violates linear regression model assumption
+
+#### curvilinear and nonlinear regression
+- https://statisticsbyjim.com/regression/choose-linear-nonlinear-regression/
+- the relationship is not a straight line, but a curve relationship
+- While both types of models can fit curvature, nonlinear regression is much more flexible in the shapes of the curves that it can fit. After all, the sky is the limit when it comes to the possible forms of nonlinear models. See the related post below for more details.
+
+### assumption checking: residual plots
+- A residual plot is typically used to find problems with regression. Some data sets are not good candidates for regression, including:
+    - Heteroscedastic data (points at widely varying distances from the line).
+    - Data that is non-linearly associated.
+    - Data sets with outliers.
+- These problems are more easily seen with a residual plot than by looking at a plot of the original data set. Ideally, residual values should be equally and randomly spaced around the horizontal axis.
+
+### pros and cons: linear regression
+- easy to understand and interpret
+- may not work well when there is a nonlinear relationship between predicted and predictor variables.
+    - linear in regression means the target value can be expressed as a linear combination of the parameters and features
+- can't handle irrelevant features well
+- assumes absence of multicollinearity
+
+### Ridge regression (Tikhonov regularization)
+- regularize `(1/C)*||theta||^2`, without the intercept
+- if `1/C` very large, then all weights very close to zero (except intercept), and the result is a flat line going through the data's mean. 
+
+### Lasso regression (Least Absolute Shrinkage and Selection Operator Regression)
+- just like Ridge Regression, it adds a regularization term to the cost function, but it uses the l1 norm of the weight vector instead of half the square of the l2 norm
+- An important characteristic of Lasso Regression is that it tends to eliminate the weights of the least important features (i.e., set them to zero). For example, the dashed line in the righthand plot in Figure 4-18 (with α = 10-7) looks almost linear: all the weights for the high-degree polynomial features are equal to zero. In other words, Lasso Regression automatically performs feature selection and outputs a sparse model (i.e., with few nonzero feature weights).
+- There are two main differences between Ridge and Lasso. First, the gradients get smaller as the parameters approach the global optimum, so Gradient Descent naturally slows down, which helps convergence (as there is no bouncing around). Second, the optimal parameters (represented by the red square) get closer and closer to the origin when you increase α, but they never get eliminated entirely.
+
+### elastic net
+- combination of both Ridge and Lasso
+
+
+## propensity model
+- propensity: Propensity Modeling is a statistical technique used to predict the chances of certain events happening in the future. With the increasing use of machine learning, companies can build robust propensity models and make accurate forecasts. In marketing, for example, propensity models are used to predict customer behavior.
+    - propensity score = probability
+    - propensity to 
+        - purchase or convert
+        - churn
+        - engage
+    - https://www.expressanalytics.com/blog/propensity-modeling-to-predict-customer-behavior-using-machine-learning/#:~:text=Propensity%20Modeling%20is%20a%20statistical,used%20to%20predict%20customer%20behavior.
+    - basically, classification problem
+    - more from the client's perspective: whether the client will purchase something or not?
+        - in our model, we often build models from the company's perspective: whether the underwriter should accept/decline in the underwriting decision
+## propensity model use case
+- Personalization goes a long way when it comes to customer engagement, company growth, and brand loyalty. Different businesses, especially those using the subscription model, try to tailor the right services and/or products to the right people to gain the most value. Although the path of personalization is often rocky, propensity modeling is one of the ways to make it smoother. Here are a few real-life examples of how propensity modeling is used.
+- Barack Obama reelection campaign: Voters segmentation
+    - During Barack Obama’s 2012 reelection campaign, a team of data scientists was hired to build propensity-to-convert models. The task was to predict which undecided voters could be encouraged to vote for democrats and which type of political campaign contact such as a door knock, call, flyer, etc., would work best for each voter. The use of Big Data predictive analytics contributed to the Obama reelection win.
+    - among undecided voters, predict the probability of voting obama
+
+## logistic regression
+- probit(p) = ppf(p), where ppf is the inverse of cdf of standard normal
+- logit(p) = log(P(Y=1)/P(Y=0))
+- https://stats.stackexchange.com/questions/20523/difference-between-logit-and-probit-models
+- Y ~ Bern(p), we model E(Y) = p
+- `g(p) = beta*x`
+- E(Y) = p, and V(Y) = p(1-p) => variance depends on x
+- odds = p/(1-p)
+- odds ratio = (p_i*(1-p_i)) /(p_j*(1-p_j))
+- remember that when log-odds increase by x, it doesn't mean the odds will increases by e^x!!!!!
+    - log-odds(old) = a
+    - log_odds(new) = a+x
+    - odds(old) = e^a
+    - odds(new) = e^(a+x)
+    - odds(new) - odds(old) = e^a(e^x - 1)
+    - pct increase = `(odds(new) - odds(old))/odds(old) * 100 = (e^x-1)*100%`
+- assumptions:
+- We assume a linear relationship between the predictor variables and the log-odds (also called logit) of the event that `y = 1`
+- explanation:
+    - we want to use linear regression for classification. But linear regression can give us a number larger than 1 and less than 0.
+    - to remedy this, we feed the output of the linear regression to a function which must have a output between 0 and 1. We don't want a function that output exactly 0 or 1 because we want to know the confidence of our prediction. It turns out that the sigmoid function is a good choice. 
+- in logistic regression, we minimize the cross-entropy: `-sum(y_i * ln h(x_i))`
+    - we don't minimize the sum of squares because (1) our cost function will have multiple minimum points and (2) the cross entropy is the negative of log-likelihood function of the parameters, and so minimizing the cross entropy is the same as finding the MLE.
+- in logistic function  `sigma(t) = 1/(1+exp(-t))`, where `t = x^t*theta`, is often called the logit. The name comes from the fact that the logit function, defined as `logit(p) = log(p / (1 – p))`, is the inverse of the logistic function. Indeed, if you compute the logit of the estimated probability p, you will find that the result is t. 
+    - that is, if y = log(p/1-p), then p = 1/(1+e^-y)
+        - logit function is the inverse of logistic function
+- The logit is also called the log-odds, since it is the log of the ratio between the estimated probability for the positive class and the estimated probability for the negative class.
+- that is, logit(p) = t, where p = sigma(t)
+- the cross-entropy cost function is convex, although it doesn't have a closed-form solution
+
+### interpretation
+- https://quantifyinghealth.com/interpret-logistic-regression-intercept/
+if we have a logistic model such that the log-odds is `log(p/(1-p)) = -3 + x1 + 2x2`, then 
+- beta_0 = -3 => when x1=x2=0 
+=> log-odds are -3 
+=> odds are e^(-3) 
+=> probability is e^(-3) / (1+e^(-3))
+- beta_1 = 1 => increase x1 by one unit, the log-odds increase by 1 
+    - NOTE: => odds increases by e IS WRONG!!!!
+    - pct increase of odds is `(e^1 - 1)*100%`
+- beta_2 = 2 => increase x2 by one unit, the log-odds increase by 2 
+    - NOTE: => odds increases by e^2 is WRONG
+    - pct increase of odds is `(e^2 - 1)*100%`
+
+### pros and cons: logistic regression
+- easy to implement
+- good interpretability
+- performs well on linearly separable classes
+- output is probability
+- small number of hyperparameters
+- can't handle irrelevant or strongly correlated features
+
+
+## generalized linear model (GLM)
+- why for GLM, if it's defined as g(E(Y|X)) = linear comb, then why it's not the case for logistic regression?
+    - no, it's still of this form, because g is the logit function! 
+- Each distribution from the exponential family has a canonical link function that can be derived mathematically from the distribution. The GLM framework makes it possible to choose the link function independently of the distribution. 
+    - https://stats.stackexchange.com/questions/40876/what-is-the-difference-between-a-link-function-and-a-canonical-link-function
+    - that is, we can derive the link function from the distribution, but it doesn't necessarily mean that we must use it as the link function!
+## link function in GLM
+- link function: mean -> eta (theta^t x)
+- response function: eta (theta^t x) -> mean
+- Notice that this modeling of the mean (i.e., the inverse of the link function) is not a linear model. It is the function of the mean (i.e., the link function) that is modeled as linear in GLM. 
+- for the link function, the input is the mean of the distribution in exponential family. The output is always eta (i.e., theta^t x)
+- link function links mean with theta^t x
+- for the response variable (= inverse of link), the input is eta, and the output is always the mean
+- Eta is related to the expected value of the data through the link function.
+- The link function provides the relationship between the linear predictor and the mean of the distribution function.
+- https://en.wikipedia.org/wiki/Generalized_linear_model
+- we want the link function for each model because it allows us to interpret the parameters! 
+    - https://towardsdatascience.com/a-simple-interpretation-of-logistic-regression-coefficients-e3a40a62e8cf
+    - for logistic regression, we know the link function is log(pi/1-pi), and so we know that as x1 increases 1 unit, the link function (i.e., log odds) will increase by theta_1 => odds will get multiplied by e^(theta_1) units.
+    - for poisson regression, we know that log(lambda) = theta^tx. So, increase intercept by a unit will increase lambda by a factor e^a.
+
+
+# entropy, cross entropy, relative entropy
+- entropy = mean surprise = mean uncertainty
+- cross entropy and relative entropy both compare two distributions
+- relative entropy = KL divergence
+
+
+# recommender system
+## collaborative vs content-based
+- collaborative: recommend items to you based on rating of users who gave similar ratings as you
+- content-based filtering: recommend items to you based on features of user and item to find good match
+
+## content-based recommender system
+- requires features of the users (e.g., age, gender, etc)
+    - 
+- assume each movie has a feature vector (e.g., x_1 = romance, x_2 = action), with intercept term. We need to hand-pick the value!
+- assume each user has a parameter vector to be learned. (e.g., theta_1 = how strongly he likes romance movies)
+- we assume the movie feature vectors are known already! All we need to do is to learn the user parameter vectors. Keep in mind that each user has a different parameter vector.
+- NOTE: in content-based, we assume each user is independent: we do not make decision on a user based on other users.
+- prediction: inner product of feature vector and parameter vector.
+- difference with linear regression: each user has a different set of parameter. 
+- problem of content-based:
+    - we actually don't have the features for each movies!
+
+### pro and cons
+- The model doesn't need any data about other users, since the recommendations are specific to this user. This makes it easier to scale to a large number of users.
+- The model can capture the specific interests of a user, and can recommend niche items that very few other users are interested in.
+- Since the feature representation of the items are hand-engineered to some extent, this technique requires a lot of domain knowledge. Therefore, the model can only be as good as the hand-engineered features.
+- The model can only make recommendations based on existing interests of the user. In other words, the model has limited ability to expand on the users' existing interests.
+
+
+## collaborative filtering
+### idea
+- https://developers.google.com/machine-learning/recommendation/collaborative/basics
+- To address some of the limitations of content-based filtering, collaborative filtering uses similarities between users and items simultaneously to provide recommendations. This allows for serendipitous recommendations; that is, collaborative filtering models can recommend an item to user A based on the interests of a similar user B. Furthermore, the embeddings can be learned automatically, without relying on hand-engineering of features.
+- Look for users who share the same rating patterns with the active user (the user whom the prediction is for).
+- Use the ratings from those like-minded users found in step 1 to calculate a prediction for the active user
+- by helping to rate movies, I'm helping the algorithm to learn a better set of features for the movies, and this in turn helps everyone by giving a better movie prediction
+
+### theory
+- One approach to the design of recommender systems that has wide use is collaborative filtering. Collaborative filtering is based on the assumption that people who agreed in the past will agree in the future, and that they will like similar kinds of items as they liked in the past.
+- assume we don't know the feature vector of each movie. Look at the rating of the users and the parameters of each user, we can infer the feature vector of each movie
+- assume we don't know the parameters of each user. Look at the rating of the users and the feature vectors of each movie, we can infer the parameters of each user (what we did in content-based recommender system)
+- approach: randomly guess user parameter values as initialization. 
+- guess theta -> x -> theta -> x
+- why collaborative? Because all users are collaborating to get better movie ratings for everyone. By rating a few movies, each user is helping the algo to learn better features for the movies. 
+
+
+## difference between content-based and collaborative filtering
+- https://www.quora.com/What-is-the-difference-between-content-based-filtering-and-collaborative-filtering
+To put it simply, the difference is in the method of how you define “similarity” between objects (usually products).
+
+In content based filtering you use properties of the objects and link similar ones and show them, whereas in collaborative filtering you usually use data of what was in any way linked together by an outside sorting entity (e.g. bought together by an online shopper) and show them in an ordered list.
+
+We’ll use suggesting books as an example - we’ll recommend which book to read if you’ve read book A.
+
+Content filtering: you show all the books that have have same author, same publisher, same genre and the most similar number of pages as book A first, then you slowly make it less strict...
+
+Collaborative filtering: you analyse what books have been read by people that have read book A and the ones with highest count are on the top of the list.
+- collaborative filtering
+    - past similar preference can inform future preference
+
+
+# interesting idea
+- it's common that we first assume something that we don't know to be known, and then iterate, and then update our initial thought. Examples:
+    - EM
+    - k-means
+    - recommender system
+
+
+# term
+- Call-to-action (CTA) buttons: just a button like "submit"
+- ROI: return on investment = (net return)/(cost of investment)
+- CRM: Customer relationship management
+    - is a technology for managing all your company's relationships and interactions with customers and potential customers. The goal is simple: Improve business relationships. A CRM system helps companies stay connected to customers, streamline processes, and improve profitability.
+- interpretability: is about the extent to which a cause and effect can be observed within a system. Or, to put it another way, it is the extent to which you are able to predict what is going to happen, given a change in input or algorithmic parameters. It’s being able to look at an algorithm and go yep, I can see what’s happening here.
+- explainability: is the extent to which the internal mechanics of a machine or deep learning system can be explained in human terms. It’s easy to miss the subtle difference with interpretability, but consider it like this: interpretability is about being able to discern the mechanics without necessarily knowing why. Explainability is being able to quite literally explain what is happening.
+- dense layer = fully-connected layer
+- proof of concept (PoC): a realization of a certain method or idea in order to demonstrate its feasibility,[1] or a demonstration in principle with the aim of verifying that some concept or theory has practical potential. A proof of concept is usually small and may or may not be complete.
+- `concept drift`: change of the mapping `x->y`. fraud detection suddenly didn't work quite well after the start of the covid-19, since many people's pattern of using their credit card change.
+    - that is, in the past, a moderate value of x -> fraud, but now a moderate value of x will not imply fraud!
+    - Concept Drift means that the properties of the data will change over time e.g., the mean and variance of a variable can change considerably over time.
+    - maybe some people now suddenly uses 10 times their credit card a day, which the fraud detection algorithm would flag as fraudulent
+    - Concept drift is also impacting models designed to predict fraud across various industries. For example, previously models were trained to view the purchase of one-way flight tickets as a strong indicator of airline fraud. This is no longer the case. With the onset and spread of Corona virus, many fliers purchased one-way tickets. It will likely take some time before this returns to be a valid indicator of fraud.
+    - ex: x = size of a house, y = price of a house. But because of inflation, house of same size may be more expensive in future. this is concept drift. 
+    - to solve concept drift, collect new data and retrain our model to make our model adapt to the new data distribution.
+- `data drift` / `covariate shift`: distribution of x changes (over time), even though the mapping from x to y does not change  
+    - Consider a movie recommendation model that was trained on movies watched by retirees, will it give good accuracy when that model is used to recommend movies for children? it will not. The reason is that there is a wide gap in the interest and the activities between these two groups. So, the model will fail in these conditions. Such changes in the distribution of data in train and test sets are called the Covariate shift. 
+- `data drift` vs `concept drift`
+    - data drift => the distributions of the feature changes over time
+        - in health insurance, in the past, maybe the age distribution has a large density around higher value (i.e., many old age). That is, usually the older people would buy health insurance. But now more and more young people also buy health insurance, and so the age distribution change over time.
+    - concept drift => the decision boundary of the prediction changes over time. 
+        - in the past, maybe a slightly higher BMI will lead to the decline decision of buying a health insurance. But today maybe a higher BMI does not matter, since maybe
+            - the company is allowing more and more people to buy insurance, since maybe it wants more business
+            - maybe a higher BMI has become a new normal
+    - in insurance, maybe other insurance companies have more relaxed screening for their clients. Then there is concept drift, since in our dataset, a high BMI can be a strong indicator for decline, but in other insurance companies, a high BMI may not matter
+        - maybe other insurance companies have more young people than our company, but the age variable may have the same effect on decline for all companies. In this case, we have data drift, but no concept drift
+- `data mismatch`: the data of train set and data of test set are from different distribution.
+    - if we see there is large difference between train set error and test set error, we might not have a variance issue. Instead, we might have a data mismatch problem. 
+- `ETL`: extract, transform, load. 
+    - at MM, we do ETL often. We `extract` useful features from our database, then do `transform`, e.g., missing values, error values, discounting, etc. Then we load it the cleaned dataset to a database, which contains dataset ready for modelling purposes.
+- `data ingestion`: Data ingestion is the process of importing large, assorted data files from multiple sources into a single, cloud-based storage medium—a data warehouse, data mart or database—where it can be accessed and analyzed. As data may be in multiple different forms and come from hundreds of sources, it is sanitized and transformed into a uniform format using an extract/transform/load (ETL) process.
+    - at MM, we also do data ingestion: we need to ingest the data from YFL to our AWS RDS!
+- `data integration`: Data integration is the process of combining data from different sources into a single, unified view. Integration begins with the ingestion process, and includes steps such as cleansing, ETL mapping, and transformation.
+- `DevOps`: DevOps is a set of practices, tools, and a cultural philosophy that automate and integrate the processes between software development and IT teams. It emphasizes team empowerment, cross-team communication and collaboration, and technology automation.
+- `CI/CD`: https://www.edureka.co/blog/what-is-jenkins/#:~:text=Jenkins%20is%20an%20open%2Dsource,to%20obtain%20a%20fresh%20build.
+    - Continuous Integration is a development practice in which the developers are required to commit changes to the source code in a shared repository several times a day or more frequently. Every commit made in the repository is then built. This allows the teams to detect the problems early. Apart from this, depending on the Continuous Integration tool, there are several other functions like deploying the build application on the test server, providing the concerned teams with the build and test results, etc.
+- `jenkins`: allows us to repeat the same tasks easily?
+    - we create jobs that install packages for our EC2 servers
+    - in a job, we execute the shell script
+- `CI/CD`: 
+- `MLOps (machine learning operations)`: an emerging discipline that comprises a set of tools and principles to support progress through the machine ML project life cycle
+- `scrum`: we say it's 
+    - software development process
+    - framework for product management
+    - project management framework
+    - also agile
+- semi-supervised learning, when we have plenty of unlabeled instances and very few labeled instances.
+- image segmentation: Image segmentation is the task of partitioning an image into multiple segments. In semantic segmentation, all pixels that are part of the same object type get assigned to the same segment. For example, in a self-driving car’s vision system, all pixels that are part of a pedestrian’s image might be assigned to the “pedestrian” segment (there would be one segment containing all the pedestrians). In instance segmentation, all pixels that are part of the same individual object are assigned to the same segment. In this case there would be a different segment for each pedestrian. The state of the art in semantic or instance segmentation today is achieved using complex architectures based on convolutional neural networks (see Chapter 14).
+- embedding = encoding = (featurized) representation = 
+- we say the model overfit/underfit the data 
+- loss : loss(y^hat^(i) -y(i))
+- cost : sum of loss
+- far-field speech recognition: speaker far from the microphone
+- data leakage: Data leakage is when information from outside the training dataset is used to create the model. This additional information can allow the model to learn or know something that it otherwise would not know and in turn invalidate the estimated performance of the mode being constructed.
+- epoch: An epoch is a term used in machine learning and indicates the number of passes of the ENTIRE training dataset the machine learning algorithm has completed. Datasets are usually grouped into batches (especially when the amount of data is very large). Some people use the term iteration loosely and refer to putting one batch through the model as an iteration.
+- sparse features: each instance has few nonzero features
+- multilabel classification: an instance with many binary labels (e.g., y=[1,0,1] to indicate having label 0 and 2)
+    - in NN, we need one neuron for each label to predict whether it has that label or not. Each neuron is to given the logistic activation.
+- multioutput classification: an instance can be multilabel, and each label can be multiclass (i.e., the label can have >2 possible values)
+- multiclass classification: an instance can belong to one class only, but there are many classes to choose from (extension of binary classification)
+    - in NN, if there are k possible classes, then we need k neurons, and they will be fed to a softmax activation
+- decision function: A decision function is a function which takes a dataset as input and gives a decision as output. To understand this trade-off, let’s look at how the SGDClassifier makes its classification decisions. For each instance, it computes a score based on a decision function. If that score is greater than a threshold, it assigns the instance to the positive class; otherwise it assigns it to the negative class. 
+    - logistic regression: decision function = 1, if g(w^T*x+b)>0.5
+    - SVC: decision function = sign(w^T*x+b)
+    - Scikit-Learn does not let you set the threshold of decision function directly, but it does give you access to the decision scores that it uses to make predictions. Instead of calling the classifier’s `predict()` method, you can call its `decision_function()` method, which returns a score for each instance, and then use any threshold you want to make predictions based on those scores:
+- white box and black box: Decision Trees are intuitive, and their decisions are easy to interpret. Such models are often called white box models. In contrast, as we will see, Random Forests or neural networks are generally considered black box models. They make great predictions, and you can easily check the calculations that they performed to make these predictions; nevertheless, it is usually hard to explain in simple terms why the predictions were made. For example, if a neural network says that a particular person appears on a picture, it is hard to know what contributed to this prediction: did the model recognize that person’s eyes? Their mouth? Their nose? Their shoes? Or even the couch that they were sitting on? Conversely, Decision Trees provide nice, simple classification rules that can even be applied manually if need be (e.g., for flower classification).
+- pipeline: A sequence of data processing components is called a data pipeline. Pipelines are very common in Machine Learning systems, since there is a lot of data to manipulate and many data transformations to apply. Components typically run asynchronously. Each component pulls in a large amount of data, processes it, and spits out the result in another data store. Then, some time later, the next component in the pipeline pulls this data and spits out its own output. Each component is fairly self-contained: the interface between components is simply the data store. This makes the system simple to grasp (with the help of a data flow graph), and different teams can focus on different components. Moreover, if a component breaks down, the downstream components can often continue to run normally (at least for a while) by just using the last output from the broken component. This makes the architecture quite robust. On the other hand, a broken component can go unnoticed for some time if proper monitoring is not implemented. The data gets stale and the overall system’s performance drops.
+- hyperparameter: A hyperparameter is a parameter of a learning algorithm (not of the model)
+- in-sample vs out-of-sample forecast: If you are forecasting for an observation that was part of the data sample - it is in-sample forecast. If you are forecasting for an observation that was not part of the data sample - it is out-of-sample forecast. So the question you have to ask yourself is: Was the particular observation used for the model fitting or not ? If it was used for the model fitting, then the forecast of the observation is in-sample. Otherwise it is out-of-sample.
+- out-of-sample error = generalization error
+- degree of freedom of a model: number of parameters
+- Feature extraction: combining existing features to produce a more useful one—as we saw earlier, dimensionality reduction algorithms can help
+- batch learning: 
+- instance-based learning: 
+- good web for stat term: https://www.stat.berkeley.edu/~stark/SticiGui/Text/gloss.htm
+- ensemble: if you aggregate the predictions of a group of predictors (such as classifiers or regressors), you will often get better predictions than with the best individual predictor. A group of predictors is called an ensemble; thus, this technique is called Ensemble Learning, and an Ensemble Learning algorithm is called an Ensemble method.
+- weak learner: it does only slightly better than random guessing, 
+- strong learner: achieving high accuracy
+- out-of-core training: Online learning algorithms can also be used to train systems on huge datasets that cannot fit in one machine’s main memory (this is cualled out-of-core learning). The algorithm loads part of the data, runs a training step on that data, and repeats the process until it has run on all of the data
+    - XGboost supports out-of-core learning 
+    - Out-of-core leanring refers to the machine learning algorithms working with data cannot fit into the memory of a single machine, but that can easily fit into some data storage such as local hard disk or web repository. Your available RAM, the core memory on your single machine, may indeed range from a few gigabytes (sometimes 2 GB, more commonly 4 GB, but we assume that you have 2 GB at maximum) up to 256 GB on large server machines. Large servers are like the ones you can get on cloud computing services such as Amazon Elastic Compute Cloud (EC2), whereas your storage capabilities can easily exceed terabytes of capacity using just an external drive (most likely about 1 TB but it can reach up to 4 TB).
+- attribute, feature, predictor: 
+    - attribute: a data type (e.g., mileage)
+    - feature: a feature has several meanings, depending on the context, but generally means an attribute plus its value (e.g., “mileage = 15,000”). Many people use the words attribute and feature interchangeably.
+    - predictor: same as attribute
+- target: usually used in regression problem to mean the target numerical value
+- regression: this odd-sounding name is a statistics term introduced by Francis Galton while he was studying the fact that the children of tall people tend to be shorter than their parents. Since the children were shorter, he called this regression to the mean. This name was then applied to the methods he used to analyze correlations between variables.
+- interesting fact: for` y=x**2`, if range is [-3,3] then corr is almost 0, but if range [0,3], then corr is almost 1
+- parametric: assume the underlying population follows some probability distributions, with unknown parameters.
+    - has a predetermined number of parameters, so its degree of freedom is limited, reducing the risk of overfitting (but increasing the risk of underfitting).
+- nonparametric: do not assume the underlying population follows some probability distributions
+    - number of parameters is not determined prior to training, so the model structure is free to stick closely to the data
+    - Such a model is often called a nonparametric model, not because it does not have any parameters (it often has a lot) but because the number of parameters is not determined prior to training, so the model structure is free to stick closely to the data. In contrast, a parametric model, such as a linear model, has a predetermined number of parameters, so its degree of freedom is limited, reducing the risk of overfitting (but increasing the risk of underfitting).
+    - e.g: decision tree, 
+- Data wrangling/Data munging: 
+    - is the process of transforming and mapping data from one "raw" data form into another format with the intent of making it more appropriate and valuable for a variety of downstream purposes such as analytics
+    - This process helps to make more meaningful data and use it for performing different tasks such as analyzing. The job position of data wrangler is a person who performs data wrangling and related tasks. This also includes visualizing the data, training a statistical model and data aggregation.
+    - In data wrangling, the data is first extracted from a data source in its raw format. Next, this data is sent to an algorithm or parsed into a predefined data structure. The final step is storing this data in a storage unit to use in the future. Data scientists and business analysts analyze this data to make business decisions. There are different tools for data wrangling, check the link provided in references. Also, you can do it with python scripting.
+- data cleaning/data cleansing: 
+    - Data cleaning is the method of finding and removing incorrect and inaccurate records from a recordset or a data source and modifying or deleting this data. For example, some of the data that need cleansing are duplicate values, dummy values, absence of data, and contradictory data. Moreover, this inconsistent data can occur due to corruption in transmission or storage.
+    - Data cleaning can include activities such as removing typographical errors or validating and correcting values against a known list of entities. It can also include tasks such as harmonizing and standardizing data. Overall, data cleaning helps to clean the data set and to provide data inconsistency to differenceent data sets that were merged for various data sources.
+- data snooping bias: Data snooping refers to statistical inference that the researcher decides to perform after looking at the data (as contrasted with pre-planned inference, which the researcher plans before looking at the data).
+    - It may sound strange to voluntarily set aside part of the data at this stage. After all, you have only taken a quick glance at the data, and surely you should learn a whole lot more about it before you decide what algorithms to use, right? This is true, but your brain is an amazing pattern detection system, which means that it is highly prone to overfitting: if you look at the test set, you may stumble upon some seemingly interesting pattern in the test data that leads you to select a particular kind of Machine Learning model. When you estimate the generalization error using the test set, your estimate will be too optimistic, and you will launch a system that will not perform as well as expected. This is called data snooping bias.
+- Multinomial logistic regression = softmax regression= maximum entropy
+- one versus all = one versus rest 
+- dichotomous: binary
+- covariate: https://stats.stackexchange.com/questions/409843/what-is-covariate
+    - Depending on the context, an independent variable is sometimes called a "predictor variable", regressor, covariate, "controlled variable", "manipulated variable", "explanatory variable", exposure variable (see reliability theory), "risk factor" (see medical statistics), "feature" (in machine learning and pattern recognition) or "input variable." In econometrics, the term "control variable" is usually used instead of "covariate".
+    - Typically, 𝐗 consists of multiple variables which may have some relations between them, i.e. they "co-vary" -- hence the term "covariate".
+- https://en.wikipedia.org/wiki/Logit
+- logit function = log odds
+- logit function is the inverse of sigmoid function
+- logit function: input = p, output = linear comb
+- sigmoid function: input = liner comb, output = 
+- longitudinal data: A dataset is longitudinal if it tracks the same type of information on the same subjects at multiple points in time. For example, part of a longitudinal dataset could contain specific students and their standardized test scores in six successive years.
+- Homogeneous Data Structures: This type can only store a single type of data inside them(integer, character, etc.)
+- Heterogeneous Data Structures: This type can store more than one type of data at the same time.
+- horizontal separation: same features, different records
+- vertical separation: same records, different features
+- homogeneous samples: whether the samples in horizontal separation are homogeneous
+- most common: non-homogeneous horizontal separation
+
+## finance terms
+- Alpha is one of five popular technical investment risk ratios. The others are beta, standard deviation, R-squared, and the Sharpe ratio. These are all statistical measurements used in modern portfolio theory (MPT). All of these indicators are intended to help investors determine the risk-return profile of an investment.
+- alpha: https://www.investopedia.com/terms/a/alpha.asp
+- beta: 
+- standard deviation: 
+- R-squared: 
+- Sharpe ratio: 
+
+## Statistics terms
+- `homoscedastic`: a sequence (or a vector) of random variables is homoscedastic if all its random variables have the same finite variance. We assume this in regression analysis and ANOVA
+- `heteroscedastic`: happens when the standard deviations of a predicted variable, monitored over different values of an independent variable or as related to prior time periods, are non-constant. Happens in time series analysis
+- derangement: A derangement is a permutation of objects that leaves no object in its original position. To solve the problem posed in Example 4 we will need to determine the number of derangements of a set of n objects.
+    - can be made more general by "exactly k objects in its original position"
+- quantiles: https://en.wikipedia.org/wiki/Quantile
+    - when we say 50% quantile, it's a number such that 50% of the data is less than it
+    - there are many ways for interpolation, when the desired quantile lies between two data points i and j:
+        -linear: i + (j - i) * fraction, where fraction is the fractional part of the index surrounded by i and j.
+        -lower: i.
+        -higher: j.
+        -nearest: i or j whichever is nearest.
+        -midpoint: (i + j) / 2.
+    - In statistics and probability, quantiles are cut points dividing the range of a probability distribution into continuous intervals with equal probabilities, or dividing the observations in a sample in the same way. There is one fewer quantile than the number of groups created. Common quantiles have special names, such as quartiles (four groups), deciles (ten groups), and percentiles (100 groups).
+    - `median`: 2-quantile
+    - `quartiles`: 4-quantiles (Q1, Q2, Q3, Q4)
+    - `deciles`: 10-quantiles (D1..D10)
+    - `percentiles`: 100-quantiles (P1,...P100)
+    - usually, by a quantile, we mean the fraction (or percent) of points below the given value. That is, the 0.3 (or 30%) quantile is the point at which 30% percent of the data fall below and 70% fall above that value.
+- quantile function: 
+    - input: p, a probability
+    - output c, such that P(X<=c) = p
+    for pdf, cdf:
+        - input: c
+        - output: p, probability 
+- Significance chasing: refers to when a researcher reports insignificant results as if they’re “almost” significant.
+- cherry-picking: refers to the practice of only selecting data or information that supports one’s desired conclusion.
+- nominal attributes: A nominal attribute assumes values that classify data into mutually exclusive (nonoverlapping), exhaustive, unordered categories
+- ordinal attributes: The Ordinal Attributes contains values that have a meaningful sequence or ranking(order) between them
+- probability vs likelihood: The terms “probability” and “likelihood” are often used interchangeably in the English language, but they have very different meanings in statistics. Given a statistical model with some parameters θ, the word “probability” is used to describe how plausible a future outcome x is (knowing the parameter values θ), while the word “likelihood” is used to describe how plausible a particular set of parameter values θ are, after the outcome x is known.
+- `standard error`: SD of an estimator, usually sample statistics, such as sample mean, variance, proportion
+- `p-value`: a p-value is the lowest level (of significance) at which the observed value of the test statistic is significant. I.e., if we set alpha to be larger than or equal to this value, we will reject H0
+    - Using the known distribution of the test statistic, calculate the P-value: "If the null hypothesis is true, what is the probability that we'd observe a more extreme test statistic in the direction of the alternative hypothesis than we did?" (Note how this question is equivalent to the question answered in criminal trials: "If the defendant is innocent, what is the chance that we'd observe such extreme criminal evidence?")
+    - https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/hypothesis-testing/p-value-approach
+    - when calculating p-values for two-side test, we look at which side is more extreme, then multiply this probability by 2
+        - alternatively, calculate the test statistics z, then find 2P(Z>z)
+        - this is true only if the distribution is symmetric
+        - p-value means obtaining a sample at least as extreme as the current sample
+        - if two-side test, obtaining a reverse direction also counts!
+    - if p-value < significant level, reject H0
+    - if p-value > significant level, accept H0
+    - if p-value > 0.05, we can't reject H0 at significant 0.05
+    - if p-value < 0.03, we can reject H0 at any significant level > 0.03
+    - p-value = 0.03. To reject null hypothesis, we need to set the significant level, alpah, to be at least 0.03. Any significant level below 0.03 will not lead to a rejection of the null hypothesis!
+    - p-value = 0.05 => there is a probability of less than 5% that the result could have happened by chance. 
+    - the p-value is the probability of obtaining results at least as extreme as the observed results of a statistical hypothesis test, assuming that the null hypothesis is correct. The p-value is used as an alternative to rejection points to provide the smallest level of significance at which the null hypothesis would be rejected. A smaller p-value means that there is stronger evidence in favor of the alternative hypothesis.
+    - If the p-value is very small, then either the null hypothesis is false or something unlikely has occurred. In a formal significance test, the null hypothesis H0 is rejected if the p-value is less than a pre-defined threshold value `alpha` , which is referred to as the `alpha` level or significance level. The value of `alpha` is instead set by the researcher before examining the data. By convention, `alpha`  is commonly set to 0.05, though lower `alpha` levels are sometimes used.
+    - if p-value = 0.0001, that means that 
+        - we need to set significant level <0.0001 in order not to reject H0
+        - we can set any significant level >=0.0001 in order to reject H0
+    - The smaller the p-value, the stronger the evidence that you should reject the null hypothesis
+    - EG: suppose a potato chip company claims its potato chip box is 50g. We select n such boxes, and found that the sample mean is 45. We want to test the claim of 50g at significant level 0.05.
+        - critical value = 1.96
+        - test statistic = Z = (sample mean - mu)/(sigma/sqrt(n))
+        - p-value = P(|Z| > test statistic)
+- `test statistic`: A statistic used to test hypotheses. An hypothesis test can be constructed by deciding to reject the null hypothesis when the value of the test statistic is in some range or collection of ranges. To get a test with a specified significance level, the chance when the null hypothesis is true that the test statistic falls in the range where the hypothesis would be rejected must be at most the specified significance level. The Z statistic is a common test statistic.
+    - a significant statistic means the value of the test statistic exceed the critical value.  
+    - value of z in the critical region prompts the statement “The value of the test statistic is significant”
+- `critical value`: The critical value in an hypothesis test is the value of the test statistic beyond which we would reject the null hypothesis. The critical value is set so that the probability that the test statistic is beyond the critical value is at most equal to the significance level if the null hypothesis be true.
+    - E.g., |Z|=1.645, 1.96, 2.58 may be our critical value 
+    - the idea is of the form: `test_statistic > critical value`
+- `critical region` = rejection region: In an hypothesis test using a test statistic, the rejection region is the set of values of the test statistic for which we reject the null hypothesis.
+    - sometimes, critical region will also be in terms of the sample statistic, rather than test statistic
+    - we need to ask ourselves, what the critical region is in terms of?
+    - for Z-test, usually in terms of |x-\mu|/sigma/sqrt(n), and so the critical region is in terms of 
+- `significant level`: P(reject H0 | H0 correct) = P(type 1 error) = P(FP). Usually set at 5%.
+- `margin of error`: half of the length of a CI. In CI for population mean, it's Z_(alpha/2)*sigma/sqrt(n)
+- `null hypothesis`: H_0. Assume true. H_0 should only be rejected if the resultant data are very unlikely when H_0 is true. If H_0 is true, the probability that it is rejected, i.e., committing type 1 error, is alpha, the significant level. 
+- `Type 1 (type I) error (aka alpah)`: reject a true null hypothesis (i.e., reject H0 when it's true), aka false positive.
+- `Type 2 (type II) error (aka beta)`: reject a true alternative hypothesis (i.e., reject H1 when it's true), aka false negative.
+    - fail to reject H0 when it is false
+    - when calculating Type 2 error, we must be given the true parameter value! (E.g, commit a type 2 error when the population mean is 60, rather than the hypothesized 50)
+- `power`: probability of rejecting H0 given that a specific alternative value is true. P(reject H0 | H1 true) = 1 - P(fail to reject H0 | H1 true) = 1 - P(type 2 error)
+- `value of the test statistic is significant`: rejection null hypothesis
+- `maximum likelihood`: P(data | parameter) = probability that we obtain such a dataset, given a specific value of the parameter 
+    - assume the data example is drawn IID
+- `odds of an event E` = P(E)/(1-P(E))
+    - the importance is whether the odds is larger than 1. If so, that means the event is more likely to occur than not 
+    - in logistic regression, we have odds ratio = exp(beta0 + beta1 x)
+- `log-odds` = log(P(E)/(1-P(E)))
+    - in logistic regression, we have log odds = beta0 + beta1 x
+    - interpretation of beta 1 = a unit increase in x will lead to an expected increase of beta_1 in the log odds ratio 
+- `weak law of large number`: given IID X1,...,Xn then the probability that the absolute difference between their mean (i.e.,X1+..+Xn)/n) and \mu is larger than any epsilon tends to 0, as n tends to infinity.
+    - the average of the results obtained from a large number of trials should be close to the expected value and will tend to become closer to the expected value as more trials are performed
+- `central limit theorem`: The central limit theorem states that if you have a population with men μ and standard deviation σ and take sufficiently large random samples from the population with replacement, then the distribution of the sample means will be approximately normally distributed. This will hold true regardless of whether the source population is normal or skewed, provided the sample size is sufficiently large (usually n > 30). If the population is normal, then the theorem holds true even for samples smaller than 30. 
+    - in fact, the sum of the IID random variables also follows a normal distribution 
+- variance of a vector = 1/n * (norm(vector))^2
+- covariance of two vectors = the mean of dot product of their respective de-mean vectors
+- correlation of two vectors = the cosine between the their respective de-mean vectors
+- `Sample selection bias`: It refers to a systematic flaw in the process of data collection or labeling which causes training examples to be selected nonuniformly from the population to be modeled uniformly.
+    - the phenomenon of selecting individuals, groups or data for analysis in such a way that proper randomization is not achieved, ultimately resulting in a sample that is not representative of the population. Understanding and identifying selection bias is important because it can significantly skew results and provide false insights about a particular population group.
+        - Sampling bias: a biased sample caused by non-random sampling
+        - Time interval: selecting a specific time frame that supports the desired conclusion. e.g. conducting a sales analysis near Christmas.
+        - Data: includes cherry-picking, suppressing evidence, and the fallacy of incomplete evidence.
+        - Attrition: attrition bias is similar to survivorship bias, where only those that ‘survived’ a long process are included in an analysis, or failure bias, where those that ‘failed’ are the only included
+        - Handling missing data can make selection bias worse because different methods impact the data in different ways. For example, if you replace null values with the mean of the data, you adding bias in the sense that you’re assuming that the data is not as spread out as it might actually be.
+            - so, the variance will be lower, since more data will be centered around the mean
+
+## sklearn terms
+- hyperparameters with respect to `fit`,`predict`,`transform` method: any parameters to the methods other than the two datasets X and y.
+- learned parameters: the original parameters of a model in theoretical sense, such as `theta` in linear regression
+- estimator: An estimator is an object that fits a model based on some training data and is capable of inferring some properties on new data. It can be, for instance, a classifier or a regressor. All estimators implement the `fit` method:
+    - any object that has `.fit` method is an estimator. **Any object that can estimate some parameters based on a dataset is called an estimator** (e.g., an `imputer` is an estimator, since it estimate the missing values, which are parameters). The estimation itself is performed by the `fit` method, and it takes only a dataset as a parameter (or two for supervised learning algorithms; the second dataset contains the labels). Any other parameter needed to guide the estimation process is considered a hyperparameter (such as an imputer’s `strategy`), and it must be set as an instance variable (generally via a constructor parameter).
+    - eg: basically, fit the model to the data 
+- transformer: an estimator with `transform` method
+    - Some estimators (such as an `imputer`) can also transform a dataset; these are called transformers. Once again, the API is simple: the transformation is performed by the `transform()` method with the dataset to transform as a parameter. It returns the transformed dataset. This transformation generally relies on the learned parameters, as is the case for an imputer. All transformers also have a convenience method called `fit_transform()` that is equivalent to calling fit() and then transform() (but sometimes `fit_transform()` is optimized and runs much faster).
+    - remember to use `fit_transform` instead of `fit` + `transform` !
+- predictor: an estimator with `predict` method
+    - Finally, some estimators, given a dataset, are capable of making predictions; they are called predictors. For example, the `LinearRegression`  is a predictor: given a country’s GDP per capita, it can predict life satisfaction. A predictor has a `predict` method that takes a dataset of new instances (it might still be the training set, in which case we're trying to find out the train error) and returns a dataset of corresponding predictions. It also has a `score()` method that measures the quality of the predictions, given a test set (and the corresponding labels, in the case of supervised learning algorithms).
+    
+# modelling techniques
+## reminder for modelling
+- do feature selection only after splitting! Remember that test data should never be involved in the preprocessing step 
+- although we do 70:30 split, if we do undersampling on train set, then it will not be 70:30!!!
+- when we see the cv result is not the same as performance on train set, this means we have overfitting problem! Remember that cv result is to predict on the unseen data, and so the result will be similar to the result on test set! 
+- `representative data set`: Let’s look at why making a representative data set is so important. Imagine we collect a training set, and we overlook the fact that occasionally all files larger than 10 MB are all malware and not benign (which is certainly not true for real world files). While training, the model will exploit this property of the dataset, and will learn that any file larger than 10 MB is malware. It will use this property for detection. When this model is applied to real world data, it will produce many false positives. To prevent this outcome, we needed to add benign files with larger sizes to the training set. Then, the model will not rely on an erroneous data set property.
+    - Generalizing this, we must train our models on a data set that correctly represents the conditions where the model will be working in the real world. This makes the task of collecting a representative dataset crucial for machine learning to be successful.
+- `interaction effect`: Given the specifics of the example, an interaction effect would not be surprising. If someone asks you, “Do you prefer ketchup or chocolate sauce on your food?” Undoubtedly, you will respond, “It depends on the type of food!” That’s the “it depends” nature of an interaction effect. You cannot answer the question without knowing more information about the other variable in the interaction term—which is the type of food in our example!
+    - `smoker` and `pieces to smoke` have interaction effect?   
+    - https://statisticsbyjim.com/regression/interaction-effects/
+
+## probability calibration
+- reliability curve = calibration curve 
+    - x-axis = average predicted probability of each bin, 
+    - y-axis = empirical probability, i.e, fraction of positive cases in each bin
+- three methods:
+    - `sklearn.calibration.CalibrationDisplay`
+    - `sklearn.calibration.CalibratedClassifierCV`
+    - `sklearn.calibration.calibration_curve`
+
+## how to select optimal threshold for binary classification
+- https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/
+- to find the optimal threshold for ROC, calculate the geometric mean of sensitivity and specificity for each possible threshold. Then choose the threshold that results in the largest g-mean. Recall that specificity is just the sensitivity of the negative class.
+    - there is a shortcut: instead of finding the g-mean, find J-statistics, which is 
+- to find the optimal threshold for ROC, calculate the f1 score 
+
+
+
+# correlation: various cases
+- case 1: C vs C
+- case 2: D vs D
+- case 3: C vs D
+## linear correlation (between two continuous dataset)
+- correlation between two continuous variables measures how well the two variables form a straight line, regardless of the slope of the line
+- if in the scatter plot, the two features form a straight line, then the correlation will be close to 1 (if slope>0), no matter how high the slope is!!
+- a straight line with slope = 100 and with slope = 0.1 also have correlation = 1
+- but not for covariance, as the slope increases, the covariance also increases!
+- an additional advantage of correlation over covariance is that as long as the relationship is perfectly linear, the correlation is 1, regardless of the slope. 
+```python
+x = np.linspace(-10,10,1000)
+y = x
+z = 1/1000*x
+print(np.corrcoef(x,y))
+print(np.cov(x,y))
+print(np.corrcoef(x,z))
+print(np.cov(x,z))
+# [[1. 1.]
+#  [1. 1.]]
+# [[33.43350023 33.43350023]
+#  [33.43350023 33.43350023]]
+# [[1. 1.]
+#  [1. 1.]]
+# [[3.34335002e+01 3.34335002e-02]
+#  [3.34335002e-02 3.34335002e-05]]
+```
+### nonlinear relationship between two continuous variables
+- use spearman correlation!
+- but for `y=x**2`, where `x in [-3,3]`, the rank correlation is still low
+- but for `y=x**2`, where `x in [0,3]`, the rank correlation is 1
+
+## correlation between categorical
+- https://datascience.stackexchange.com/questions/893/how-to-get-correlation-between-two-categorical-variable-and-a-categorical-variab
+- distance (hamming distance)
+- chi-squared independent test
+
+## correlation between continuous and categorical
+- https://medium.com/@outside2SDs/an-overview-of-correlation-measures-between-categorical-and-continuous-variables-4c7f85610365
+- use logistic regression
+- For this type we typically perform One-way ANOVA test: we calculate in-group variance and intra-group variance and then compare them.
+
+
+# feature selection:
+- speed: `SelectFromModel > RFE > RFECV > SequentialFeatureSelector`
+- https://towardsdatascience.com/feature-selection-techniques-in-machine-learning-with-python-f24e7da3f36e
+- remove irrelevant features can:
+    - Reduces Overfitting: Less redundant data means less opportunity to make decisions based on noise.
+    - Improves Accuracy: Less misleading data means modeling accuracy improves.
+    - Reduces Training Time: fewer data points reduce algorithm complexity and algorithms train faster.
+- remove features with very low variance
+- use `df.corr` to check the correlations of the features, and remove one that is correlated with others
+
+## when to use which feature importance evaluation in feature selection
+https://blog.methodsconsultants.com/posts/be-aware-of-bias-in-rf-variable-importance-metrics/
+- All continuous or all categorical with the same number of categories => mean decrease in impurity (MDI)
+- mix of categorical and continuous, but no collinearity => permutation importance
+- mix of categorical and continuous, and with collinearity => conditional permutation importance
+  
+## VarianceThreshold
+- very simple and effective. For binary features, the variance is `p(1-p)`. if we set `p = 0.95`, that means we will remove a feature if more than 95% of its value belong to the same class. 
+
+## recursive feature elimination (RFE) and RFECV
+- `RFE` or `RFECV` in sklearn
+- model-based method, meaning that it needs to use a model that can return feature importance (e.g., xgboost, decision tree, regression models)
+- at first, train a model, then remove the least important `step` features according to `feature_importance_`, where `step` is a parameter
+- That procedure is recursively repeated on the pruned set until the desired number of features to select is eventually reached.
+- pros and cons:
+    - need to specify `n_features_to_select`
+
+## SelectFromModel
+- unlike RFE, this function will only do feature selection once. Basically, very similar to how to do feature selection manually, using a model's `feature_importance_` parameter 
+- SelectFromModel is a meta-transformer that can be used alongside any estimator that assigns importance to each feature through a specific attribute (such as coef_, feature_importances_) or via an importance_getter callable after fitting. The features are considered unimportant and removed if the corresponding importance of the feature values are below the provided threshold parameter
+- we need to pick a threshold feature importance value.
+- to use it to select the best k features, do `feat = SelectFromModel(perm, max_features=20, threshold=-np.inf).fit(X,y)` (i,e., set `threshold=-np.inf` and then `max_features=k`)
+
+## SequentialFeatureSelector
+- based on a model. 
+- good thing: no need to have a `feature_importance_` attribute. 
+- at first, pick the feature that can increase the metric score by the most. 
+- Forward-SFS is a greedy procedure that iteratively finds the best new feature to add to the set of selected features. Concretely, we initially start with zero feature and find the one feature that maximizes a cross-validated score when an estimator is trained on this single feature. Once that first feature is selected, we repeat the procedure by adding a new feature to the set of selected features. The procedure stops when the desired number of selected features is reached, as determined by the n_features_to_select parameter.
+- SFS differs from RFE and SelectFromModel in that it does not require the underlying model to expose a coef_ or feature_importances_ attribute. It may however be slower considering that more models need to be evaluated, compared to the other approaches. For example in backward selection, the iteration going from m features to m - 1 features using k-fold cross-validation requires fitting m * k models, while RFE would require only a single fit, and SelectFromModel always just does a single fit and requires no iterations.
+
+## Sequential Feature Selection
+- https://scikit-learn.org/stable/modules/feature_selection.html
+- doesn't require the model to have feature important calculation.
+- forward/backward SFS
+- Forward-SFS is a greedy procedure that iteratively finds the best new feature to add to the set of selected features. Concretely, we initially start with zero feature and find the one feature that maximizes a cross-validated score when an estimator is trained on this single feature. Once that first feature is selected, we repeat the procedure by adding a new feature to the set of selected features. The procedure stops when the desired number of selected features is reached, as determined by the n_features_to_select parameter.
+- Backward-SFS follows the same idea but works in the opposite direction: instead of starting with no feature and greedily adding features, we start with all the features and greedily remove features from the set. The direction parameter controls whether forward or backward SFS is used.
+- In general, forward and backward selection do not yield equivalent results. Also, one may be much faster than the other depending on the requested number of selected features: if we have 10 features and ask for 7 selected features, forward selection would need to perform 7 iterations while backward selection would only need to perform 3.
+- SFS differs from RFE and SelectFromModel in that it does not require the underlying model to expose a coef_ or feature_importances_ attribute. It may however be slower considering that more models need to be evaluated, compared to the other approaches. For example in backward selection, the iteration going from m features to m - 1 features using k-fold cross-validation requires fitting m * k models, while RFE would require only a single fit, and SelectFromModel always just does a single fit and requires no iterations.
+
+## univariate feature selection
+- For regression: `f_regression, mutual_info_regression`
+- For classification: `chi2, f_classif, mutual_info_classif`
+- `univariate` => consider the relationship between one feature with the target only
+- Univariate feature selection works by selecting the best features based on univariate statistical tests.
+- `from sklearn.feature_selection import SelectKBest`: It keeps the top-k scoring features. The scoring function is to be provided. 
+- `from sklearn.feature_selection import SelectPercentile`: It keeps the top features which are in a percentage specified by the user
+- for classification
+```python
+from sklearn.feature_selection import chi2
+from sklearn.feature_selection import f_classif
+from sklearn.feature_selection import mutual_info_classif
+```
+- for regression
+```python
+from sklearn.feature_selection import f_regression
+from sklearn.feature_selection import mutual_info_regression
+```
+- usage
+```python
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_regression
+SelectKBest(f_regression, k = 5).fit_transform(X,y) # for regression task
+```
+
+
+## chi2 test
+- `chi2`: Compute chi-squared stats between each non-negative feature and class.
+- works when X is nonnegative, and y is discrete. That is, only works for classification problem
+- Recall that the chi-square test measures dependence between stochastic variables, so using this function “weeds out” the features that are the most likely to be independent of class and therefore irrelevant for classification.
+- although a feature can be uncorrelated with the target, it can still be useful because maybe two features together more useful in predicting the target
+- 
+
+
+## f_regression
+- basically, build a linear regression, then do a F-test for each coefficient to see if it is zero (beta_i = 0).
+- QUESTION: works also for categorical variables?
+- Univariate linear regression tests returning F-statistic and p-values.
+- Quick linear model for testing the effect of a single regressor, sequentially for many regressors.
+- This is done in 2 steps:
+- The cross correlation between each regressor and the target is computed, that is, ((X[:, i] - mean(X[:, i])) * (y - mean_y)) / (std(X[:, i]) * std(y)) using r_regression function.
+- It is converted to an F score and then to a p-value.
+- Note: `r_regression` is just pearson correlation. `f_regression` calculates f statistics, which is always positive
+- Note however that contrary to f_regression, r_regression values lie in [-1, 1] and can thus be negative. f_regression is therefore recommended as a feature selection criterion to identify potentially predictive feature for a downstream classifier, irrespective of the sign of the association with the target variable.
+```python
+f_regression(X.iloc[:, :10],y)
+# (array([4.35296964e-03, 3.70591846e+02, 1.75446802e+00, 3.22918170e-01,
+#         7.24497439e+02, 2.02212873e+02, 1.27755929e+03, 5.17913676e+02,
+#         1.38809716e-03, 2.19416906e+01]),
+#  array([9.47400505e-001, 5.84885596e-078, 1.85416984e-001, 5.69901745e-001,
+#         4.05624310e-143, 1.85584128e-044, 2.17599930e-233, 6.88475298e-106,
+#         9.70282431e-001, 2.93568048e-006]))
+
+# for feature 1, it has high f-statistics value => p-value low => useful feature
+
+r_regression(X.iloc[:, :10],y)
+# array([ 0.00120497, -0.3316834 ,  0.0241841 , -0.01037784, -0.44116518,
+#         0.25137088,  0.54663076,  0.38380408, -0.00068045,  0.08523849])
+
+# for feature 1, we see that it has high correlation
+
+
+X.iloc[:, :10].corrwith(pd.Series(y)).values # same as above. this shows that r_regression is just a correlation measure
+```
+
+
+## mutual_info_regression
+- https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.mutual_info_regression.html#sklearn.feature_selection.mutual_info_regression
+- can capture non-linear relationship
+- https://scikit-learn.org/stable/auto_examples/feature_selection/plot_f_test_vs_mi.html#sphx-glr-auto-examples-feature-selection-plot-f-test-vs-mi-py
+- values >=0. Zero means independent.
+
+## backward elimination, forward selection, stepwise regression
+- use hypothesis test to check each feature. pick the one with highest F-test score 
+
+## use models to select features
+- https://machinelearningmastery.com/calculate-feature-importance-with-python/
+- decision tree: use the `feature_importances_` attribute
+- build a linear regression model, with the variable values scaled, and check which parameters have the highest values
+
+## boruta
+- https://www.kaggle.com/residentmario/automated-feature-selection-with-boruta
+- https://towardsdatascience.com/boruta-explained-the-way-i-wish-someone-explained-it-to-me-4489d70e154a
+- https://mljar.com/blog/feature-importance-xgboost/
+- for each feature, make a random permutation of it (each is called a shadow)
+- So if originally has n features, we'll have 2n features afterwards
+- then, calculate the feature importance of each feature (including the shadow)
+- an original feature (non shadow) is considered useful if its feature importance > max(feature importance of the shadows) (i.e., it has higher feature importance than the best permuted feature)
+- but some original features may be removed purely due to randomness! So, we need to repeat the above multiple times (=> binomial distribution)
+- some people would insert a random feature to the dataset, and then check which features have a lower importance than this random feature, and then remove those original features
+
+
+
+# data preprocessing
+## steps of given a large one single dataset X:
+- fill in missing values using `df.fillna` or `SimpleImputer`
+    - if latter, then need to separate numerical and categorical variables
+- encode categorical variables
+- split the dataset into X and y 
+- split dataset into train and test portion by `train_test_split`
+- normalize the dataset by first normalizing the X_train. Then use the statistics from X_train to normalize X_test
+- the problem of `SimpleImputer` and `OrdinalEncoder` are that they require data to be all categorical or numerical. Also, they return ndarray
+
+## missing value management
+- There are several ways to handle missing data:
+    - Delete rows with missing data
+    - delete the columns with missing data 
+    - Mean/Median/Mode imputation
+    - Assigning a unique value
+    - Predicting the missing values
+    - Using an algorithm which supports missing values, like random forests
+- The best method is to delete rows with missing data as it ensures that no bias or variance is added or removed, and ultimately results in a robust and accurate model. However, this is only recommended if there’s a lot of data to start with and the percentage of missing values is low.
+
+## log transform
+- The log transform is a powerful tool for dealing with positive numbers with a heavy-tailed distribution. (A heavy-tailed distribution places more probability mass in the tail range than a Gaussian distribution.) It compresses the long tail in the high end of the distribution into a shorter tail, and expands the low end into a longer head.
+- sometimes, some algorithms work better if features are normally distributed. If we found that some features aren't normal, we may take log to make it to be more normal.
+
+### preprocessing for supervised learning
+- the data shape is 2d (i.e, a matrix), but for preprocessing for CNN and LSTM, we need 3d.
+- Time series data can be phrased as a supervised learning problem. Given a sequence of numbers for a time series dataset, we can restructure the data to look like a supervised learning problem. We can do this by using previous time steps as input variables and use the next time step as the output variable. Let's make this concrete with an example. Imagine we have a time series as follows:
+```python
+time, measure
+1, 100
+2, 110
+3, 108
+4, 115
+5, 120
+```
+- We can restructure this time series dataset as a supervised learning problem by using the value at the previous time step to predict the value at the next time step. Re-organizing the time series dataset this way, the data would look as follows:
+```python
+X, y
+?, 100
+100, 110
+110, 108
+108, 115
+115, 120
+120, ?
+```
+- we can use several values at the previous time steps as well:
+```python
+X, y
+[100,110,108] 115
+[110,108,115] 120
+```
+
+
+- We can see that we have no previous value that we can use to predict the first value in the sequence. We will delete this row as we cannot use it.
+- We can also see that we do not have a known next value to predict for the last value in the sequence. We may want to delete this value while training our supervised model also.
+- The use of prior time steps to predict the next time step is called the `sliding window method`. For short, it may be called the window method in some literature. In statistics and time series analysis, this is called a `lag or lag method`. The number of previous time steps is called the window width or size of the lag. This sliding window is the basis for how we can turn any time series dataset into a supervised learning problem. From this simple example, we can notice a few things:
+    - We can see how this can work to turn a time series into either a regression or a classification supervised learning problem for real-valued or labeled time series values.
+    - We can see how once a time series dataset is prepared this way that any of the standard linear and nonlinear machine learning algorithms may be applied, as long as the order of the rows is preserved.
+    - We can see how the width sliding window can be increased to include more previous time steps.
+    - We can see how the sliding window approach can be used on a time series that has more than one value, or so-called multivariate time series.
+- If your time series data is uniform over time and there is no missing values, we can drop the time column.
+- if we have predictors for each time step, do this.
+```python
+time, measure1, measure2 (y)
+1, 0.2, 88
+2, 0.5, 89
+3, 0.7, 87
+4, 0.4, 88
+5, 1.0, 90
+```
+```python
+X1, X2, X3, y
+?, ?, 0.2, 88
+0.2, 88, 0.5, 89
+0.5, 89, 0.7, 87
+0.7, 87, 0.4, 88
+0.4, 88, 1.0, 90
+1.0, 90, ?, ?
+```
+- if we have multi-output for each time step:
+```python
+time, measure1 (y1), measure2 (y2)
+1, 0.2, 88
+2, 0.5, 89
+3, 0.7, 87
+4, 0.4, 88
+5, 1.0, 90
+```
+```python
+X1, X2, y1, y2
+?, ?, 0.2, 88
+0.2, 88, 0.5, 89
+0.5, 89, 0.7, 87
+0.7, 87, 0.4, 88
+0.4, 88, 1.0, 90
+1.0, 90, ?, ?
+```
+
+### preprocessing for deep learning sequence model
+- we need our X dataset to be of 3d shape: `[batch size, time steps, dimensionality]`
+- the reason why we need `batch size` is LSTM isn't good at learning long-term dependency. 
+
+
+
+## different types of forecasting
+- multiple output (multivariate): at each time step, want to predict the price of meet and cheese, and so want to predict two values at each time step
+- forecast with features: at each time step, we have some x1, x2 
+- multi-step forecast (multi-step): at each time step, predict the future two time step values
+    - to solve it, use sliding window with width 2.
+```python
+time, measure
+1, 100
+2, 110
+3, 108
+4, 115
+5, 120
+```
+```python
+X1, y1, y2
+? 100, 110
+100, 110, 108
+110, 108, 115
+108, 115, 120
+115, 120, ?
+120, ?, ?
+```
+- We can see that the first row and the last two rows cannot be used to train a supervised model. It is also a good example to show the burden on the input variables. Specifically, that a supervised model only has X1 to work with in order to predict both y1 and y2. Careful thought and experimentation are needed on your problem to find a window width that results in acceptable model performance.
+
+### overlapping or not
+- LSTMs need to process samples where each sample is a single sequence of observations. In this
+case, 5,000 time steps is too long; LSTMs work better with 200-to-400 time steps. Therefore, we
+need to split the 5,000 time steps into multiple shorter sub-sequences. There are many ways to
+do this, and you may want to explore some depending on your problem. For example, perhaps
+you need overlapping sequences, perhaps non-overlapping is good but your model needs state
+across the sub-sequences and so on. In this example, we will split the 5,000 time steps into 25
+sub-sequences of 200 time steps each.
+
+### financial time series
+- use lag log returns as features: This section applies linear OLS regression to predict the direction of market movements based on historical log returns. To keep things simple, only two features are used. The first feature (lag_1) represents the log returns of the financial time series lagged by one day. The second feature (lag_2) lags the log returns by two days. log returns—in contrast to prices—are stationary in general, which often is a necessary condition for the application of statistical and ML algorithms. 
+
+# feature engineering
+- aim: create features such that: large for normal examples; small for anomaly 
+- given x1 = cpu load, x2 = network traffic, 
+    - if we know that x1 and x2 either tends to both high or both low, then create x1/x2. 
+- on some date, the sales are much higher. why?
+    - maybe it's Sat Sun. May be black Friday, etc
+    - in this case, should create new features to encode the day of week, if Sat and Sun have very different behavior 
+- if we are predicting sales on people, then age=5 and age=6 should be similar. We should consider doing binning
+- why use min-max scaling instead of standard scalar? Because the sd might be small 
+- if given 52 US states with names, then probably group them into several groups (north east, west, etc), or whether inland, near sea, etc
+    - alternatively, use k-means?
+## categorical variable encoding
+- first check the value distribution. If some values have low proportion of appearing, then combine them together
+- if we have further info about the variable, e.g., we know what values correspond to geographically, then we can group them by proximity
+- use target encoding instead. I.e., 
+- https://machinelearningmastery.com/one-hot-encoding-for-categorical-data/
+- for ordinal features (not target), use `OrdinalEncoder`
+- for nominal features (not target), use `OneHotEncoder` or `pd.get_dummies `
+    - Dummy Variable Encoding: the one-hot encoding creates one binary variable for each category.
+    - The problem is that this representation includes redundancy. For example, if we know that [1, 0, 0] represents “blue” and [0, 1, 0] represents “green” we don’t need another binary variable to represent “red“, instead we could use 0 values for both “blue” and “green” alone, e.g. [0, 0].
+    - This is called a dummy variable encoding, and always represents C categories with C-1 binary variables.
+    - In addition to being slightly less redundant, a dummy variable representation is required for some models.
+    - For example, in the case of a linear regression model (and other regression models that have a bias term), a one hot encoding will case the matrix of input data to become singular, meaning it cannot be inverted and the linear regression coefficients cannot be calculated using linear algebra. For these types of models a dummy variable encoding must be used instead.
+- for target, use `LabelEncoder`
+
+
+## target encoding
+- Target encoding is a Baysian encoding technique
+- https://www.analyticsvidhya.com/blog/2020/08/types-of-categorical-data-encoding/#:~:text=Effect%20Encoding%3A,%2C0%2C%20and%20%2D1.
+- Bayesian encoders use information from dependent/target variables to encode the categorical data.
+
+## one-hot encoding vs dummy encoding
+- One-hot encoding is very simple to understand, but it uses one more bit than is strictly necessary. If we see that k–1 of the bits are 0, then the last bit must be 1 because the variable must take on one of the k values. Mathematically, one can write this constraint as “the sum of all bits must be equal to 1”:
+    - Thus, we have a linear dependency on our hands. Linear dependent features, as we discovered in Chapter 4, are slightly annoying because they mean that the trained linear models will not be unique. Different linear combinations of the features can make the same predictions, so we would need to jump through extra hoops to understand the effect of a feature on the prediction.
+- The problem with one-hot encoding is that it allows for k degrees of freedom, while the variable itself needs only k–1. Dummy coding2 removes the extra degree of free‐ dom by using only k–1 features in the representation (see Table 5-2). One feature is thrown under the bus and represented by the vector of all zeros. This is known as the reference category. Dummy coding and one-hot encoding are both implemented in Pandas as pandas.get_dummies.
+- One-hot, dummy, and effect coding are very similar to one another. They each have pros and cons. One-hot encoding is redundant, which allows for multiple valid mod‐ els for the same problem. The nonuniqueness is sometimes problematic for interpretation, but the advantage is that each feature clearly corresponds to a category. Moreover, missing data can be encoded as the all-zeros vector, and the output should be the overall mean of the target variable.
+- Dummy coding and effect coding are not redundant. They give rise to unique and interpretable models. The downside of dummy coding is that it cannot easily handle missing data, since the all-zeros vector is already mapped to the reference category. It also encodes the effect of each category relative to the reference category, which may look strange. 
+## effect encoding
+
+## standardization for binary variables
+- we should not do it on indicator variables, since for many models there are optimization such that being 0/1 can improve training time
+
+## feature scaling
+- when given a dataset X, should we do feature scaling on the 
+    A: whole dataset before splitting it into train, valid, test sets?
+    B: do independent scaling on each individual sets, so that each feature in each dataset has mean 0 and sd 1
+    C: do scaling on the train set first, then use the means and sd's found there for the valid and test set?
+- Choice C is correct!
+- https://datascience.stackexchange.com/questions/54908/data-normalization-before-or-after-train-test-split
+- https://www.baeldung.com/cs/data-normalization-before-after-splitting-setwwww
+- Answer to your question: Do Normalization after splitting into train and test/validation. The reason is to avoid any data leakage.
+- Normalization across instances should be done after splitting the data between training and test set, using only the data from the training set.
+- This is because the test set plays the role of fresh unseen data, so it's not supposed to be accessible at the training stage. Using any information coming from the test set before or during training is a potential bias in the evaluation of the performance.
+```python
+# correct way 
+scaler = StandardScaler()
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=4)
+X_train=scaler.fit_transform(x_train)
+
+LR = LogisticRegression(C=0.01, solver='liblinear').fit(X_train, y_train)
+
+X_test= scalar.transform(X_test) # call transform only, not fit_transform!!!
+test_pred = LR.predict(X_test)
+```
+
+
+
+# imbalanced datasets (or skewed dataset)
+- Sci-Kit Learn classifiers can give heavier weights to the minority class using a simple parameter during model initiation. Let's see how that will improve our results
+    - `LogisticRegression(class_weight='balanced')
+    - https://www.kaggle.com/lct14558/imbalanced-data-why-you-should-not-use-roc-curve`
+- metrics to use: `precision`, `recall`, `f1`, `precision-recall` curve
+- One approach to addressing imbalanced datasets is to oversample the minority class. The simplest approach involves duplicating examples in the minority class, although these examples don’t add any new information to the model. Instead, new examples can be synthesized from the existing examples. This is a type of data augmentation for the minority class and is referred to as the Synthetic Minority Oversampling Technique (SMOTE).
+- we should focus on `recall`, because we don't want false negative
+- Oversampling methods duplicate or create new synthetic examples in the minority class, whereas undersampling methods delete or merge examples in the majority class. Both types of resampling can be effective when used in isolation, although can be more effective when both types of methods are used together.
+- One of the remedies to handle such situations is to under-sample the data. A simple technique is to under-sample the majority class randomly and uniformly. This might lead to a loss of information, but it may yield strong results by modeling the minority class well.
+- https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/
+- https://towardsdatascience.com/methods-for-dealing-with-imbalanced-data-5b761be45a18
+- https://www.kdnuggets.com/2017/06/7-techniques-handle-imbalanced-data.html
+- There are several processes to deal with the issue of imbalanced datasets. The main goal of these processes is to either decrease the frequency of the majority class or increase the frequency of the minority class. Here, we'll list a few efforts that can help us get rid of the data imbalance:
+- In this process, random selections are made from the class that has the majority of the data. This act is continued until both classes are balanced out. Though this method is good in terms of storage, but while random data reduction a lot of the important data points may get discarded. Another issue with this approach, is that it does not solve the problem of the dataset from which the random sample is picked being biased.
+- decision tree often performs well on imbalanced datasets in terms of f1 score
+- either oversample the minority class or undersample the majority class
+- Always split into test and train set before trying oversampling technique! Oversampling before splitting the data can allow the exact same observations to be present in both the test and train sets. This can allow our model to simply memorize specific data points and cause overfitting and poor generalization to the test data
+- we can use sklearn to do resampling:
+```python
+from sklearn.utils import resample
+
+# Separate input features and target
+y = df.Class
+X = df.drop('Class', axis=1)
+
+# setting up testing and training sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=27)
+
+# concatenate our training data back together
+X = pd.concat([X_train, y_train], axis=1)
+
+# separate minority and majority classes
+not_fraud = X[X.Class==0]
+fraud = X[X.Class==1]
+
+# upsample minority
+fraud_upsampled = resample(fraud,
+                          replace=True, # sample with replacement
+                          n_samples=len(not_fraud), # match number in majority class
+                          random_state=27) # reproducible results
+
+# combine majority and upsampled minority
+upsampled = pd.concat([not_fraud, fraud_upsampled])
+
+# check new class counts
+upsampled.Class.value_counts()
+    1    213245
+    0    213245
+```
+- cons of upsampling: the dataset becomes even larger!!! So, we often use downsampling instead!
+downsampling: Undersampling can be defined as removing some observations of the majority class. Undersampling can be a good choice when you have a ton of data - think millions of rows. But a drawback is that we are removing information that may be valuable. This could lead to underfitting and poor generalization to the test set.
+```python
+# still using our separated classes fraud and not_fraud from above
+
+# downsample majority
+not_fraud_downsampled = resample(not_fraud,
+                                replace = False, # sample without replacement
+                                n_samples = len(fraud), # match minority n
+                                random_state = 27) # reproducible results
+
+# combine minority and downsampled majority
+downsampled = pd.concat([not_fraud_downsampled, fraud])
+
+# checking counts
+downsampled.Class.value_counts()
+    1    360
+    0    360
+```
+- generating synthetic samples: A technique similar to upsampling is to create synthetic samples. Here we will use `imblearn` SMOTE or Synthetic Minority Oversampling Technique. SMOTE uses a nearest neighbors algorithm to generate new and synthetic data we can use for training our model. Again, it’s important to generate the new samples only in the training set to ensure our model generalizes well to unseen data.
+- we don't have to have exactly 1:1 ratio
+```python
+from imblearn.over_sampling import SMOTE
+
+# Separate input features and target
+y = df.Class
+X = df.drop('Class', axis=1)
+
+# setting up testing and training sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=27)
+
+sm = SMOTE(random_state=27, ratio=1.0)
+X_train, y_train = sm.fit_sample(X_train, y_train)
+```
+
+
+## situations where imbalance occurs
+- fraud detection
+
+# hyperparameter tuning
+## bayesian hyperparameter search
+- have prior belief what which region the best setting is. Could be from some prior studies, or some research paper 
+    - even if the prior belief is wrong, no matter, since the algo will self-correct
+- basically, learning from past history
+- down-weight region that has low accuracy. 
+- grid search doesn't learn anything from the past
+
+# learning to rank
+- assume we have a query, and a set of documents.
+- aim: output a score to each document, based on the given query
+- e.g., query = 'cat', then cat-related documents will have higher rank
+- why not use regression? in regression's testing phase, we predict each record independently. But in ranking, we just need to know whether a record is better than other records (dependent)
+- just like to rank a group of students, we can either ask them to do an exam independently, or we can ask the students to debate among themselves and rank them 
+- point-wise method: predict each record individually
+    - (Qi, di) as features
+    - can use existing ML models 
+    - ignore the fact that query and documents can have very interesting relationship 
+- pair-wise
+    - (Q1, (d1,d2))
+
+    
+# anomaly detection:
+- assume data follows a multivariable normal 
+- model probability density, by learning the normal distribution's parameters, by MLE
+- given a new example x, if p(x) is small, i.e., the density is small, then flag it as anomaly
+- we can also assume the features are independent, and so our density p becomes a product of n terms, where n is the number of features
+- if we have too few positive examples, then we can frame it as a unsupervised learning algorithm. But we should still have some positive examples, to be used in CV and test
+- remember to plot the distribution of each feature to see if it is roughly normal. If not, do log transform or square root transform, etc.
+    - x1 = log(x1)
+    - x1 = log(x1+c) 
+        - larger value of c will transform the original distribution less
+    - x1 = x**(1/2)
+    - x1 = x**(1/3)
+## supervised learning vs anomaly detection
+- anomaly:
+    - very small number of positive
+    - many different types of anomalies. hard for any algo to learn from positive examples what the anomalies look like. future anomalies may look nothing like any of the anomalies examples we have seen so far
+    - fraud, 
+    - manufacturing: finding new previously unseen defects in manufacturing
+    - monitoring machines in data center (there are numerous new ways for hacking)
+- supervised learning:
+    - positive examples' features won't change a lot (i.e., current positive examples will look similar to positive examples in the future)
+    - future positives should like those positives in training set.
+    - manufacturing: finding known, previously seen defects. 
+    - weather prediction
+    - disease classification
+
+
+# computer vision
+- image preprocessing: https://machinelearningmastery.com/how-to-manually-scale-image-pixel-data-for-deep-learning/
+- why normalize pixel values? 
+    - https://machinelearningmastery.com/how-to-manually-scale-image-pixel-data-for-deep-learning/
+    - Neural networks process inputs using small weight values, and inputs with large integer values can disrupt or slow down the learning process. As such it is good practice to normalize the pixel values so that each pixel value has a value between 0 and 1.
+
+## image reminder
+- In a straightforward 24-bit color representation of an image, each pixel is represented as three 8-bit unsigned integers (ranging from 0 to 255) (and so 8*3 = 24 bits) that specify the red, green and blue intensity values. This encoding is often referred to as the RGB encoding.
+    - for an image with shape (128,128,3), we need 128*128*3*8=393,216 bits
+    - if we run k-means to reduce the colors of the image to 16, then (16*8*3)+128*128*4 = 65920
+    - so, 393216/65920 = 5.96 => a reduction of a factor of 6. 
+- for each pixel, we usually scale the pixel to [0,1] by dividing it by 255. This is useful for gradient descend
+    - Additionally, since we are going to train the neural network using Gradient Descent, we must scale the input features. For simplicity, we’ll scale the pixel intensities down to the 0–1 range by dividing them by 255.0 (this also converts them to floats):
+
+# NLP
+## fuzzy match
+- for `double bedroom`, then candidates 
+    - `bedroom double`: 
+        - edit distance = 14
+        - 2-gram = 11/15
+    - `bedroom big`:
+        - edit distance = 11
+        - 2-gram = 7/16
+- for `NEVADA`, then candidates 
+    - `NV`: 
+        - edit distance = 4
+        - 2-gram = 0
+    - `CA`:
+        - edit distance = 5
+        - 2-gram = 0
+- use n-gram when we expect the words will be next to each other
+- tf-idf: measure the importance of a word in each sentence
+- bag of word: if a word appears twice, then give a count of 2 to it. 
+    - applications:
+        - spam email
+        - P(legit | sentence) vs P(spam | sentence)
+        - 
+
+
+# deep learning
+## softmax and hierarchical softmax
+- if we have many classes (say 10k), we can use hierarchical softmax
+- each step, ask: is it among the 5k words? (each time asks a binary question)
+- https://www.coursera.org/learn/nlp-sequence-models/lecture/8CZiw/word2vec
+
+
+# ML project life cycle
+- ![](media/ML_life_cycle.png)
+- scoping document: A scope document is simply a piece of formal documentation outlining both product scope and project scope. Before diving into a new project, you and your team (and any other stakeholders) will need to agree on the scope of the project.
+
+## step 1: scoping: define project
+- what objective we want to achieve, and what metrics are we going to use to evaluate our objective.
+- decide key metrics: 
+    - accuracy
+    - latency: e.g.: How long does the system take to transcribe speech
+    - throughput: e.g.: How many queries per second we handle.
+- estimate resource needed: estimate the resources needed. So how much time, how much compute how much budget as well as timeline. How long will it take to carry out this project?
+
+## step 2: data: define data and establish baseline; label and organize data
+- define data: is the data labeled consistently? 
+    - Use speech recognition as example:
+        - In "umm... I want water". How to deal with `umm`? We need to deal with it consistently!
+        - how much silence before/after each clip?
+        - volume normalization? Some audio will be louder than the others.
+- data preprocessing:
+    - are there missing values in the data?
+    - are there outliers in the data? 
+    - should we convert categorical variables to numerical ones?
+    - remove irrelevant features?
+    - standardize the data?
+    - log-transform some features to make them less skewed?
+
+## step 3: modeling: select and train model
+- select models useful for our projects. 
+    - For regression tasks, consider
+        - linear regression
+        - regularized regression (LASSO, Ridge, elastic net)
+        - k-nn (k nearest neighbors regression)
+        - decision tree
+        - SVR (support vector regression)
+        - adaboost
+        - gradient boosting
+        - random forest
+        - extra tree
+        - neural networks
+    - For classification tasks, consider
+        - logistic regression
+        - linear discriminant analysis
+        - k-nn (k nearest neighbors classification)
+        - decision tree (cart)
+        - SVC (support vector classification)
+        - adaboost
+        - gradient boosting
+        - random forest
+        - extra tree
+        - neural networks
+
+    - code, hyperparameters, data 
+- in research, hold data fixed, and vary code and hyperparamters
+- in product team, hold code fixed, and vary hyperparamters and data
+
+## step 4: deployment: deploy in production. Monitor & maintain system
+- in this step, we need to deal with data mismatch, concept drift, data drift
+- real-life example: our team had built a speech recognition system and it was trained mainly on adult voices. We pushed into production, random production and we found that over time more and more young individuals, kind of teenagers, you know, sometimes even younger seem to be using our speech recognition system and the voices are very young individuals just sound different. And so my speech systems performance started to degrade. We just were not that good at recognizing speech as spoken by younger voices. And so he had to go back and find a way to collect more data are the things in order to fix it. So one of the key challenges when it comes to deployment is concept drift or data drift, which is what happens when the data distribution changes, such as there are more and more young voices being fed to the speech recognition system. And knowing how to put in place appropriate monitors to spot such problems and then also how to fix them in a timely way is a key skill needed to make sure your production deployment creates a value. 
+- if data distribution changes => need to update the model 
+- maintenance: go back to perform more error analysis and retrain the model. Update your data by feeding the live data back to the system.
+
+# ML knowledge
+## types of learning
+- how much human supervision: supervised, unsupervised, semisupervised, reinforcement 
+- whether they can learn incrementally on the fly (online versus batch learning)
+- Whether they work by simply comparing new data points to known data points, or instead by detecting patterns in the training data and building a predictive model, much like scientists do (instance-based versus model-based learning)
+
+## important plot/graph for fitting diagnostics:
+- learning curve: x-axis: dataset size (or epoch). y-axis: performance score (e.g., RMSE) (https://www.youtube.com/watch?v=ISBGFY-gBug)
+    - ![](media/learning_curve_epoch.png)
+    - ![](media/learning_curve_learning_rate.png)
+    - IMPORTANT: x-axis can also be epochs. So, we don't need to retrain our model!!
+    - plot both train and validation error. 
+    - when doing so, we need to artificially limit the train set size!
+    - for validation error, it's independent of the x-axis! That is, we'll always use the entire validation set for each value of x!
+```python
+# x-axis is epoch
+import pandas as pd
+import matplotlib.pyplot as plt
+pd.DataFrame(history.history).plot(figsize=(8, 5))
+plt.grid(True)
+plt.gca().set_ylim(0, 1) # set the vertical range to [0-1]
+plt.show()
+```
+
+- early stopping curve: ![](media/early_stopping_curve.png)
+    - With early stopping you just stop training as soon as the validation error reaches the minimum. It is such a simple and efficient regularization technique that Geoffrey Hinton called it a “beautiful free lunch.”
+    - x-axis: epoch
+    - y-axis: RMSE, or other performance measure
+    - plot two graphs: train error and test/validation error
+    - downside: The main downside of early stopping is that this couples two tasks. (https://www.coursera.org/learn/deep-neural-network/lecture/Pa53F/other-regularization-methods)
+    - We have two (independent, orthogonalization) tasks, and we want to think about one task at a time:
+        - optimize cost function J
+        - not overfit
+    - So you no longer can work on these two problem independently because by stopping gradient descent early, you're sort of breaking whatever you're doing to optimize cost function J, because now you're not doing a great job reducing the cost function J. And then you also simultaneously trying to not over fit. So instead of using different tools to solve the two problems, you're using one tool that kind of mixes the two. And that just make the things you could try more complicated to think about.
+    - advantage: run gradient descent once, you get to try out values of small w, mid-size w, and large w, without needing to try a lot of values of the L2 regularization hyperparameters
+    - Andrew prefers L2 regularization and try different values of lambda
+
+
+
+
+# Idea from Andrew
+- AI companies are good at spotting automation opportunities
+- data science: get insight from data. EG:　after investigation, a newly renovated apartment can sell about 15% higher than non-renovated ones
+- when doing early stopping, it violates the orthogonalization method! This will affect several things at the same time 
+- we need to specify acceptance criteria 
+
+# multi-class support
+- native support: SGD classifiers, decision tree, Random Forest classifiers, kNN, naive Bayes classifiers, softmax
+- non-support: logistic regression, SVM (deal with it by OvR, or sometimes called one-versus-all, or OvO)
+- in sklearn, the algorithm will choose OvR or OvO, depending on the situation 
+- one versus one: if we have n class, then we have nC2 that many pairs to try 
+
+# multi-output
+- A multi-output problem is a supervised learning problem with several outputs to predict, that is when Y is a 2d array of shape (n_samples, n_outputs).
+- When there is no correlation between the outputs, a very simple way to solve this kind of problem is to build n independent models, i.e. one for each output, and then to use those models to independently predict each one of the n outputs. However, because it is likely that the output values related to the same input are themselves correlated, an often better way is to build a single model capable of predicting simultaneously all n outputs. First, it requires lower training time since only a single estimator is built. Second, the generalization accuracy of the resulting estimator may often be increased.
+- native support: regression and its variants, decision tree and its variants (random forest)
+- With regard to decision trees, this strategy can readily be used to support multi-output problems. This requires the following changes:
+    - Store n output values in leaves, instead of 1;
+    - Use splitting criteria that compute the average reduction across all n outputs.
+
+# hyperparameter search
+- if we have lots of hyperparameters to search, we should use random search instead of grid research, since it allow us to explore more different values of each hyperparameter 
+- use coarse-to-fine search
+
+# smoothing term
+- smoothing term: a tiny number (or vector) added to the denominator to avoid division by zero 
+- used whenever we divide by a real number or vector. Very often used when dividing by vector, since the vector can have many terms and if we have one term that is zero, we have error. 
+- used in batch norm, rms prop, naive Bayes
+
+# weight decay
+- A regularization technique (such as L2) that results in gradient descent shrinking the weights on every iteration
+- weight decay: L2 regularization applied to cost function
+
+# optimizing metric and satisficing metrics
+- basically, optimize the optimizing metric, subject to the satisficing metrics.
+
+# association rule and frequent itemset mining
+## frequent itemset mining
+- C_k = candidate large itemsets of size k
+- L_k = large itemsets of size k
+- important theorem:
+    - if itemset s is not frequent, then so are all of its supersets
+    - if itemset s is frequent, then so are all of its subsets
+- to generate C_k:
+    - `join step`: look at L_k. Join two itemsets in L_(k-1) if their first `k-2` items are the same (i.e., only their last item differs). We get C_k
+    - `prune step`: for all itemsets in C_k:
+        - check whether all of its `k-1` subsets are in L_(k-1)
+        - if not, then remove (i.e., prune) that itemset from C_k
+    - `counting step`: for each itemset c in C_k:
+        - get the count of c from the dataset
+        - if the count is less than threshold, remove it from C_k
+
+## association rule
+- the goal is to dig into large amounts of data and discover interesting relations between attributes. For example, suppose you own a supermarket. Running an association rule on your sales logs may reveal that people who purchase barbecue sauce and potato chips also tend to buy steak. Thus, you may want to place these items close to one another.
+- association rule: I->J, where I and J are disjoint itemsets
+- support of I->J = s(I->J) = s(I union J)
+- confidence of I->J = P(J | I) = s(I union J) / s(I)
+- strong association rule: support > s and confidence >= c 
+
+# optimization: gradient descent
+- advantage of normal equation and SVD: they don't require feature scaling for them to work well, but gradient-based algorithms will take much longer to converge If the features in your training set have very different scales, the cost function will have the shape of an elongated bowl, so the Gradient Descent algorithms will take a long time to converge.
+- the cost function of linear regression has the shape of a bowl, but it can be an elongated bowl if the features have very different scales.
+- So, before using gradient descent based algorithm, we should first ensure all features have a similar scale by using `StandardScalar`, for example
+- The function that determines the learning rate at each iteration is called the learning schedule.
+- epoch in stochastic gradient descent: one epoch = one iteration of all m examples. 
+- unless you gradually reduce the learning rate, Stochastic GD and Mini-batch GD will never truly converge; instead, they will keep jumping back and forth around the global optimum. This means that even if you let them run for a very long time, these Gradient Descent algorithms will produce slightly different models.
+- It does not care about what the earlier gradients were. If the local gradient is tiny, it goes very slowly. That's why we need momentum! 
+
+## gradient descent with momentum
+- whenever we have oscillation, we should consider using exponential moving average to smooth out the oscillation!!
+- usually beta (the weight for the previous result) is 0.9, i.e., approximately averaging the previous 10 mini-batch gradients 
+- no need to use bias correction 
+
+## RMS prop (root mean squares prop)
+- can use a larger learning rate
+- in direction where we get a large oscillation, we end up getting a larger dW^2, and so entry of dW will be divided by a large entry 
+
+
+## adam (adaptive moment estimation)
+- combination of RMSprop and momentum
+- 
+
+## learning rate decay
+- useful for mini-batch learning, so that our algorithm would converge
+
+
+## stochastic gradient descent
+- Stochastic Gradient Descent picks a random instance in the training set at every step and computes the gradients based only on that single instance
+- remember that we need to pick a RANDOM instance in each step!!!
+- note that since instances are picked randomly, some instances may be picked several times per epoch, while others may not be picked at all. If you want to be sure that the algorithm goes through every instance at each epoch, another approach is to shuffle the training set (making sure to shuffle the input features and the labels jointly), then go through it instance by instance, then shuffle it again, and so on. However, this approach generally converges more slowly.
+- On the other hand, due to its stochastic (i.e., random) nature, this algorithm is much less regular than Batch Gradient Descent: instead of gently decreasing until it reaches the minimum, the cost function will bounce up and down, decreasing only on average. Over time it will end up very close to the minimum, but once it gets there it will continue to bounce around, never settling down (see Figure 4-9). So once the algorithm stops, the final parameter values are good, but not optimal.
+- When the cost function is very irregular (as in Figure 4-6), this can actually help the algorithm jump out of local minima, so Stochastic Gradient Descent has a better chance of finding the global minimum than Batch Gradient Descent does.
+- When using Stochastic Gradient Descent, the training instances must be independent and identically distributed (IID) to ensure that the parameters get pulled toward the global optimum, on average. A simple way to ensure this is to shuffle the instances during training (e.g., pick each instance randomly, or shuffle the training set at the beginning of each epoch). If you do not shuffle the instances—for example, if the instances are sorted by label—then SGD will start by optimizing for one label, then the next, and so on, and it will not settle close to the global minimum.
+
+## mini-batch gradient descent
+- batch gradient descent = vanilla gradient descent, i.e., without using mini-batch!
+- The main advantage of Mini-batch GD over Stochastic GD is that you can get a performance boost from hardware optimization of matrix operations, especially when using GPUs.
+- ![](media/algo_OLR.png)
+- if using mini-batch, one iteration = one mini-batch?
+- stochastic gradient descent will never converge
+- drawback of SGD: lose speedup from vectorization
+- when using mini-batch and it doesn't converge, try to reduce learning rate
+- minibatch size: between 2^6 to 2^9. Need to make it power of two for taking advantage of memory 
+- make sure minibatch fits in CPU/GPU memory
+
+# supervised learning algorithms
+## summary: regression and classification
+- regression:
+    - linear regression
+    - regularized regression (LASSO, Ridge, elastic net)
+    - knn
+    - decision tree (cart)
+    - SVR
+    - adaboost
+    - gradient boosting
+    - random forest
+    - extra tree
+    - deep learning
+- classification
+    - logistic regression
+    - linear discriminant analysis
+    - knn
+    - decision tree (cart)
+    - SVM
+    - adaboost
+    - gradient boosting
+    - random forest
+    - extra tree
+    - deep learning
+
+## ensemble
+- ensemble: a group of predictors. The predictors could be different algorithms, but if we're using bagging/pasting, then the predictors must be the same algorithms, trained on different subsets of the train data.
+- ensemble method: an ensemble learning algorithm
+- scale extremely well, since it is inherently parallel, meaning that it's multi-threaded.
+- need a sufficient number of weak/strong learners and they're sufficiently diverse.
+- if we have 1000 independent weak learners with 51% accuracy, then if we do majority voting, then our prediction accuracy jumps to 75%
+    - Think of it this way: we have 1000 biased coins, and each has independently 51% chance of showing a head. So, P(predict head by majority voting) = P(>500 coming up head)=0.75
+```python
+stats.binom.sf(500,1000,0.51) # P(X>500), where X~B(1000,0.51). 0.7260985557303354
+```
+- to get roughly independent learners:
+    - train different algorithms
+    - train the algorithms on a different subset of the dataset
+- hard voting = majority voting
+- soft voting: average of the probabilities of each learner
+    - can be used only when each learner can output probability 
+- resampling: random sample from a dataset (without replacement?)
+- bootstrap: resampling with replacement
+- Each individual predictor has a higher bias than if it were trained on the original training set, but aggregation reduces both bias and variance. Generally, the net result is that the ensemble has a similar bias but a lower variance than a single predictor trained on the original training set. (i.e., it makes roughly the same number of errors on the training set, but the decision boundary is less irregular)
+- out-of-bag (oob) instances: instances that are not in a particular sample. Note: if we sample m instances WR, then about 1-e^-1 = 63.212% samples will be selected. Since a predictor never sees the oob instances during training, it can be evaluated on these instances, without the need for a separate validation set. You can evaluate the ensemble itself by averaging out the oob evaluations of each predictor. To do so, use `oob_score=True`
+    - what if in a particular sample, we selected all instances exactly once?
+    - so, one good thing about bagging is you can even do away with train set!!
+- random patches method: sampling both training instances and features
+    - originally, we sample only instances and use all their features 
+- random subspace method: keeping all training instances but sampling features only (by `bootstrap=False, max_samples=1.0, bootstrap_features=True, max_features=0.5`)
+- Sampling features results in even more predictor diversity, trading a bit more bias for a lower variance.
+
+## bagging and pasting
+- One way to get a diverse set of classifiers is to use very different training algorithms, as just discussed. Another approach is to use the same training algorithm for every predictor and train them on different random subsets of the training set
+- bagging (abbreviated for bootstrap aggregating)
+    - for each predictor, sampling of the training examples is performed WITH REPLACEMENT
+- pasting
+    - for each predictor, sampling of the training examples is performed WITHOUT REPLACEMENT
+- bagging vs pasting
+    - In other words, both bagging and pasting allow training instances to be sampled several times across multiple predictors, but only bagging allows training instances to be sampled several times for the same predictor
+    - Bootstrapping introduces a bit more diversity in the subsets that each predictor is trained on, so bagging ends up with a slightly higher bias than pasting; but the extra diversity also means that the predictors end up being less correlated, so the ensemble’s variance is reduced. Overall, bagging often results in better models, which explains why it is generally preferred. However, if you have spare time and CPU power, you can use cross-validation to evaluate both bagging and pasting and select the one that works best.
+
+## random patches and random subspace
+- instead of sample examples randomly, they random features randomly. 
+- each predictor is trained on a random subset of the input features
+- for each predictor, we randomly sample a set of features at the beginning
+- QUETSION: for random forest, is it true that for each split, a different subset of features are sampled randomly, or sampling is done only once and all splitting consider the same set of features?
+    - at each split, a new random subset of features is chosen!
+- random patches: sample both instances and features
+- random subspaces: sample features only, not instances
+
+
+
+## boosting (aka hypothesis boosting):
+- our model = F(x). Want to learn `F(x) = sum_i=1^k f_i(x)`. Each of `f_i(x)` is a weak learner
+- train a bad learner first. The next learner tries to learn from the mistakes of all the weak learners that came before it. 
+- any Ensemble method that can combine several weak learners into a strong learner. 
+- The general idea of most boosting methods is to train predictors sequentially, each trying to correct its predecessor. There are many boosting methods available, but by far the most popular are AdaBoost (short for Adaptive Boosting) and Gradient Boosting. 
+- There is one important drawback to this sequential learning technique: it cannot be parallelized (or only partially), since each predictor can only be trained after the previous predictor has been trained and evaluated. As a result, it does not scale as well as bagging or pasting.
+
+
+### gradient boosting machine (GBM) = gradient boosted regression tree (GBRT) = gradient tree boosting
+- Just like AdaBoost, Gradient Boosting works by sequentially adding predictors to an ensemble, each one correcting its predecessor. However, instead of tweaking the instance weights at every iteration like AdaBoost does, **this method tries to fit the new predictor to the residual errors made by the previous predictor.**
+- if we use decision tree as base, then it's called gradient tree boosting
+```python
+# %%
+# first tree
+tree_reg1 = DecisionTreeRegressor(max_depth=2)
+tree_reg1.fit(X, y)
+(y-tree_reg1.predict(X)).shape
+
+mean_squared_error(y,tree_reg1.predict(X))
+# %%
+# second tree
+y2 = y - tree_reg1.predict(X)
+tree_reg2 = DecisionTreeRegressor(max_depth=2)
+tree_reg2.fit(X,y2)
+mean_squared_error(y,tree_reg1.predict(X)+ tree_reg2.predict(X))
+
+# %%
+# third tree
+y3 = y2 - tree_reg2.predict(X)
+tree_reg3 = DecisionTreeRegressor(max_depth=2)
+tree_reg3.fit(X, y3)
+mean_squared_error(y,tree_reg1.predict(X) + tree_reg2.predict(X) + tree_reg3.predict(X))
+# %%
+# prediction
+y_pred = sum(tree.predict(X) for tree in (tree_reg1, tree_reg2, tree_reg3))
+```
+- `learning_rate` (aka shrinkage): The `learning_rate` hyperparameter scales the contribution of each tree. If you set it to a low value, such as 0.1, you will need more trees in the ensemble to fit the training set, but the predictions will usually generalize better. This is a regularization technique called shrinkage. Figure 7-10 shows two GBRT ensembles trained with a low learning rate: the one on the left does not have enough trees to fit the training set, while the one on the right has too many trees and overfits the training set.
+    - if we decrease the learning rate, then trade a higher bias, for a lower variance
+- `subsample`: The GradientBoostingRegressor class also supports a subsample hyperparameter, which specifies the fraction of training instances to be used for training each tree. For example, if subsample=0.25, then each tree is trained on 25% of the training instances, selected randomly. As you can probably guess by now, this technique trades a higher bias for a lower variance. It also speeds up training considerably. This is called Stochastic Gradient Boosting.
+    - if we decrease the learning rate, then trade a higher bias, for a lower variance
+
+
+### histogram-based gradient boosting (HGB)
+- binning features (i.e., pd.cut)
+- Q: how to do binning optimally?
+- It works by binning the input features, replacing them with integers. The number of bins is controlled by the max_bins hyperparameter, which defaults to 255 and cannot be set any higher than this. Binning can greatly reduce the number of possible thresholds that the training algorithm needs to evaluate. Moreover, working with integers makes it possible to use faster and more memory-efficient data structures. And the way the bins are built removes the need for sorting the features when training each tree.
+    - but binning doesn't necessarily improve model performance
+- 
+
+
+
+
+#### light GBM
+- good due to its speed and efficiency. LightGBM is able to handle huge amounts of data with ease. But keep in mind that this algorithm does not perform well with a small number of data points.
+
+#### cat GBM
+- As the name suggests, CatBoost is a boosting algorithm that can handle categorical variables in the data. Most machine learning algorithms cannot work with strings or categories in the data. Thus, converting categorical variables into numerical values is an essential preprocessing step.
+- CatBoost can internally handle categorical variables in the data. These variables are transformed to numerical ones using various statistics on combinations of features.
+- Another reason why CatBoost is being widely used is that it works well with the default set of hyperparameters. Hence, as a user, we do not have to spend a lot of time tuning the hyperparameters.
+
+
+#### adaboost
+- the second classifier focuses on the misclassified training instances of the first classifier.
+- when training an AdaBoost classifier, the algorithm first trains a base classifier (such as a Decision Tree) and uses it to make predictions on the training set. The algorithm then increases the relative weight of misclassified training instances. Then it trains a second classifier, using the updated weights, and again makes predictions on the training set, updates the instance weights, and so on
+- 
+
+#### pros and cons: adaboost
+- AdaBoost has a high degree of precision. AdaBoost can achieve similar results to other models with much less tweaking of parameters or settings. The algorithm doesn’t need the data to be scaled and can model a nonlinear relationship. 
+- In terms of disadvantages, the training of AdaBoost is time consuming. AdaBoost can be sensitive to noisy data and outliers, and data imbalance leads to a decrease in classification accuracy.
+
+#### pro and cons: gradient boosting
+- In terms of advantages, gradient boosting method is robust to missing data, highly correlated features, and irrelevant features in the same way as random forest. It naturally assigns feature importance scores, with slightly better performance than random forest. The algorithm doesn’t need the data to be scaled and can model a nonlinear relationship. 
+- In terms of disadvantages, it may be more prone to overfitting than random forest, as the main purpose of the boosting approach is to reduce bias and not variance. It has many hyperparameters to tune, so model development may not be as fast. Also, feature importance may not be robust to variation in the training dataset.
+
+
+
+### LGBM
+- LGBM almost 7 times faster than xgboost
+- xgboost grows leaf-wise, rather than level-wise
+- This algorithm grows leaf wise and chooses the maximum delta value to grow. LightGBM uses histogram-based algorithms. The advantages of this are as follows:
+    - Less Memory Usage
+    - Reduction in Communication Cost for parallel learning
+    - Reduction in Cost for calculating gain for each split in the decision tree.
+- 
+
+
+### ff
+- GBDT: gradient boosting decision tree
+- LightGBM: Light Gradient Boosting Machine
+- 
+
+
+### ensemble learning summary
+Five possibilities:
+- diverse set of algorithms
+    - SVM, DT, logistic regression
+    - soft/hard voting
+- same algorithm for every predictor on different instances
+    - with replacement => bagging (bootstrap aggregation)
+        - e.g.: random forest, using n_examples = n 
+            - search for the best feature among a random subset of features
+    - without replacement => pasting ()
+- same algorithm for every predictor on different instances and different features
+    - on different instances and different features => random patches method
+    - on different features but keeping all instances => random subspace method
+- boosting
+    - adaboost:  At the end of every model prediction we end up boosting the weights of the misclassified instances so that the next model does a better job on them, and so on
+    - gradient boosting: Gradient Boosting learns from the mistake — residual error directly, rather than update the weights of data points.
+
+
+
+## functions for ensemble
+- `from sklearn.ensemble import VotingClassifier`
+    - need to provide several predictors 
+    - If all classifiers are able to estimate class probabilities (i.e., they all have a `predict_prob` method), then you can tell Scikit-Learn to predict the class with the highest class probability, averaged over all the individual classifiers. This is called soft voting. It often achieves higher performance than hard voting because it gives more weight to highly confident votes.
+    - to do soft voting, use voting='soft'
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import VotingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+
+log_clf = LogisticRegression()
+rnd_clf = RandomForestClassifier()
+svm_clf = SVC()
+voting_clf = VotingClassifier( estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)], voting='hard')　# to do soft voting, use voting='soft'
+voting_clf.fit(X_train, y_train)
+```
+- `from sklearn.ensemble import BaggingClassifier`
+    - just give one predictor, and use bagging (or pasting) on that predictor
+    - The BaggingClassifier automatically performs soft voting instead of hard voting if the base classifier can estimate class probabilities (i.e., if it has a predict_proba() method), which is the case with Decision Tree classifiers.
+```python
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
+bag_clf = BaggingClassifier( DecisionTreeClassifier(), n_estimators=500, max_samples=100, bootstrap=True, n_jobs=-1) # bootstrap=True means bagging. If want pasting, use bootstrap=False. 
+# max_samples can be set as float from 0 to 1, indicating the proportion of samples to draw from the entire dataset
+bag_clf.fit(X_train, y_train)
+y_pred = bag_clf.predict(X_test)
+```
+
+
+
+
+## support vector machine (SVM)
+- explanation
+    - fit a hyperplane to separate two classes with the largest margin. 
+        - margin is the distance between the hyperplane and the point closet to the hyperplane. 
+    - in the optimization objective, we want to maximum the margin lambda, subject to the constraint that each training example is classified correctly and has a margin with the classifier lambda
+    - but the objective is not convex, and so we do some transformation, and can show that it's equivalent to minimizing the norm of weight vector w, subject to the constraints that the margin of the each example with the classifier is at least 1.
+- SVMs are particularly well suited for classification of complex small- or medium-sized datasets.
+- sensitive to feature scales. We should use `StandardScaler` to change the scale of the features (i.e., change to standard score)
+    - SVM constructs a hyperplane such that it has the largest distance to the nearest data points (called support vectors). If the dimensions have different ranges, the dimension with much bigger range of values influences the distance more than other dimensions. So it's necessary to scale the features such that all the features have similar influence when calculating the distance to construct a hyperplane.
+- for regularization parameter C, the higher the value, the higher the regularization!!!!
+    - if C is low => lots of violation  => simpler model => strong regularization
+    - if C is high => few violation     => more complex model (this is the opposite of regression) => low effect of regularization
+- overfit:
+    - do regularization by reducing C 
+    - if `kernel=poly`, reduce polynomial degree
+    - if `kernel=RBF`, reduce gamma
+- underfit:
+    - if `kernel=poly`, increase polynomial degree
+    - if `kernel=RBF`, increase gamma
+- remember: overfitting => reduce both C and gamma. Underfitting => increase both C and gamma 
+- Unlike Logistic Regression classifiers, SVM classifiers do not output probabilities for each class.
+- rule of thumb to choose kernel:
+    - try linear kernel first
+    - then training set not too large, try RBF
+    - if still have time, try poly and use grid search and cross-validation
+- In sklearn, `LinearSVC` uses linear kernel
+- The hyperparameter coef0 controls how much the model is influenced by high-degree polynomials versus low-degree polynomials.
+- The fundamental idea behind Support Vector Machines is to fit the widest possible “street” between the classes. In other words, the goal is to have the largest possible margin between the decision boundary that separates the two classes and the training instances. When performing soft margin classification, the SVM searches for a compromise between perfectly separating the two classes and having the widest possible street (i.e., a few instances may end up on the street). Another key idea is to use kernels when training on nonlinear datasets. 
+- After training an SVM, a support vector is any instance located on the “street” (see the previous answer), including its border. The decision boundary is entirely determined by the support vectors. Any instance that is not a support vector (i.e., is off the street) has no influence whatsoever; you could remove them, add more instances, or move them around, and as long as they stay off the street they won’t affect the decision boundary. Computing the predictions only involves the support vectors, not the whole training set.
+- Can an SVM classifier output a confidence score when it classifies an instance? What about a probability? An SVM classifier can output the distance between the test instance and the decision boundary, and you can use this as a confidence score. However, this score cannot be directly converted into an estimation of the class probability. If you set probability=True when creating an SVM in Scikit-Learn, then after training it will calibrate the probabilities using Logistic Regression on the SVM’s scores (trained by an additional five-fold cross-validation on the training data). This will add the predict_proba() and predict_log_proba() methods to the SVM.
+- cons of SVM
+    - support two classes only
+    - technically can't output probability. Although it actually can in sklearn, it'll slow down the algo dramatically.
+    - too slow. Dual form is proportional to `m^3`. So, when we have too many examples, kernelized SVM is infeasible
+
+### complexity of SVM
+- ![](media/SVM_complecxity.png)
+- if n>m, then use dual
+- kernelized SVM can only use the dual form when training, but linear SVM can use both primal and dual form. 
+- primal form TC: proportional to m, 
+- dual form TC: proportional to a number between m^2 and m^3. So if there are millions of instances, you should definitely use the primal form, because the dual form will be much too slow.
+- linear SVC TC: O(m*n)
+- SVC with kernel: O(m^2 * n) to O(m^3 * n)
+- the reason is that only in the dual form we have the dot product appearing
+
+### support vectors
+- support vectors are those with alpha=/=0
+- in unregularized version, all examples with functional margin =/= 1 will have alpha = 0, and thus they are not support vectors
+- in regularized version, those vectors with functional margin<=1 are support vectors, and so their alpha =/= 0
+
+### SVM kernels
+- in SVM, of course we can add polynomial features ourselves, like what we did in regression. However, we don't need to do so, since we can just change the kernel! Also, if we add poly features manually, we can't take advantage of kernel tricks! 
+- Gaussian Radial Basis Function (RBF): it has a parameter (gamma) to tune. 
+    - increase gamma => decrease variance => bell-shaped curve narrower => decrease similarity => decision boundary more irregular 
+    - if overfit, then reduce gamma
+    - if underfit, then increase gamma
+- kernels other than RBF exist but are used much more rarely. Some kernels are specialized for specific data structures. String kernels are sometimes used when classifying text documents or DNA sequences (e.g., using the string subsequence kernel or kernels based on the Levenshtein distance).
+
+### pros and cons: SVM
+- robust against overfitting
+- handle non-linear relationship well
+- inefficient and memory intensive, and so can't handle large dataset
+- requires feature scaling
+- doesn't natively support multiclass and multioutput problem 
+- very high time complexity 
+- many hyperparameters to tune
+- Outliers have less of an impact as the hyperplane is affected only by the support vectors.
+- Effective when there are more dimensions than number of samples.
+- can't (or hard) to output a probability 
+
+
+# kNN
+## pros and cons: knn
+- no training involved
+- Since the algorithm requires no training before making predictions, new data can be added seamlessly without impacting the accuracy of the algorithm
+- easy to interpret
+- natively support multi-label classification
+- can learn complex decision boundary
+- effective when training data is large
+- performs poorly when dimension is large, due to curse of dimensionality
+- slow when dataset size is large 
+- feature scaling is required
+- constantly evolving model: When it is exposed to new data, it changes to accommodate the new data points.
+- must scale the data
+- doesn't work well on imbalanced data 
+- sensitive to outliers
+- can't deal with missing values
+
+
+
+
+
+
+
+# linear discriminant analysis (aka Guassian discriminant analysis)
+## pros and cons: LDA
+- LDA is a relatively simple model with fast implementation and is easy to implement. 
+- requires feature scaling and involves complex matrix operations.
+
+
+
+# naive bayes
+- naive bayes assumption (NB assumption): assume all features are conditionally independent, given class labels
+    - `P(x_1,x_2,..,x_n | y) = P(x_1|y)P(x_2|y)...P(x_n|y)`
+
+## pros and cons: naive bayes
+- very fast. Can do real-time prediction
+- scalable with large dataset
+- insensitive to irrelevant features
+- support multi-class
+- doesn't support regression problem
+- good performance with high dimensional data
+- requires the conditional independence assumption
+- if you have no occurrences of a class label and a certain attribute value together (e.g. class=”No”, shape=”Overcast “) then the posterior probability will be zero. So if the training data is not representative of the population, Naive bayes does not work well. (This problem is removed by smoothening techniques)
+
+# Bayesian network
+- BN property: A node in a BN is conditionally independent of all its non-descendants, givens all its parents
+
+# unsupervised learning algorithms
+## dimensionality reduction 
+- curse of dimensionality: The common theme of these problems is that when the dimensionality increases, the volume of the space increases so fast that the available data become sparse
+    - specifically the issue of data sparsity and “closeness” of data.
+- too many dimensions causes every observation in your dataset to appear equidistant from all the others. And because clustering uses a distance measure such as Euclidean distance to quantify the similarity between observations, this is a big problem. If the distances are all approximately equal, then all the observations appear equally alike (as well as equally different), and no meaningful clusters can be formed.
+
+## why use dimensionality reduction:
+- the pixels on the image borders are almost always white, so you could completely drop these pixels from the training set without losing much information
+- two neighboring pixels are often highly correlated: if you merge them into a single pixel (e.g., by taking the mean of the two pixel intensities), you will not lose much information.
+- data visualization
+- In some cases, reducing the dimensionality of the training data may filter out some noise and unnecessary details and thus result in higher performance, but in general it won’t; it will just speed up training.
+- the more dimensions the training set has, the greater the risk of overfitting it.
+
+## PCA
+- steps:
+    - de-mean the dataset `X`
+    - find the covariance matrix `X^T*X`
+    - find the eigenvalues and eigenvectors of the covariance matrix. Make the eigenvectors to be unit length 
+    - pick the first k eigenvectors corresponding to the k highest eigenvalues
+    - project each data point to the orthogonal subspace spanned by the k eigenvectors
+        - `sum(q_i^Tb)q_i`
+- the first vector to pick is the eigenvector of the covariance mastrix S = \sum_i x^(i)x^(i)^T with the largest eigenvalue
+- the second vector to pick is the eigenvector of the covariance matrix S = \sum_i x^(i)x^(i)^T with the second largest eigenvalue, because we need to ensure that the second vector is orthogonal to the first one.
+
+## anomaly detection (outlier, novelty, fraud)
+- outliers could be due to measurement error. 
+- easy ways:
+    - data falling outside of three sd, since if the data follows a normal distribution, then there should be 99.7% of the data within 3sd from the mean. 
+    - IQR, the concept used to build boxplots, can also be used to identify outliers. The IQR is equal to the difference between the 3rd quartile and the 1st quartile. You can then identify if a point is an outlier if it is less than Q1–1.5*IRQ or greater than Q3 + 1.5*IQR. This comes to approximately 2.698 standard deviations.
+- usually posed as an unsupervised learning problem. I.e., without label
+- statistics-based: assumes data follows a particular distribution
+    - In Andrew's video: assume each feature follows a normal distribution, and assume that the features are independent. 
+    - we want to estimate p(x), where x is a new example
+    - p(x) = p(x1)p(x2)...p(xn)
+    - if p(x) < eps, flag it as anomaly
+    - for parameter estimators: use MLE
+    - plot a hist for each feature to see if they look normal. If not, try to take log to transform the data so that they look more normal 
+    - or, transform it by log(x_2 + c)
+    - or, take x^(1/c)
+    - alternatively, model x directly by multivariate normal 
+- clustering-based: k-means: https://medium.datadriveninvestor.com/outlier-detection-with-k-means-clustering-in-python-ee3ac1826fb0. run k-means, then find out which points have the largest distance from their respective centroid. Flag those points as outlier.
+- classification based: one-class SVM
+- density based: k-NN. https://towardsdatascience.com/k-nearest-neighbors-knn-for-anomaly-detection-fdf8ee160d13. Basically, find the average distance of the neighbors of each points. Then flag those with high average as anomaly.
+- deep learning: LSTM, autoencoder, replicator neural network
+- 
+
+
+## clustering
+### applications of clustering
+- as semi-supervised learning technique: If you only have a few labels, you could perform clustering and propagate the labels to all the instances in the same cluster. This technique can greatly increase the number of labels available for a subsequent supervised learning algorithm, and thus improve its performance.
+- as dimensionality reduction: Once a dataset has been clustered, it is usually possible to measure each instance’s affinity with each cluster (affinity is any measure of how well an instance fits into a cluster). Each instance’s feature vector x can then be replaced with the vector of its cluster affinities. If there are k clusters, then this vector is k-dimensional. This vector is typically much lower-dimensional than the original feature vector, but it can preserve enough information for further processing.
+- For search engines: Some search engines let you search for images that are similar to a reference image. To build such a system, you would first apply a clustering algorithm to all the images in your database; similar images would end up in the same cluster. Then when a user provides a reference image, all you need to do is use the trained clustering model to find this image’s cluster, and you can then simply return all the images from this cluster.
+- To segment an image: By clustering pixels according to their color, then replacing each pixel’s color with the mean color of its cluster, it is possible to considerably reduce the number of different colors in the image. Image segmentation is used in many object detection and tracking systems, as it makes it easier to detect the contour of each object.
+- For anomaly detection (also called outlier detection): Any instance that has a low affinity to all the clusters is likely to be an anomaly. For example, if you have clustered the users of your website based on their behavior, you can detect users with unusual behavior, such as an unusual number of requests per second. Anomaly detection is particularly useful in detecting defects in manufacturing, or for fraud detection.
+- density estimation: This is the task of estimating the probability density function (PDF) of the random process that generated the dataset. Density estimation is commonly used for anomaly detection: instances located in very low-density regions are likely to be anomalies. It is also useful for data analysis and visualization.
+
+### k-means
+- explanation: 
+    - initialize cluster centroids randomly
+    - cluster assignment step: assign each example to its closet cluster
+    - centroid update: update each of the cluster centroid by updating it as the mean of the points in the cluster
+    - stop until the cluster assignment step has no effect.
+        - the algorithm above is trying to minimize the inertia, which is the sum of squared distances of the points to their cluster centroid
+        - the above algo can converge to a local minimum only. Therefore, need to run the algo with different initialization several times 
+        - to pick k, plot a graph with k against the inertia. Inertia is a decreasing function of k, but if we see a sudden drop of inertia (i.e., elbow), then it's a good value of k.
+- inertial = SUM of squared distance between each instance and its closest centroid, not MEAN of squared!
+- IMPORTANT: It is important to scale the input features before you run K-Means, or the clusters may be very stretched and K-Means will perform poorly. Scaling the features does not guarantee that all the clusters will be nice and spherical, but it generally improves things.
+- Q: what if there is no point in a cluster? 
+    - A: remove the cluster
+- how to pick initial values for the k cluster centroids
+    - randomization
+- how to pick the value of K?
+    - elbow method
+- how to evaluate the performance of k-means?
+    - look at the inertia
+- if K=1, then the cluster centroid is necessarily the mean of the all data points?
+    - yes
+- pros and cons of k-means
+    - fast and scalable
+    - necessary to run the algorithm several times to avoid suboptimal solutions,
+    - need to specify the number of clusters
+    - k-means does not behave very well when the clusters have varying sizes, different densities, or nonspherical shapes. 
+        - E.g., if the clusters are ellipsoidal, then k-means performs poorly
+
+
+### T-SNE (t-distributed Stochastic Neighbor Embedding)
+- https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html
+- used in NLP embedding 
+- Reduces dimensionality while trying to keep similar instances close and dissimilar instances apart. It is mostly used for visualization, in particular to visualize clusters of instances in high-dimensional space (e.g., to visualize the MNIST images in 2D).
+- 
+
+
+### hierarchical clustering
+- 
+
+
+
+
+# reinforcement learning andrew
+- RL: given state, find action
+    - learn a mapping from state to action
+- 
+
+# reinforcement learning (RL)
+- reward: it's immediate. The reward that we can receive after taking an action
+- (discounted) return = future reward = 
+- V^{pi}(s) = the future total reward according to the policy `pi` if start at state `s`
+- iterative policy evaluation: a way to solve the bellman equations. Note that it's a way to find the values for a particular policy, not a way to find the optimal policy
+- policy: could be a neural network, with input = observations, and output = action to take
+    - policy could be anything, and it does not have to be deterministic
+    - what is the observation data fed to neural network???
+    - stochastic policy: for robotic vacuum cleaner, with prob p, move forward. With prob 1-p, rotate left or right, and the angle is randomly chosen from [-r, r]
+        - parameters: p and r 
+        - for parameter search, 
+            - can use randomized search. Slow
+            - genetic algorithm
+            - optimization technique: evaluate the gradient of the rewards with respect to the policy parameters, then tweaking the parameters by following the gradients toward higher rewards. This is called policy gradient (PG) method. 
+                - Going back to the vacuum cleaner robot, you could slightly increase p and evaluate whether doing so increases the amount of dust picked up by the robot in 30 minutes; if it does, then increase p some more, or else reduce p.
+
+## Three important values
+- optimal state-value function: tells us the the maximum discounted cumulative reward that the agent can obtain starting from start s
+- optimal state-value policy: tell us what specific action to take in each state. it doesn't tell us the total return for each state. To find it, we still need to use 
+- state value: the final return if starting at this state 
+- state-action value = Q-value = quality value 
+    - Q: (s,a) -> value 
+- Once you have the optimal Q-Values, defining the optimal policy, noted π*(s), is trivial: when the agent is in state s, it should choose the action with the highest Q-Value for that state: π* s = argmax a Q* s, a .
+- Q-learning algo: used when state transition probability and returns are initially unknown. 
+    - Similarly, the Q-Learning algorithm is an adaptation of the Q-Value Iteration algorithm to the situation where the transition probabilities and the rewards are initially unknown
+
+
+## problems with designing RL
+- delay of reward
+    - If we knew what the best action was at each step, we could train the neural network as usual, by minimizing the cross entropy between the estimated probability distribution and the target probability distribution. It would just be regular supervised learning. However, in Reinforcement Learning the only guidance the agent gets is through rewards, and rewards are typically sparse and delayed. For example, if the agent manages to balance the pole for 100 steps, how can it know which of the 100 actions it took were good, and which of them were bad? All it knows is that the pole fell after the last action, but surely this last action is not entirely responsible. This is called the credit assignment problem: when the agent gets a reward, it is hard for it to know which actions should get credited (or blamed) for it. Think of a dog that gets rewarded hours after it behaved well; will it understand what it is being rewarded for?
+- Q-value:
+    - Knowing the optimal state values can be useful, in particular to evaluate a policy, but it does not give us the optimal policy for the agent. Luckily, Bellman found a very similar algorithm to estimate the optimal state-action values, generally called Q-Values (Quality Values). The optimal Q-Value of the state-action pair (s, a), noted Q*(s, a), is the sum of discounted future rewards the agent can expect on average after it reaches the state s and chooses action a, but before it sees the outcome of this action, assuming it acts optimally after that action.
+    - Q(s,a): tell us the optimal value when at state s, and take action a
+- Q-learning:
+    - Similarly, the Q-Learning algorithm is an adaptation of the Q-Value Iteration algorithm to the situation where the transition probabilities and the rewards are initially unknown
+    - Q-learning is a model-free reinforcement learning algorithm to learn the value of an action in a particular state. It does not require a model of the environment (hence "model-free"), and it can handle problems with stochastic transitions and rewards without requiring adaptations.
+    - "Q" refers to the function that the algorithm computes – the expected rewards for an action taken in a given state.
+    - Q: S x A -> R
+- temporal difference learning
+    - assume doesn't know `transition probabilities T(s,a,s')` and `rewards R(s,a,s')`.
+    - It must experience each state and each transition at least once to know the rewards, and it must experience them multiple times if it is to have a reasonable estimate of the transition probabilities.
+    - we assume that the agent initially knows only the possible states and actions, and nothing more
+
+## policy
+- neural network policy: Let’s create a neural network policy. Just like with the policy we hardcoded earlier, this neural network will take an `observation` as input, and it will output the `action` to be executed. More precisely, it will estimate a probability for each action, and then we will select an action randomly, according to the estimated probabilities.
+    - returns a probability distribution of the possible actions, then we randomly draw an action according to this distribution 
+- in cart pole example:
+    - there are just two possible actions (left or right), so we only need one output neuron. It will output the probability p of action 0 (left), and of course the probability of action 1 (right) will be 1 – p. For example, if it outputs 0.7, then we will pick action 0 with 70% probability, or action 1 with 30% probability.
+    - Also note that in this particular environment, the past actions and observations can safely be ignored, since each observation contains the environment’s full state.
+```python
+n_inputs = 4 # == env.observation_space.shape[0]
+model = keras.models.Sequential([
+keras.layers.Dense(5, activation="elu", input_shape=[n_inputs]),
+keras.layers.Dense(1, activation="sigmoid"),
+])
+```
+    - After the imports, we use a simple Sequential model to define the policy network. The number of inputs is the size of the observation space (which in the case of Cart‐ Pole is 4), and we have just five hidden units because it’s a simple problem. Finally, we want to output a single probability (the probability of going left), so we have a single output neuron using the sigmoid activation function. If there were more than two possible actions, there would be one output neuron per action, and we would use the softmax activation function instead.
+- question: how do we have the training examples? That is, how to know the correct output? => credit assignment problem!
+    - IMPORTANT: we need to use policy gradient when using neural network policy!!!!
+
+### credit assignment problem:
+- If we knew what the best action was at each step, we could train the neural network as usual, by minimizing the cross entropy between the estimated probability distribution and the target probability distribution. It would just be regular supervised learning. However, in Reinforcement Learning the only guidance the agent gets is through rewards, and rewards are typically sparse and delayed. For example, if the agent manages to balance the pole for 100 steps, how can it know which of the 100 actions it took were good, and which of them were bad? All it knows is that the pole fell after the last action, but surely this last action is not entirely responsible. This is called the credit assignment problem: when the agent gets a reward, it is hard for it to know which actions should get credited (or blamed) for it. Think of a dog that gets rewarded hours after it behaved well; will it understand what it is being rewarded for?
+- To tackle this problem, a common strategy is to evaluate an action based on the sum of all the rewards that come after it, usually applying a discount factor γ (gamma) at each step. This sum of discounted rewards is called the action’s return. Consider the example in Figure 18-6). If an agent decides to go right three times in a row and gets +10 reward after the first step, 0 after the second step, and finally –50 after the third step, then assuming we use a discount factor γ = 0.8, the first action will have a return of 10 + γ × 0 + γ2 × (–50) = –22. If the discount factor is close to 0, then future rewards won’t count for much compared to immediate rewards. Conversely, if the discount factor is close to 1, then rewards far into the future will count almost as much as immediate rewards. Typical discount factors vary from 0.9 to 0.99. With a discount factor of 0.95, rewards 13 steps into the future count roughly for half as much as immediate rewards (since 0.9513 ≈ 0.5), while with a discount factor of 0.99, rewards 69 steps into the future count for half as much as immediate rewards. In the CartPole environment, actions have fairly short-term effects, so choosing a discount factor of 0.95 seems reasonable.
+
+### policy gradient
+- As discussed earlier, PG algorithms optimize the parameters of a policy by following the gradients toward higher rewards.
+- to get good results, we need to combine deep learning and RL!
+- policy gradient: As discussed earlier, PG algorithms optimize the parameters of a policy by following the gradients toward higher rewards. One popular class of PG algorithms, called REINFORCE algorithms, was introduced back in 1992 by Ronald Williams. Here is one common variant:
+    1. First, let the neural network policy play the game several times, and at each step, compute the gradients that would make the chosen action even more likely—but don’t apply these gradients yet.
+    2. Once you have run several episodes, compute each action’s advantage (using the method described in the previous section).
+    3. If an action’s advantage is positive, it means that the action was probably good, and you want to apply the gradients computed earlier to make the action even more likely to be chosen in the future. However, if the action’s advantage is negative, it means the action was probably bad, and you want to apply the opposite gradients to make this action slightly less likely in the future. The solution is simply to multiply each gradient vector by the corresponding action’s advantage.
+    4. Finally, compute the mean of all the resulting gradient vectors, and use it to perform a Gradient Descent step.
+
+
+## reminder
+- after obtaining Q-value, we can find the optimal policy easily by choosing the action that maximize the Q-value 
+
+
+
+# problem of Q-learning
+- The main problem with Q-Learning is that it does not scale well to large (or even medium) MDPs with many states and actions. For example, suppose you wanted to use Q-Learning to train an agent to play Ms. Pac-Man (see Figure 18-1). There are about 150 pellets that Ms. Pac-Man can eat, each of which can be present or absent (i.e., already eaten). So, the number of possible states is greater than 2150 ≈ 1045. And if you add all the possible combinations of positions for all the ghosts and Ms. Pac- Man, the number of possible states becomes larger than the number of atoms in our planet, so there’s absolutely no way you can keep track of an estimate for every single Q-Value.
+
+
+
+
+
+
+- deep Q-network (DQNs)
+- policy: The algorithm a software agent uses to determine its actions is called its policy.   
+    - The policy could be a neural network taking observations as inputs and outputting the action to take
+    - The policy can be any algorithm you can think of, and it does not have to be deterministic. In fact, in some cases it does not even have to observe the environment! For example, consider a robotic vacuum cleaner whose reward is the amount of dust it picks up in 30 minutes. Its policy could be to move forward with some probability p every second, or randomly rotate left or right with probability 1 – p. The rotation angle would be a random angle between –r and +r. Since this policy involves some randomness, it is called a stochastic policy. The robot will have an erratic trajectory, which guarantees that it will eventually get to any place it can reach and pick up all the dust. The question is, how much dust will it pick up in 30 minutes?
+- how to explore policy space
+    - genetic algorithm
+
+- Belleman: estimate the expected return for each state. 
+- policy gradient: try to optimize the policy to increase rewards
+
+- MDP (Markov decision process): five tuples (S,A,{P_sa}, gamma, R)
+    - P_sa: state transition probability
+        - gives the distribution over what states we will transition to if we take action a in state s.
+        - sometimes action may have a uncertain outcome!
+            - if uncertain, then non-deterministic
+            - if certain, then deterministic
+        - 
+    - gamma: discount factor in [0,1]
+    - R: reward function 
+    - w  
+- with discount factor, our algo converges much faster
+- The algorithm a software agent uses to determine its actions is called its policy. The policy could be a neural network taking observations as inputs and outputting the action to take. More precisely, it will estimate a probability for each action, and then we will select an action randomly, according to the estimated probabilities (see Figure 18-5). 
+
+## linear model
+- https://scikit-learn.org/stable/modules/linear_model.html#
+- when using polynomial regression, we're still using linear regression, since we're just transforming our features to a higher-order space. As long as the model is such that we can write the target as a linear combination of the coefficient and features, then it's a linear model. 
+    - note that the features can be a non-linear transformation of the original features.
+    - EG: (x1,x2)=> (x1,x2,x1x2,x1^2,x2^2) is a nonlinear transformation of the features (x1,x2)
+        - `nonlinear transformation` here refers to the standard linear function definition
+- More generally, a linear model makes a prediction by simply computing a weighted sum of the input features, plus a constant called the bias term (also called the intercept term), as shown in Equation 4-1.  
+
+# ML project knowledge
+- when our project is put to deployment, we're just half way to the finish line, because we still need to deal with issues like concept drift/data drift, 
+
+# example of data pipeline
+
+## data preprocessing process
+### explore the features:
+```python
+df.info # check the datatype of each feature to see if there are categorical
+df.describe()
+df
+housing['ocean_proximity'].value_counts().sort_index().plot.bar() # check the count distribution of the values of a categorical variable
+housing.corr() # check the correlation of each features and 
+housing.corrwith(housing['median_house_value']).sort_values(ascending=False) # check only the correlation with the target 
+sns.heatmap(housing.corr(), annot=True,cmap="Blues") # plot a heat map. Not good if there are too many features 
+```
+- visualization: 
+```python
+housing.hist(bins=50,figsize=(20,15)) # each feature is one hist
+housing['median_income'].hist(bins=50) # one single feature
+housing['median_income'].plot(kind='box') # box plot for one single feature
+(housing['median_income']>8).value_counts() # count how many rows with median_income > 8 
+```
+- outlier removal
+```python
+df[(np.abs(stats.zscore(df))<3).all(axis = 1)] # remove the rows with at least one feature value that is outlier
+
+(((df- df.mean())/df.std()).abs() > 3).any(axis = 1).value_counts() # if using scipy not allowed, use this to find the number of rows with feature values exceeding 3 sd.
+```
+
+- `separate dataset into X and y`: when loading dataset, if dataset is in one single variable, i.e., labels and attributes aren't separated, do this. 
+```python
+X = df.drop("median_house_value", axis=1)
+y = df["median_house_value"].copy()
+```
+- `split X and y datasets into train/test sets`
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+```
+- `check for missing values`
+```python
+housing.info() # we can check if there is missing value using this function as well
+housing.isnull().sum() # return for each feature the number of missing values
+```
+- `check # categories of a feature`
+```python
+housing_cat.ocean_proximity.unique()
+```
+- if there is a feature that is strong predictor of the label, try to stratify based on this feature.
+    - if the strong predictor is continuous variable, try to discretize it first
+- `manage missing values`: if the data is continuous, we have three choices:
+    - drop rows with missing values
+```python
+DataFrame.dropna(subset=['total_bedrooms']) # remove rows whose 'total_bedrooms' column has NaN entry
+DataFrame.dropna() # dropna by default drops any row containing a missing value
+```
+    - drop the attributes with missing values
+        - `DataFrame.drop("ocean_proximity", axis=1)`
+    - fill missing values with mean/mode/median
+        - NOTE: `Series.fillna()` or `DataFrame.fillna()` can only fill constant values to the `NA` entries, not mean/mode etc.
+        - Alternatively, use `from sklearn.impute import SimpleImputer`
+            - `strategy` hyperparameter defaults to `mean`
+            - con: need to drop all categorical data before fit and transform
+```python
+from sklearn.impute import SimpleImputer
+data = pd.DataFrame([[1., 6.5, 3.], [1., np.nan, np.nan],[np.nan, np.nan, np.nan], [np.nan, 6.5, 3.]])
+print(data)
+#      0    1    2
+# 0  1.0  6.5  3.0
+# 1  1.0  NaN  NaN
+# 2  NaN  NaN  NaN
+# 3  NaN  6.5  3.0
+SimpleImputer(strategy='median').fit_transform(data)
+# array([[1. , 6.5, 3. ],
+#        [1. , 6.5, 3. ],
+#        [1. , 6.5, 3. ],
+#        [1. , 6.5, 3. ]])
+```
+    - IMPORTANT: whichever choice we choose, we need to do the same thing for the test set as well!!!! Also, if we use method 1 (drop rows), we need to drop the corresponding entries in y as well!
+    - for choice 3 (`fillna`), remember to store the values (be it mean, mode, etc) for test set!
+    - if we have categorical variable with missing value, we can treat the `nan` value as one class when encoding it. 
+- for algorithms that work for categorical data, convert continuous to categorical
+    - EG: stratified random sampling, decision tree, NB classifier etc
+    - `pd.cut()`
+- convert categorical to integer (for those algo that require numeric values). Use either ordinal transform or one-hot transform
+    - `from sklearn.preprocessing import OrdinalEncoder`
+    - `from sklearn.preprocessing import OneHotEncoder`
+- outlier detection and removal
+    - better to plot scatter plots to see if there are outliers and then remove them.
+- create new attributes by combining existing attributes
+    - for example, if we have total bedrooms in a district, it may not be useful, since usually `total` is not useful. Try to convert it to `average`
+```python
+housing["rooms_per_household"] = housing["total_rooms"]/housing["households"]
+housing["bedrooms_per_room"] = housing["total_bedrooms"]/housing["total_rooms"]
+housing["population_per_household"]=housing["population"]/housing["households"]
+```
+- feature scaling: 
+    - the most important transformation step!
+    - scaling the target value is generally not required!
+    - MinMaxScaler (i.e., normalization)
+        - pros: range of feature values = [0,1] 
+        - cons: highly sensitive to outliers 
+            - For example, suppose a district had a median income equal to 100 (by mistake). Min-max scaling would then crush all the other values from 0–15 down to 0–0.15, whereas standardization would not be much affected. 
+    - StandardScaler
+        - pros: robust to outliers. The distribution has unit variance 
+        - cons: range of feature values =/= [0,1]
+    - Normalizer
+```python
+data
+MinMaxScaler().fit_transform(data)
+StandardScaler().fit_transform(data)
+Normalizer().fit_transform(data)
+```
+- if we see some features have tail-heavy distribution, so you may want to transform them (e.g., by computing their logarithm). we can plot a graph to investigate first:
+```python
+housing.hist(bins=50, figsize=(20, 15)) # categorical feature automatically excluded
+np.log(housing['total_bedrooms'])
+```
+
+## comprehensive example
+```python
+# %%
+# method 1: use pandas to do preprocessing
+df = housing.fillna(housing.median()) # fill missing values by median
+# df = pd.get_dummies(df, dummy_na = True) # one-hot encoder. `dummy_na` will always give one extra column, even if there are no missing value!
+df = pd.get_dummies(df) # one-hot encoder. Now, all the features are continuous
+X, y  = df.drop('median_house_value', axis=1), df[['median_house_value']] # split dataset into X and y
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=4) # split datasets into train and test sets
+standard_scaler = StandardScaler().fit(X_train) # standardization 
+X_train = standard_scaler.transform(X_train) # standardize train set
+X_test = standard_scaler.transform(X_test) # standardize test set
+X_test
+
+ 
+# %%
+# method 2: use sklearn
+X, y  = housing.drop('median_house_value', axis=1), housing[['median_house_value']] # split dataset into X and y
+
+X_num, X_cat  = X.drop('ocean_proximity', axis=1), X[['ocean_proximity']]
+X_num = SimpleImputer(strategy='median').fit_transform(X_num)
+X_cat = OneHotEncoder().fit_transform(X_cat).toarray()
+
+X = np.hstack([df_num,df_cat])
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=4) # split datasets into train and test sets
+standard_scaler = StandardScaler().fit(X_train) # standardization 
+X_train = standard_scaler.transform(X_train) # standardize train set
+X_test = standard_scaler.transform(X_test) # standardize test set
+X_test
+```
+
+```python
+np.random.seed(1)
+df.info()
+df = pd.DataFrame({'a':np.random.randint(0,10,20), 
+            'b':np.random.choice(['x','y', None], size = 20),
+            'c':np.random.rand(20), 
+            })
+df.iloc[0,:] = np.nan
+df
+df = df.fillna(df.median())
+df = pd.get_dummies(df, dummy_na = True)
+StandardScaler().fit_transform(df)
+```
+
+
+

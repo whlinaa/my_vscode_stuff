@@ -1,0 +1,645 @@
+\documentclass[10pt, oneside]{article}   
+% \documentclass{article}   
+% \usepackage{C:/Users/whlin/Documents/Latex/Styles/should_be_useless/My_Style/Assignment}
+\usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/MyStyle}
+\usepackage{multicol}
+\usepackage{booktabs} % To thicken table lines
+\usepackage{tabularx}
+\usepackage{pbox}
+\usepackage{enumitem}
+\usepackage{tabularx, makecell}%
+\renewcommand\theadfont{\normalsize\bfseries}
+\usepackage{etoolbox} %
+\usepackage{comment}
+\AtBeginEnvironment{tabularx}{\setlist[itemize, 1]{wide, leftmargin=*, itemsep=0pt, before=\vspace{-\dimexpr\baselineskip +2 \partopsep}, after=\vspace{-\baselineskip}}}
+%\end{comment}
+%%%%%
+%If pdftex is used, then the subbookmarks won't expand
+%%%%
+
+%\hypersetup{
+%	colorlinks=true,
+%	citecolor=Violet,
+%	linkcolor=Red,
+%	urlcolor=blue}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{bibentry}
+\setlength{\voffset}{-0.25in}
+\makeatletter\let\saved@bibitem\@bibitem\makeatother
+% If the doc. is for printing, use the segment to change all colors to black
+\begin{comment}
+\hypersetup{colorlinks, citecolor=black, filecolor=black, linkcolor=black, urlcolor=black, pdftex}
+\end{comment}
+\urlstyle{same}
+%\usepackage{titlesec}
+%\usepackage{lipsum}
+% \usepackage{bibentry}
+% \makeatletter\let\saved@bibitem\@bibitem\makeatother
+\def \B {\mathcal{B}}
+\def \W {\mathcal{W}}
+
+\def \b {\textbf}
+
+%\titleformat{\section}
+%{\normalfont\scshape}{\thesection}{1em}{}
+%\title{Assignment}
+%\author{Student Name: Joe Wing-Ho Lin\\ Student ID: 20137952}
+%\date{}
+
+%\parindent 2em 
+\linespread{0.89}
+\hyphenpenalty=10000
+
+%\renewcommand{\baselinestretch}{0.9}
+
+
+
+\begin{document}
+\nobibliography{Pub.bib}
+%	\bibliographystyle{unsrt}
+%\maketitle 
+%\tableofcontents  %show table of content
+%\newpage
+%\begin{multicols*}{2}  % the "*" means the lengths of the two columns can differ. note that additional "[]" can be used to make introductory paragargh to the two columns 
+%\large{ Lin Wing Ho }
+\begin{center}
+\section*{Wing Ho Lin}
+% \section*{\huge{Wing Ho Lin}}
+\begin{comment}
+\begin{tabular}{p{2.1cm}l}	
+	\toprule
+%	Address: & 13/F, Kam Sing Building
+%	88A, Prince Edward Road West,
+%	Prince Edward, Hong Kong\\
+	Telephone: & +852 64336027\\
+	Email: & \href{mailto:whlinaa@cse.ust.hk}
+	{whlinaa@cse.ust.hk}
+%	Research Interests: & Database base and data mining. 
+\end{tabular}	
+\end{comment}
+% Assistant Lecturer, College of Professional and Continuing Education (CPCE), Hong Kong Polytechnic University\\
+% Assistant Lecturer, Hong Kong Community College (HKCC), Hong Kong Polytechnic University\\
+% Tel: (852) 6433-6027 \qquad Email: \href{mailto:whlinaa@connect.ust.hk}{whlinaa@connect.ust.hk} \qquad Homepage:  \href{https://www.hkcc-polyu.edu.hk/en/about-hkcc/staff-directory/division-of-science-engineering-and-health-studies/index.php?sid=318}{here} \qquad GitHub: \href{https://github.com/whlinaa?tab=repositories}{here}
+% Tel: (852) 6433-6027 \qquad Email: \href{mailto:whlinaa@connect.ust.hk}{whlinaa@connect.ust.hk} \qquad \href{https://www.linkedin.com/in/wing-ho-lin-5b5226110/}{LinkedIn}
+% Tel: (852) 6433-6027 \qquad Email: \href{mailto:whlinaa@connect.ust.hk}{whlinaa@connect.ust.hk} \qquad LinkedIn: \href{www.linkedin.com/in/wing-ho-lin}{www.linkedin.com/in/wing-ho-lin}
+Tel: (852) 6433-6027 \qquad Email: \href{mailto:whlinaa@connect.ust.hk}{whlinaa@connect.ust.hk} \qquad LinkedIn: \url{www.linkedin.com/in/wing-ho-lin}
+% \qquad GitHub: \href{https://github.com/whlinaa?tab=repositories}{here}
+
+% Tel: +852 64336027 \qquad Email: \href{mailto:lkj872001@gmail.com}{lkj872001@gmail.com} \qquad Homepage:  \href{https://www.hkcc-polyu.edu.hk/en/about-hkcc/staff-directory/division-of-science-engineering-and-health-studies/index.php?sid=318}{here}
+\end{center}
+%\vspace{-0.2cm}
+% \section*{Areas of Interests}
+% Numerical Linear Algebra, 
+% Machine Learning, Data Mining, Neural Networks.
+% support vector machines, data mining.
+% optimization, matrix factorization,
+\vspace{-0.4cm}
+\section*{Work Experience}
+\begin{tabularx}{\linewidth}{p{2.2cm}|p{16cm}}
+	\toprule 
+
+	\textsc{Nov} 2022 | & \textbf{Part-time Lecturer (Data Science)}\\
+	\textsc{Present}  & \textbf{College of Professional and Continuing Education, Hong Kong Polytechnic University}\\
+	& Teach lectures and tutorials of undergraduate courses in data science:\\
+	&	\begin{itemize}
+		\vspace{0.2cm}
+	\begin{minipage}{0.55\linewidth}
+		\item Statistical Inference
+		\item Workshop in Statistical Computation in Python
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\item Calculus and Linear Algebra
+		\item Workshop in Math for Data Science
+	\end{minipage}
+	% \begin{minipage}{0.25\linewidth}
+	% 	\small{
+	% 	\item Discrete Mathematics
+	% 	}
+	% \end{minipage}
+	\end{itemize}
+	% &	\begin{itemize}
+	% 	\vspace{0.1cm}
+	% 	\small{
+	% 		\item SEHH2311: Statistical Inference (Spring 23)
+	% 		\item SEHH1069: Calculus and Linear Algebra (Spring 23)
+	% 		\item SEHH2241: Discrete Mathematics (Spring 23)
+	% 		\item Workshop in Mathematics for Data Science (Winter 22)
+	% 		\item Workshop in Statistical Computation in Python for Data Science (Winter 22)
+	% 	}
+	% \end{itemize}
+	\\\\
+
+	%Collaborated with other team members to ensure that data was accurate, reliable, and accessible.
+	% Collected, analyzed, and interpreted large, complex datasets to identify trends, patterns, and insights.
+	\textsc{~Sep} 2021 | & \textbf{Data Scientist}\\
+	\textsc{Nov 2022} & \textbf{MassMutual Financial Group}\\
+	& Analyzed large, complex datasets using Python and its data science packages (e.g., Pandas, Scikit-learn and Seaborn) to identify trends, patterns and insights. Collaborated with team members to build machine-learning models to support business objectives. Communicated findings and recommendations to key stakeholders. Continuously monitored and improved performance of predictive models. \\
+	&
+	\begin{itemize}
+		\item Conducted data preprocessing and exploratory data analysis to cleanse datasets with missing and erroneous values, resulting in clean datasets ready for modeling.
+		\item Built machine-learning models (e.g., XGBoost and generalized linear models) to predict insurance loss ratio, claim amount, and claim frequency. The models have secured interest from several major insurance companies for cooperation, including a POC (proof of concept) using their datasets.
+		\item Implemented automation of insurance policy underwriting process by integrating machine-learning models.
+		% \item Interpreted the final model predictions using SHAP. 
+	\end{itemize}
+	% & Built machine-learning models (e.g., XGBoost, generalized linear models) to predict insurance claim amount, loss ratio, claim frequency and automate the insurance policy underwriting process.
+	% Visualized the experiment results using Pyplot (a third-party package in Python).
+		% under the supervision of Prof. \href{https://www.cse.ust.hk/~raywong/}{\underline{Raymond Chi-Wing Wong}}.
+	\\\\
+
+	 % (full-time)
+	\textsc{Aug} 2017 | & \textbf{Assistant Lecturer (Data Science)}\\
+	\textsc{~Sep} 2021 & \textbf{College of Professional and Continuing Education, Hong Kong Polytechnic University}\\
+	% \textsc{Present} & Hong Kong Community College, Hong Kong Polytechnic University\\
+	% & $-$ Lead a research project to implement a real-time emotion recognition system to detect students' emotions to aid online teaching (prototype can be found \href{https://github.com/whlinaa/emotion-detection}{\underline{here}}).\\
+	% & $-$ Implement a real-time emotion recognition system to detect students' emotions to aid online teaching (a prototype can be found here).\\
+	% & $-$ Design teaching materials for various courses, including data mining and Python programming. \\
+	% & $-$ Teach lectures and tutorials of undergraduate courses in data mining (using Python), programming in Python and C++, data structures, statistics and mathematics (e.g., linear algebra and calculus):\\
+	% & $-$ Teach lectures and tutorials of undergraduate courses for data science and computer science students:\\
+	& Taught lectures and tutorials of undergraduate courses in data science and computer science:\\
+	% &	\begin{itemize}
+	% 	\vspace{0.2cm}
+	% 	% \begin{itemize}
+	% 		\begin{minipage}{0.3\linewidth}
+	% 			\item Data Mining
+	% 			% \item Statistical Inference
+	% 			\item Probability and Statistics
+	% 			\item Calculus
+	% 			\item Foundation Mathematics
+	% 		\end{minipage}
+	% 		\begin{minipage}{0.33\linewidth}
+	% 			\item Python Programming 
+	% 			\item Statistics and Vector Algebra
+	% 			% \item Data Structures
+	% 			\item Discrete Mathematics
+	% 			\item Workshop in Calculus
+	% 		\end{minipage}
+	% 		\begin{minipage}{0.4\linewidth}
+	% 			\item Statistical Inference
+	% 			\item Data Structures
+	% 			\item Linear Algebra
+	% 			\item Workshop in C\texttt{++} Programming
+	% 			% \item[\vspace{\fill}] ~
+	% 			% \item Workshop in Calculus
+	% 		\end{minipage}
+	% 	\end{itemize}
+	&	\begin{itemize}
+		\vspace{0.2cm}
+		% \begin{itemize}
+			\begin{minipage}{0.3\linewidth}
+				\item Machine Learning
+				\item Statistical Inference
+				\item Data Structures
+				\item Calculus
+			\end{minipage}
+			\begin{minipage}{0.33\linewidth}
+				\item Data Mining
+				\item Statistics and Vector Algebra
+				\item Discrete Mathematics
+				\item Foundation Mathematics
+				% \item Workshop in Calculus
+			\end{minipage}
+			\begin{minipage}{0.4\linewidth}
+				\item Python Programming 
+				\item Probability and Statistics
+				\item Linear Algebra
+				\item Workshop in C\texttt{++} Programming
+				% \item[\vspace{\fill}] ~
+				% \item Workshop in Calculus
+			\end{minipage}
+		\end{itemize}
+
+		% % \footnotesize{
+		% \small{
+		% 	\item Data Mining (Spring 19, Spring 20, Fall 20, Fall 21)
+		% 	% : a hands-on course focusing on classification and regression models. Python and data science packages (e.g., numpy, pandas, matplotlib and scikit-learn) are extensively used throughout the course.
+		% 	% \item SEHH3163: Introduction to Big Data Analytics (Fall 21)
+		% 	% \item SEHH2240: Database Systems (Spring 21, Fall 21)
+		% 	\item Computer Programming in Python (Fall 18, Spring 20, Fall 20)
+		% 	\item Statistical Inference (Fall 20)
+		% 	\item Data Structures (Spring 21)
+		% 	\item Discrete Structures (Fall 18, Fall 19)
+		% 	\item Statistics and Vector Algebra (Spring 21)
+		% 	\item Calculus and Linear Algebra (Spring 19)
+		% 	\item Linear Algebra (Fall 17, Spring 18, Spring 19)
+		% 	\item Probability and Statistics (Fall 17)		
+		% 	\item Foundation Mathematics (Fall 19)		
+		% 	\item Workshop in Python Programming (Winter 17, Winter 18)
+		% 	\item Workshop in Calculus (Fall 17, Spring 18)
+		% 	% \item Workshop in Mathematics for Data Science (Winter 22)
+		% 	% \item Workshop in Statistical Computation in Python for Data Science (Winter 22)
+		% 	% \item Instructor at Math Learning Center
+		% }
+
+
+
+
+	% &	\begin{itemize}
+	% 	\vspace{0.1cm}
+	% 	\small{
+	% 		\item SEHH3164: Introduction to Data Mining (Spring 19, Spring 20, Fall 20): a hands-on course focusing on supervised and unsupervised learning algorithms. Python and data science packages (e.g., NumPy, Pandas, Matplotlib and Scikit-learn) are used throughout the course to 
+	% 		\item SEHH2042: Computer Programming (Fall 18, Spring 20, Spring 21)
+	% 		\item SEHH2241: Discrete Structures (Fall 18, Fall 19, Fall 20, Spring 21)
+	% 		\item SEHH1070: Statistics and Vector Algebra (Spring 21)
+	% 		\item SEHH1069: Calculus and Linear Algebra (Spring 19)
+	% 		\item SEHH1048: Introduction to Linear Algebra (Fall 17, Spring 18, Spring 19)
+	% 		\item SEHH1050: Introduction to Probability and Statistics (Fall 17)		
+	% 		\item SEHH1068: Foundation Mathematics (Fall 19)		
+	% 		\item Programming Workshop (Winter 17, Winter 18)
+	% 		\item Calculus Workshop (Fall 17, Spring 18)
+	% 		\item Instructor at Math Learning Center
+	% 	}
+	% \end{itemize}
+	% &	\begin{itemize}
+	% 	\vspace{0.1cm}
+	% 	\small{
+	% 		\item SEHH1048: Introduction to Linear Algebra (Fall 17, Spring 18, Spring 19)
+	% 		\item SEHH1050: Introduction to Probability and Statistics (Fall 17)		
+	% 		\item SEHH1068: Foundation Mathematics (Fall 19)		
+	% 		\item SEHH1069: Calculus and Linear Algebra (Spring 19)
+	% 		\item SEHH1070: Statistics and Vector Algebra (Spring 21)
+	% 		\item SEHH2042: Computer Programming (Fall 18, Spring 20, Spring 21)
+	% 		\item SEHH2241: Discrete Structures (Fall 18, Fall 19, Fall 20, Spring 21)
+	% 		\item SEHH3164: Introduction to Data Mining (Spring 19, Spring 20, Fall 20)
+	% 		\item Programming Workshop (Winter 17, Winter 18)
+	% 		\item Calculus Workshop (Fall 17, Spring 18)
+	% 		\item Instructor at Math Learning Center
+	% 	}
+	% \end{itemize}
+	\\\\
+	% \textsc{Aug} 2017 | & \textbf{Visiting Lecturer} \\
+	% \textsc{Aug} 2018 & Hong Kong Community College, Hong Kong Polytechnic University\\	
+	% &	\begin{itemize}
+	% 	\vspace{0.1cm}
+	% 	\small{
+	% 		\item SEHH1048: Introduction to Linear Algebra (Fall 17, Spring 18)
+	% 		\item SEHH1050: Introduction to Probability and Statistics (Fall 17)		
+	% 		\item Programming Workshop (Winter 17)
+	% 		\item Calculus Workshop (Fall 17, Spring 18)
+	% 		\item Tutor at Math Learning Center
+	% 		}
+	% \end{itemize}
+	% \\\\
+
+	\textsc{~Sep} 2017 | & \textbf{Research Assistant} (part-time)\\
+	\textsc{Mar} 2018 & \textbf{Department of Computer Science and Engineering, HKUST}\\
+	& Implemented data mining algorithms in research papers (e.g., Reverse Top-$k$ Threshold Algorithm, Sticky Sampling); undertook experiments to compare their performance with our proposed algorithm using Python and C\texttt{++}; visualized the research outcomes using Matplotlib and Seaborn.
+	% Visualized the experiment results using Pyplot (a third-party package in Python).
+		% under the supervision of Prof. \href{https://www.cse.ust.hk/~raywong/}{\underline{Raymond Chi-Wing Wong}}.
+	\\\\
+	% (part-time)
+	\textsc{Feb} 2016 | & \textbf{Teaching Assistant} \\
+	\textsc{Jun} 2017 & \textbf{Department of Computer Science and Engineering, HKUST}\\
+	& Taught tutorials, designed test questions and marked students' work of computer science courses: \\
+	&	\begin{itemize}
+		\vspace{0.2cm}
+	\begin{minipage}{0.37\linewidth}
+		\item Exploring and Visualizing Data
+	\end{minipage}
+	\begin{minipage}{0.25\linewidth}
+		\item Database Systems
+	\end{minipage}
+	\begin{minipage}{0.3\linewidth}
+		% \small{
+		% \item 
+		\item Discrete Mathematics
+		% }
+	\end{minipage}
+
+	% &	\begin{itemize}
+	% 	\vspace{0.1cm}
+	% 	% \footnotesize{
+	% 	\small{
+	% 		\item Exploring and Visualizing Data
+	% 		\item Database Management Systems
+	% 		\item Discrete Mathematical Tools for Computer Science %\vspace{0.1cm}\\\footnotesize{Teaching tutorials, grading quizzes \& exams, and holding consultation sessions. }
+	% 		%\vspace{0.1cm}\\\footnotesize{Teaching labs, setting homework \& exam questions, grading homework \& exams, and holding consultation sessions. }
+	% 	}
+	% \end{itemize}
+	\end{itemize}
+\end{tabularx}
+
+
+\section*{Education}
+\begin{tabularx}{\linewidth}{p{2.2cm}|p{17cm}}
+	\toprule 
+% \textsc{Aug} 2017   & Master of Philosophy (MPhil) in Computer Science\\
+\textsc{Aug} 2017   & Master of Philosophy in Computer Science\\
+& Hong Kong University of Science and Technology (HKUST)\\
+% \textsc{~Sep} 2015 |  & Master of Philosophy in Computer Science (Research Area: Data Mining)\\
+% \textsc{Aug} 2017 & Hong Kong University of Science and Technology (HKUST)\\
+& GPA: \b{3.965} (4-point scale)\\
+% \\
+% & Thesis Title: Frequent Item Finding when Obtaining Support is Costly 
+% (given \textbf{Champion Award }of Postgraduate Paper Competition from IEEE)\\
+& Research Area: Data Mining\\
+% & Supervisor: Prof. \href{https://www.cse.ust.hk/~raywong/}{Raymond Chi-Wing Wong}
+& Thesis received \textbf{Champion Award} of IEEE Postgraduate Paper Competition\\
+\\
+\textsc{Jul} 2017  & International Summer School Program \\
+& Peking University (PKU), Beijing, China
+% \textsc{Jun} 2017 |  & International Summer School Program \\
+% \textsc{Jul} 2017& Peking University (PKU), Beijing, China
+	\\& Overall score: \textbf{88.55}/100
+%\textsc{Present}& Peking University (PKU), Beijing, China	
+\\\\
+\textsc{Jul} 2015  & Bachelor of Engineering in Computer Science (First Class Honors)\\
+& Hong Kong University of Science and Technology (HKUST)\\
+% \textsc{Sep} 2013 |  & Bachelor of Engineering in Computer Science (First Class Honors)\\
+% \textsc{Jul} 2015& Hong Kong University of Science and Technology (HKUST)\\
+& GPA: \b{3.881} (4-point scale) %(in top 1.5\% of all students graduated in 2015)} 
+\\
+% &\href{https://drive.google.com/open?id=1ZCn4DEuqxciS6mTMCwEY44IbwPbFbu3G}{Ranked 1st among all 48 students in the BEng in Computer	Science Program}
+&\b{Ranked {1\textsuperscript{st}} among all graduates in the same program} (confirmation letter \href{https://drive.google.com/open?id=1ZCn4DEuqxciS6mTMCwEY44IbwPbFbu3G}{\underline{here}})
+\\
+% \textsc{Sep} 2011 |  & Associate in Statistics and Computing for Business (Distinction)\\
+% \textsc{Jul} 2013& Hong Kong Community College (HKCC), Hong Kong Polytechnic University\\
+% & GPA: \b{4.00} (4-point scale)\\
+% &Ranked 1\textsuperscript{st} and the only one with 4.0 GPA among all graduates in the same program (confirmation letter \href{https://drive.google.com/file/d/1cgY5f74OeQwvsQzqbZbWYSRvBQIEI66W/view?usp=sharing}{\underline{here}})
+\end{tabularx}
+% \vspace*{-0.5cm}
+
+
+
+\section*{Language and Technical Skills}
+%\vspace{ -.4 cm}
+%\begin{table}
+%\begin{tabular}{p{2.1cm}|p{14cm}}
+%\begin{longtable}{l|p{16cm}}
+\begin{tabularx}{\linewidth}{p{2.2cm}|p{16cm}}
+	\toprule 
+	Languages
+	% \pbox{2.1cm}{Languages} 
+	& \begin{itemize}
+		\item English (Fluent. IELTS overall band score: 8.0 out of 9.0, taken in Oct 2019)
+		\item Chinese (Native)
+		% \item Mandarine (Intermediate)
+	\end{itemize}
+	\\\\
+	Programming Languages
+	% \pbox{2.1cm}{Programming languages}
+	& \begin{itemize}
+		% \item Python and its data science packages, such as NumPy, Pandas, Matplotlib, and Scikit-learn, Keras, and TensorFlow (Proficient)
+		\item Python and its data science packages, such as NumPy, Pandas, Matplotlib, and Scikit-learn (Proficient)
+		% \item Data science packages, such as NumPy, Pandas, Matplotlib, Scikit-learn, Keras, and TensorFlow (Proficient)
+		\item SQL (Proficient)
+		% \item C++ (Familiar)
+	\end{itemize}
+	\\\\
+	Machine Learning
+	% \pbox{2.1cm}{Machine learning}
+	% & Proficient in fundamental machine learning algorithms, such as Linear 
+	% 	Regression and its variants (Ridge, Lasso, and Elastic Net Regression), Logistic and Softmax Regression, Support Vector Machine (SVM), Decision Tree, Random Forest, Naive Bayes Classifier, Bayesian Network, Ensemble Learning, XGBoost, Principal Component Analysis (PCA), and $k$-means clustering.
+	& \begin{itemize}
+		\item Proficient in fundamental machine learning algorithms, such as Linear 
+		Regression and its variants (Ridge, Lasso, and Elastic Net Regression), Logistic and Softmax Regression, Support Vector Machine (SVM), Decision Tree, Random Forest, Naive Bayes Classifier, Bayesian Network, Ensemble Learning, XGBoost, Principal Component Analysis (PCA), and $k$-means clustering.
+		% \item Proficient in deep learning models, such as Multilayer Perceptron (MLP), Convolutional Neural Network (CNN), and Recurrent Neural Network (RNN).
+		% \item Solid grasp on hyperparameter tuning and regularization concepts, such as Bias-Variance Tradeoff, Randomized Hyperparameter Search, $\ell_1$ and $\ell_2$ regularization, Dropout, and Batch Normalization.
+	\end{itemize}
+\end{tabularx}
+%\end{tabular}
+%\end{table}
+
+
+
+
+
+\section*{Relevant Coursework}
+%\vspace{ -.4 cm}
+%\begin{table}
+%\begin{tabular}{p{2.1cm}|p{14cm}}
+%\begin{longtable}{l|p{16cm}}
+\begin{tabularx}{\linewidth}{p{2.2cm}|p{7cm} p{9cm}}
+	\toprule 
+	Data Science
+	% \small{Data Science}
+	% \pbox{2.1cm}{Languages} 
+	&
+	Undergraduate Machine learning (A+) & Postgraduate Machine learning (A)\\
+	&
+	Introduction to Bayesian Networks (A) & Exploring and Visualizing Data (A+)\\
+	% \\\\
+	% Statistics
+	% \pbox{2.1cm}{Programming languages}
+	&
+	Regression Analysis (A+) & Time Series Forecasting (A+)\\
+	&
+	Statistical Data Analysis (A+) & Survey Design and Analysis (A+)\\	
+	&
+	Statistics I (A+) & Statistics II (A+) \\
+	&
+	Economic and Social Statistics (A+) 
+	\\\\
+	Mathematics &
+	% \small{Mathematics} &
+	Calculus (A+) & Introduction to Multivariable Calculus (A+)\\
+	& Linear Algebra (A+) & Discrete Mathematics for Computer Science (A+)\\
+	& Financial Mathematics (A+) & Logic (A+) 
+	\\\\
+	% \small{Computer Science}
+	Computer 
+	&
+	% \small{Computer Science}&
+	Principles of Programming (A+) & Object-Oriented Programming and Data Structures (A+)\\
+	Science & Design and Analysis of Algorithms (A) & Introduction to Advanced Algorithmic Techniques (A-)\\
+	& Fundamentals of Database Systems (A) & Cryptography and Security (A+)\\
+	& Operating Systems (A) & Computer Organization (A-)\\
+\end{tabularx}
+\vspace{-0.3cm}
+%\end{tabular}
+%\end{table}
+
+% \section*{References}
+% \begin{tabularx}{\linewidth}{p{9cm} p{9cm}}
+% 	\toprule 
+% \textbf{Prof. \href{https://www.cse.ust.hk/~raywong/}{Raymond Chi-Wing Wong}, Professor}& 	\b{Dr. \href{https://www.hkcc-polyu.edu.hk/en/about-hkcc/staff-directory/division-of-science-engineering-and-health-studies/index.php?sid=184}{Anthony Wai-Keung Loh}, Division Head}\\
+% Department of Computer Science and Engineering&	Division of Science, Engineering and Health Studies\\
+% Hong Kong University of Science and Technology&	College of Professional and Continuing Education\\
+% Tel: (852) 2358-6982& Hong Kong Polytechnic University\\
+% Email: \href{raywong@cse.ust.hk}{raywong@cse.ust.hk}&	Tel: (852) 3746-0238\\
+% &	Email: \href{anthony.wk.loh@cpce-polyu.edu.hk}{anthony.wk.loh@cpce-polyu.edu.hk}\\
+% \\
+% \b{Dr. \href{https://www.hkcc-polyu.edu.hk/en/about-hkcc/staff-directory/division-of-science-engineering-and-health-studies/index.php?sid=213}{Ching-On Lo}, Senior Lecturer} & \b{Dr. \href{https://www.hkcc-polyu.edu.hk/en/about-hkcc/staff-directory/division-of-science-engineering-and-health-studies/index.php?sid=213}{Wilson Chun-Kit Kwan}, Senior Lecturer}\\
+% Division of Science, Engineering and Health Studies & Division of Science, Engineering and Health Studies\\
+% College of Professional and Continuing Education & College of Professional and Continuing Education\\
+% Hong Kong Polytechnic University & Hong Kong Polytechnic University\\
+% Tel: (852) 3746-0626 & Tel: (852) 3746-0258\\
+% Email: \href{mailto:co.lo@cpce-polyu.edu.hk}{co.lo@cpce-polyu.edu.hk} & Email: \href{wilson.kwan@cpce-polyu.edu.hk}{wilson.kwan@cpce-polyu.edu.hk}\\
+% \end{tabularx}
+
+\section*{Honors and Awards}
+%\vspace{ -.4 cm}
+%\begin{table}
+%\begin{tabular}{p{2.1cm}|p{14cm}}
+%\begin{longtable}{l|p{16cm}}
+\begin{tabularx}{\linewidth}{p{2.2cm}|p{16cm}}
+	\toprule 
+%\hline
+	\pbox{2.2cm}{\small{IEEE, Computational Intelligence Chapter}} &   \pbox{15cm}{{\textbf{Champion Award of Postgraduate Student Research Paper Competition}} (2017) \\ 	\small{Awarded to one student each year based on the quality of the research paper submitted to the competition as well as the performance of the ensuing paper presentation.}}
+
+	
+\\\\
+%	\hline
+	\pbox{2.1cm}{Education Bureau, Hong Kong} & \pbox{16cm} {HKSAR Government Scholarship -- Continuing Students’ Awards (all years of undergraduate study)  \\ \small{Awarded to HKUST students with an overall GPA $\ge 3.85$, a demonstrated leadership capacity, and a good command of English, among other criteria, to fully cover their undergraduate tuition fee.}}	
+
+
+	\\\\
+%		\hline
+%		\hline
+	& Outstanding Performance Scholarship (2013) \\
+	& \small{Awarded to students with outstanding academic performance, valuable contributions to the school, and good communication skills, among other criteria.}
+	\\\\
+	HKUST 
+	& Li Po Chun Charitable Trust Fund Scholarships (2016-17)\\
+	&	\small{Awarded to three postgraduate students each year according to research progress and academic performance.}
+\\\\
+	& Postgraduate Studentship (all semesters of enrollment)\\
+	& \small{Awarded to postgraduate research students to fully cover their program fees and living expenses.}
+	\\\\
+	& \textbf{Outstanding Student Award} (2014--15)\\
+	& \small{For an elite group of \b{68 out of 4482 ($\approx 1.5\%$)} graduating students  with an excellent academic record.}
+	\\\\
+	& Dean's List (all semesters of enrollment)\\
+	&\small{For students with a term grade average $\ge3.70$.}
+	\\
+%	& Certificate of Achievement for Graduate Teaching Assistant Training Program (2016)\\
+%	&\small{For graduate teaching assistants who successfully completed at least six teaching-related training courses.}
+%	\\\\ 
+	% HKCC & Outstanding Student Award Scholarship (Gold) (2011--12) \\
+	% &\small{For students with outstanding academic achievements during their first year of study.}
+	% \\\\
+	% & Outstanding Student Award Scholarship: Department of Applied Mathematics (2011--12) \\
+	% &\small{For students pursuing a degree in a mathematics-related field and with strong academic performance.}
+	% \\\\
+
+	% &  Director's List (2011--12)\\
+	% &\small{For students with excellent academic performance in the whole academic year.}
+	% \\\\
+	% & Dean's List (all semesters of enrollment) \\
+	% &\small{For students ranked among the top 5\% of all registered students in the semester.}
+\end{tabularx}
+%\end{tabular}
+%\end{table}
+
+\begin{comment}
+\section*{Certificate}
+\begin{tabular}{p{2.1cm}|p{13cm}}	
+	\toprule 
+	Hong Kong Statistical Society & Higher Certificate\\
+	& \footnotesize{TODO}
+\end{tabular}
+\end{comment}
+%\newpage
+
+\section*{Publication}
+\begin{itemize}
+	\item Wing-Ho Lin and Raymond Chi-Wing Wong. \href{https://link.springer.com/chapter/10.1007/978-3-030-27520-4_4}{Frequent Item Mining when Obtaining Support is Costly}. \textit{In 21st International Conference on Big Data Analytics and Knowledge Discovery} (DaWaK), pages 37--56. Springer, 2019.	
+	% \vspace*{-0.5cm}
+	% \paragraph{Abstract:} suppose there are $n$ users and $m$ items, and the preference of each user for the items is revealed only upon probing, which takes time and is therefore costly. How can we quickly discover all the frequent items that are favored individually by at least a given number of users? This new problem not only has strong connections with several well-known problems, such as the frequent item mining problem, it also finds applications in fields such as sponsored search and marketing surveys. Unlike traditional frequent item mining, however, our problem assumes no prior knowledge of users' preferences, and thus obtaining the support of an item becomes costly. Although our problem can be settled naively by probing the preferences of all $n$ users, the number of users is typically enormous, and each probing itself can also incur a prohibitive cost. 
+	
+	% We present a sampling algorithm that drastically reduces the number of users needed to probe to $O(\log m)$---regardless of the number of users---as long as slight inaccuracy in the output is permitted. For reasonably sized input, our algorithm needs to probe only $0.5\%$ of the users, whereas the naive approach needs to probe all of them. 
+\end{itemize}
+
+% \section*{Professional Experience}
+% \begin{itemize}
+% 	\item \textbf{Paper Reviewer} of International Conferences:
+% 	\begin{itemize}
+% 		\item International Conference on Data Mining (ICDM) (2016 \& 2017)
+% 		\item Conference on Information and Knowledge Management (CIKM) (2016 \& 2017)
+% 		\item SIAM International Conference on Data Mining (SDM) (2017)
+% 		\item International Conference on Data Science and Advanced Analytics (DSAA) (2016)	
+% 		\item Asia Pacific Web Conference (APWeb) (2016)
+% 	\end{itemize}
+% \end{itemize}
+
+
+% \\ (Among 6 out of 61 papers invited to appear in the special issue of Journal of Data Intelligence)
+
+% \section{testing}
+% \begin{multicols}{3}
+% \begin{itemize}
+% 	\item Data Mining
+% 	\item Statistical Inference
+% 	\item Data Structures
+% 	\item Discrete Structures
+% 	\item Statistics and Vector Algebra
+% 	\item Calculus and Linear Algebra
+% 	\item Linear Algebra
+% 	\item Probability and Statistics
+% 	\item Foundation Mathematics
+% 	\item Workshop in Python Programming
+% 	\item Workshop in Calculus
+% \end{itemize}
+% \end{multicols}
+
+
+% \begin{itemize}
+% 	\begin{minipage}{0.3\linewidth}
+% 		\item Data Mining
+% 		\item Data Structures
+% 		\item Discrete Mathematics
+% 		\item Foundation Mathematics
+% 	\end{minipage}
+% 	\begin{minipage}{0.3\linewidth}
+% 		\item Python Programming 
+% 		\item Probability and Statistics
+% 		\item Calculus
+% 		\item Workshop in Calculus
+% 	\end{minipage}
+% 	\begin{minipage}{0.4\linewidth}
+% 		\item Statistical Inference
+% 		\item Statistics and Vector Algebra
+% 		\item Linear Algebra
+% 		\item Workshop in Python Programming
+% 		% \item[\vspace{\fill}] ~
+% 		% \item Workshop in Calculus
+% 	\end{minipage}
+% \end{itemize}
+\end{document}
+
+% \item Data Mining (Spring 19, Spring 20, Fall 20, Fall 21)
+% % : a hands-on course focusing on classification and regression models. Python and data science packages (e.g., numpy, pandas, matplotlib and scikit-learn) are extensively used throughout the course.
+% % \item SEHH3163: Introduction to Big Data Analytics (Fall 21)
+% % \item SEHH2240: Database Systems (Spring 21, Fall 21)
+% \item Computer Programming in Python (Fall 18, Spring 20, Fall 20)
+% \item Statistical Inference (Fall 20)
+% \item Data Structures (Spring 21)
+% \item Discrete Structures (Fall 18, Fall 19)
+% \item Statistics and Vector Algebra (Spring 21)
+% \item Calculus and Linear Algebra (Spring 19)
+% \item Linear Algebra (Fall 17, Spring 18, Spring 19)
+% \item Probability and Statistics (Fall 17)		
+% \item Foundation Mathematics (Fall 19)		
+% \item Workshop in Python Programming (Winter 17, Winter 18)
+% \item Workshop in Calculus (Fall 17, Spring 18)
+
+
+% Data Mining
+% Programming in Python
+% Statistical Inference
+% Data Structures
+% Probability and Statistics
+% Statistics and Vector Algebra
+% Discrete Mathematics
+% Calculus
+% Linear Algebra
+% Foundation Mathematics
+% Workshop in Python Programming
+% Workshop in Calculus
+
+
+% Data Mining
+% Data Structures
+% Discrete Mathematics
+% Foundation Mathematics
+
+% Programming in Python
+% Probability and Statistics
+% Calculus
+% Workshop in Python Programming
+
+% Statistical Inference
+% Statistics and Vector Algebra
+% Linear Algebra
+% Workshop in Calculus

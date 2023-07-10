@@ -1,0 +1,180 @@
+\ProvidesPackage{examStyle}
+\usepackage{amsthm, amsmath, amssymb, amsfonts,  graphicx}
+\usepackage{comment}
+%geometry epstopdf amstext,
+%graphicx is for including graphics
+%ams (american math society). amsmath is important
+%amsmath: pmatrix
+%amssymb for \mathbb, and bb means blackboard bold (used for x\in\mathbb{R}sqr)
+%amsthm: for theoremstyle, proof
+
+
+% \usepackage{C:/Users/whlin/Documents/Latex/Styles/algorithm/algorithm}
+% \usepackage[noend]{C:/Users/whlin/Documents/Latex/Styles/algorithmicx/algpseudocode}
+% \usepackage{D:/Documents/Latex/Styles/algorithm/algorithm}
+% \usepackage{C:/Users\whlin\OneDrive - HKUST Connect/Documents/Latex/Styles/algorithm/algorithm}
+% \usepackage[noend]{D:/Documents/Latex/Styles/algorithmicx/algpseudocode}
+% \usepackage[noend]{C:/Users\whlin\OneDrive - HKUST Connect/Documents/Latex/Styles/algorithmicx/algpseudocode}
+
+
+
+
+\marginparwidth 0pt \oddsidemargin -1.4 truecm \evensidemargin  0pt \marginparsep 0pt \topmargin -2.5truecm \textheight 24.5truecm \textwidth 18.9 truecm
+\graphicspath{{pic/}{../pic/}}
+
+
+\usepackage[ pdftex, bookmarksnumbered 
+]{hyperref} 
+%\begin{comment}
+\hypersetup{
+	%pdfpagemode makes the bookmark pane not shown
+	%pdfpagemode=UseNone,
+%	bookmarks = true,
+	colorlinks=true,
+	  urlcolor  = blue,
+ 	 anchorcolor = blue,
+% 	 bookmarksopen= false
+ 	 pdfpagemode=UseNone,
+ 	 % pdfborderstyle={/S/U/W 1}
+ 	 %not sure what the two are
+ 	 %	  linkcolor = Red,
+ 	 %	  citecolor = Violet,
+}
+
+
+
+%more info: https://www.overleaf.com/learn/latex/Hyperlinks
+% \usepackage[pdftex, bookmarksnumbered]{hyperref} 
+% \hypersetup{
+% 	%pdfpagemode makes the bookmark pane not shown
+% 	%pdfpagemode=UseNone,
+% %	bookmarks = true,
+% 	colorlinks=true,
+% 	  urlcolor  = blue,
+%  	 anchorcolor = blue,
+%  	 pdfpagemode=UseNone,
+%  	 bookmarksopen= true
+%  	 %not sure what the two are
+%  	 %	  linkcolor = Red,
+%  	 %	  citecolor = Violet,
+% }
+
+\usepackage{subfiles}
+
+%%%%%%%%%New command%%%%%%%%%
+%syntax: \newcommand{name}[num]{definition}
+
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}} %EG: $\pmat{1 & 2 & 3 \\ 4 & 5 & 6}$
+%% To write a matrix with fractions, do \\{0.3em}
+%EG: $\pmat{\f12 & \f12 \\[0.3em] \f12 &\f12}$
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+\newcommand{\N}{\mathbb{N}}                     % Positive integers.
+\newcommand{\R}{\mathbb{R}}                     % Reals.
+\newcommand{\Z}{\mathbb{Z}}                     % Integers.
+\newcommand{\Q}{\mathbb{Q}}                     % Integers.
+\def \t{\text}
+\def \c {\textcolor{red}} 
+\renewcommand \qedsymbol{$\blacksquare$}
+
+%To remove numbering, add *
+%EG: \newtheorem*{marking}{Marking}
+%\theoremstyle{plain} :it sets the text in italic and adds extra space above and below
+%\theoremstyle{definition}: adds extra space above and below, but sets the text in roman. it is recommended for definitions, conditions, problems, and examples; I've also seen it used for exercises.
+%\theoremstyle{remark} is set in roman, with no additional space above or below. it is recommended for remarks, notes, notation, claims, summaries, acknowledgments, cases, and conclusions.
+%To number the theorems by section/chapter, add [section]/[subsection] and so on.
+\theoremstyle{plain} 
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition} 
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{property}{Property}
+
+\theoremstyle{definition}
+\newtheorem{fact}{Fact}
+\newtheorem{application}{Application}
+\newtheorem{example}{Example}
+\newtheorem{definition}{Definition}
+\newtheorem*{analysis*}{Analysis}
+\newtheorem{correctness}{Correctness}
+\newtheorem{problem}{Problem}
+\newtheorem{assumption}{Assumption}
+% \newtheorem{question}[subsection]{Q}
+\newtheorem*{answer}{Answer}
+% \newtheorem*{solution}{Solution}
+\newtheorem*{conclusion}{Conclusion}
+\newtheorem*{notation*}{Notation}
+\newtheorem*{motivation}{Motivation}
+
+%\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{discussion}{Discussion}
+\newtheorem{observation}{Observation}
+
+
+
+
+
+% \newcommand{\done}{\hspace*{\fill} $\blacksquare$ \medskip}
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % overline (or bar)
+% %	sim
+% %	infty
+% %	binom
+% %	cap (bigcap)
+% %	cup (bigcup)
+% %	subset
+% %	subseteq
+% % textsuperscript
+% % mathbf
+% % langle (rangle)
+% % dotfill
+% % \paragraph
+% % \, < \: < \; < \quad < \qquad
+% % mm < cm < in < pt < em < ex
+% %
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %\varepsilon for a
+% %\widehat for a normal hat
+% %\wedge for logic and
+% %\vee for logic or
+% %\| for norm
+% %underbrace{}_{} for math comment under expression
+% %boldsymbol for bolding symbols optimally!
+% %to write inverted trinagle, use \nabla
+% %to write a mapping, do $f:\R\to\R^2$
+% %\item $x\mod y$ \qquad $x\pmod y$ \qquad $x\bmod y$
+% %To avoid word hyphenating, use \hyphenpenalty=10000
+% %The following are some common ways to make texts different: 
+% %\textsl
+% %\textsc
+% %\textsf
+
+
+% %%%%Some old command%%%%%%%
+% %\geometry{letterpaper}
+% %\usepackage{soul, enumitem, float, , diagbox, }
+
+
+% %\def \algo {algorithm}
+% %\def{\ccc}{\ell}
+% %\def{\draw}{independently and uniformly at random}
+% %\newcommand{\algo}{\t{algorithm\xspace}}
+% %\def \algos {\text{algorithms\xspace}}
+% %\def \ssec{\subsection}
+% %\def \sssec{\subsubsection}
+% %\def \ssssec{\subsubsubsection}
+% %\newcommand{\ran}[1]{Let $#1$ be an indicator variable such that }
+% %\algnewcommand{\LineComment}[1]{\Statex   $\blacktriangleright$ #1}
+% %\algrenewcommand{\algorithmiccomment}[1]{\hfill$\blacktriangleright$ #1}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+

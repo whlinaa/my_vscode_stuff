@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm,amssymb,amsfonts,amsmath,amstext}
+
+\marginparwidth 0pt
+\oddsidemargin -1.22 truecm
+\evensidemargin  0pt
+\marginparsep 0pt
+\topmargin -2.7truecm
+\linespread{1}
+\textheight 26.3truecm
+\textwidth 18.6 truecm
+\newenvironment{remark}{\noindent{\bf Remark }}{\vspace{0mm}}
+\newenvironment{remarks}{\noindent{\bf Remarks }}{\vspace{0mm}}
+\newenvironment{question}{\noindent{\bf Question }}{\vspace{0mm}}
+\newenvironment{questions}{\noindent{\bf Questions }}{\vspace{0mm}}
+\newenvironment{note}{\noindent{\bf Note }}{\vspace{0mm}}
+\newenvironment{summary}{\noindent{\bf Summary }}{\vspace{0mm}}
+\newenvironment{back}{\noindent{\bf Background}}{\vspace{0mm}}
+\newenvironment{conclude}{\noindent{\bf Conclusion}}{\vspace{0mm}}
+\newenvironment{concludes}{\noindent{\bf Conclusions}}{\vspace{0mm}}
+\newenvironment{dill}{\noindent{\bf Description of Dill's model}}{\vspace{0mm}}
+\newenvironment{maths}{\noindent{\bf Mathematics needed}}{\vspace{0mm}}
+\newenvironment{object}{\noindent{\bf Objective}}{\vspace{0mm}}
+\newenvironment{notes}{\noindent{\bf Notes }}{\vspace{0mm}}
+\newenvironment{theorem}{\noindent{\bf Theorem }}{\vspace{0mm}}
+\newenvironment{example}{\noindent{\bf Example }}{\vspace{0mm}}
+\newenvironment{examples}{\noindent{\bf Examples }}{\vspace{0mm}}
+\newenvironment{illu}{\noindent{\bf Illustration}}{\vspace{0mm}}
+\newenvironment{illus}{\noindent{\bf Illustrations}}{\vspace{0mm}}
+\newenvironment{lemma}{\noindent{\bf Lemma }}{\vspace{0mm}}
+\newenvironment{solution}{\noindent{\it Solution}}{\vspace{2mm}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\un}{\underline}
+\newcommand{\bs}{\boldsymbol}
+
+\begin{document}
+
+\baselineskip 18 pt
+
+\begin{center}
+{\bf \large CCN2237 2015--2016 Summer Term Class Test Suggested Solution}
+\end{center}
+
+\vspace{0.3cm}
+
+\noindent {\bf \underline{Question 1} (40 points)}
+
+\begin{enumerate}
+\item[(a)]
+The two assumptions are
+\begin{enumerate}
+\item[(i)]
+$\varepsilon_i \sim \mbox{N$(0, \sigma^2)$}$ for $i = 1, 2, \dots, 11$, and
+\item[(ii)]
+$Y_i$ and $Y_j$ (or $\varepsilon_i$ and $\varepsilon_j$) are independent for $i \ne j$.
+\end{enumerate}
+\item[(b)]
+The equation of the estimated regression line is
+$$
+\fbox{$\ds \widehat{y} = 6.4136 + 1.8091x$} \ \left(\widehat{y} = 6.41363636 + 1.80909091x\right).
+$$
+The mean (coded) amount of converted sugar increases approximately by $1.8091$ when the (coded) temperature increases by one.
+\item[(c)]
+The coefficient of determination $R^2$ is given by
+$$
+R^2 \approx (0.70702644)^2 \approx \fbox{$0.4999$},
+$$
+i.e.~$49.99\%$ of the variation in the amount of converted sugar can be explained by the linear relationship with temperature.
+\item[(d)]
+Since
+\begin{eqnarray*}
+{\rm SSE} & = & S_{yy} - \frac{\left(S_{xy}\right)^2}{S_{xx}} \\
+& = & \sum_{i=1}^n y_i^2 - n\,\overline{y}^2 - \frac{\left(\sum_{i=1}^n x_i y_i - n\,\overline{x}\,\overline{y}\right)^2}{\sum_{i=1}^n x_i^2 - n\,\overline{x}^2} \\
+& = & 923.58 - 11\left(\frac{100.4}{11}\right)^2 - \frac{\left(152.59 - 11 \times \frac{16.5}{11} \times \frac{100.4}{11}\right)^2}{25.85 - 11\left(\frac{16.5}{11}\right)^2} \\
+& \approx & 3.60172728,
+\end{eqnarray*}
+an unbiased point estimate for $\sigma^2$ is given by
+$$
+{\rm MSE} = \frac{{\rm SSE}}{n - 2} = \frac{3.60172728}{11 - 2} \approx \fbox{$0.4002$}.
+$$
+\item[(e)]
+The hypotheses are
+$$
+H_0 : \beta_1 = 2 \ \ \, {\rm versus} \ \ \, H_1 : \beta_1 \ne 2.
+$$
+The test statistic is
+$$
+t := \frac{\widehat{\beta_1} - c}{\sqrt{\frac{{\rm MSE}}{S_{xx}}}} = \frac{1.80909091 - 2}{\sqrt{\frac{\frac{3.60172728}{11 - 2}}{25.85 - 11\left(\frac{16.5}{11}\right)^2}}} \approx -0.3165.
+$$
+Since $|t| < 3.250 \approx t_{0.005;\,9}$, we do {\em not\/} reject $H_0$ at the $1\%$ level of significance. There is insufficient evidence to indicate that the slope of the actual regression line is different from two.
+\item[(f)]
+\begin{enumerate}
+\item[(i)]
+The hypotheses are
+$$
+H_0 : \beta_1 = 0 \ \ \, {\rm versus} \ \ \,  H_1 : \beta_1 \ne 0.
+$$
+We present calculations in an ANOVA table as follows.
+\begin{center}
+\begin{tabular}{|ccccc|} \hline
+{\bf Source of} & {\bf Sum of} & {\bf Degree(s) of} & {\bf Mean} & {\bf Computed} \\
+{\bf Variation} & {\bf Squares} & {\bf Freedom} & {\bf Square} & {\bf $F$} \\ \hline\hline
+Regression & $3.60009091$ & 1 & $3.60009091$ & $8.9959$  \\
+Error/Residual & $3.60172728$  & 9 & $0.40019192$ & \\ \hline
+Total & $7.20181819$ & $10$ & & \\ \hline
+\end{tabular}
+\end{center}
+As $F > 5.12 \approx F_{0.05;\,1,\,9}$, we reject $H_0$ at $\alpha = 0.05$. There is sufficient evidence to indicate that a linear relationship between temperature and the amount of converted sugar exists.
+\item[(ii)]
+The ANOVA approach {\em cannot\/} be used to test for the existence of a positive linear relationship between the two variables, since the MSR tends to over-estimate the error variance $\sigma^2$ of the regression model whenever $\beta_1 \ne 0$ (i.e.~$\beta_1$ is positive or negative) and the MSE is always an unbiased estimator for $\sigma^2$ regardless of the value of $\beta_1$.
+\end{enumerate}
+\item[(g)]
+With $t_{0.025;\,9} \approx 2.262$, a $95\%$ prediction interval for the amount of converted sugar corresponding to the (coded) temperature $1.6$ (i.e.~$x_0 = 1.6$) is given by
+\begin{eqnarray*}
+ & & \widehat{\beta_0} + \widehat{\beta_1}x_0 \pm t_{\frac{\alpha}{2};\,n - 2}\sqrt{{\rm MSE}\left[1 + \frac{1}{n} + \frac{\left(x_0 - \overline{x}\right)^2}{S_{xx}}\right]} \\
+& = & 6.41363636 + 1.80909091 \times 1.6 \pm 2.262\sqrt{\frac{3.60172728}{11 - 2}\left[1 + \frac{1}{11} + \frac{\left(1.6 - \frac{16.5}{11}\right)^2}{25.85 - 11\left(\frac{16.5}{11}\right)^2}\right]} \\
+& \approx & \fbox{$(7.8074, 10.8090)$}.
+\end{eqnarray*}
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\noindent {\bf \underline{Question 2} (48 points)}
+
+\begin{enumerate}
+\item[(a)]
+Since $\ds \widehat{\bs{\beta}} = \left(X^T X\right)^{-1} X^T\bs{Y}$, we have
+$$
+E\left(\widehat{\bs{\beta}}\right) = E\left[\left(X^T X\right)^{-1} X^T\bs{Y}\right] = \left(X^T X\right)^{-1} X^TE(\bs{Y}) = \left(X^T X\right)^{-1} X^T X\bs{\beta} = \bs{\beta}
+$$
+and
+\begin{eqnarray*}
+{\rm Var}\left(\widehat{\bs{\beta}}\right) & = & {\rm Var}\left[\left(X^T X\right)^{-1} X^T\bs{Y}\right] \\
+& = & \left(X^T X\right)^{-1} X^T {\rm Var}(\bs{Y})\left[\left(X^T X\right)^{-1} X^T\right]^T \\
+& = & \left(X^T X\right)^{-1} X^T \left(\sigma^2 I_n\right) \left(X^T\right)^T \left[\left(X^T X\right)^T\right]^{-1} \\
+& = & \sigma^2 \left(X^T X\right)^{-1} X^T X \left(X^T X\right)^{-1} \\
+& = & \sigma^2 \left(X^T X\right)^{-1}.
+\end{eqnarray*}
+\item[(b)]
+\begin{enumerate}
+\item[(i)]
+The design matrix $X$ is given by
+$$
+\fbox{$\ds X = \begin{pmatrix}
+1 & 2 & -3 \\
+1 & 0 & -2 \\
+1 & -2 & -1 \\
+1 & 1 & 0 \\
+1 & -1 & 0 \\
+1 & 3 & 1 \\
+1 & 2 & 2 \\
+1 & -1 & 3
+\end{pmatrix}$}.
+$$
+\item[(ii)]
+Let $\widehat{\bs{\beta}} = \begin{pmatrix}
+\widehat{\beta_0} & \widehat{\beta_1} & \widehat{\beta_2}
+\end{pmatrix}^T$ be the least squares estimate for $\bs{\beta} = \begin{pmatrix}
+\beta_0 & \beta_1 & \beta_2
+\end{pmatrix}^T$. Then
+\begin{eqnarray*}
+\widehat{\bs{\beta}} & = & \left(X^T X\right)^{-1} X^T{\bs Y} \ = \ \begin{pmatrix}
+8 & 4 & 0 \\
+4 & 24 & 0 \\
+0 & 0 & 28
+\end{pmatrix}^{-1}\begin{pmatrix}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+2 & 0 & -2 & 1 & -1 & 3 & 2 & -1 \\
+-3 & -2 & -1 & 0 & 0 & 1 & 2 & 3 \\
+\end{pmatrix}\begin{pmatrix}
+2.8 \\
+1.0 \\
+4.2 \\
+3.8 \\
+3.6 \\
+2.0 \\
+3.0 \\
+6.4
+\end{pmatrix} \\
+& = & \begin{pmatrix}
+\ds \frac{24}{176} & \ds -\frac{4}{176} & 0 \\
+\ds -\frac{4}{176} & \ds \frac{8}{176} & 0 \\
+0 & 0 & \ds \frac{1}{28}
+\end{pmatrix}\begin{pmatrix}
+26.8 \\
+3 \\
+12.6
+\end{pmatrix} \ \approx \ \begin{pmatrix}
+3.58636364 \\
+-0.47272727 \\
+0.45
+\end{pmatrix}.
+\end{eqnarray*}
+Thus, $\fbox{$\widehat{\beta_0} \approx 3.5864$}$, $\fbox{$\widehat{\beta_1} \approx -0.4727$}$ and $\fbox{$\widehat{\beta_2} = 0.45$}$.
+\item[(iii)]
+Since
+\begin{eqnarray*}
+{\rm SSE} & = & {\bs Y}^T{\bs Y} - \left(X^T\bs{Y}\right)^T\widehat{\bs{\beta}} \\
+& = & \sum_{i=1}^8 y_i^2 - \begin{pmatrix}
+26.8 & 3 & 12.6
+\end{pmatrix}\begin{pmatrix}
+3.58636364 \\
+-0.47272727 \\
+0.45
+\end{pmatrix} \\
+& = & 107.84 - 100.366363742 \\
+& \approx & 7.4736363,
+\end{eqnarray*}
+the standard error of estimate of the given model is
+$$
+\sqrt{{\rm MSE}} = \sqrt{\frac{{\rm SSE}}{n - p}} = \sqrt{\frac{7.4736363}{8 - 3}} \approx \fbox{$1.2226$}.
+$$
+\item[(iv)]
+With
+$$
+{\rm SST} = \sum_{i=1}^{8} y_i^2 - 8\,\overline{y}^2 = 107.84 - 8\left(\frac{26.8}{8}\right)^2 = 18.06,
+$$
+the adjusted coefficient of multiple determination of $\Omega$ is given by
+$$
+1 - \left(\frac{n-1}{n-p}\right)\frac{{\rm SSE}}{{\rm SST}} = 1 - \left(\frac{8 - 1}{8 - 3}\right)\frac{7.4736363}{18.06} \approx \fbox{0.4206}.
+$$
+\item[(v)]
+\begin{enumerate}
+\item[(1)]
+The hypotheses are
+$$
+H_0 : \beta_1 = \beta_2 = 0 \ \ \, {\rm versus} \ \ \, \mbox{$H_1$ : either $\beta_1$ or $\beta_2$ is non-zero}.
+$$
+We present calculations in an ANOVA table as follows.
+
+\begin{center}
+\begin{tabular}{|ccccc|} \hline
+{\bf Source of} & {\bf Sum of} & {\bf Degrees of} & {\bf Mean} & {\bf Computed} \\
+{\bf Variation} & {\bf Squares} & {\bf Freedom} & {\bf Square} & {\bf $F$} \\ \hline\hline
+Regression & $10.5863637$ & $2$ & $5.29318185$ & $3.5412$  \\
+Error/Residual & $7.4736363$ & $5$ & $1.49472726$ & \\ \hline
+Total & $18.06$ & $7$ & & \\ \hline
+\end{tabular}
+\end{center}
+
+As $F < 5.79 \approx F_{0.05;\,2,\,5}$, we do {\em not\/} reject $H_0$ at the $5\%$ level of significance. There is insufficient evidence to indicate that the model $\Omega$ is appropriate.
+\item[(2)]
+The hypotheses are
+$$
+H_0 : \beta_2 = 0 \ \ \, {\rm versus} \ \ \, H_1 : \beta_2 \ne 0.
+$$
+Since
+$$
+t := \frac{\widehat{\beta_2} - c}{\sqrt{{\rm MSE} \cdot a_{33}}} = \frac{0.45 - 0}{\sqrt{\frac{7.4736363}{5} \times \frac{1}{28}}} \approx 1.9476
+$$
+and $|t| < 2.571 \approx t_{0.025;\,5}$, we do {\em not\/} reject $H_0$ at the $5\%$ level of significance. There is insufficient evidence that the predictor variable $x_2$ is significant in the model $\Omega$.
+\end{enumerate}
+\item[(vi)]
+The hypotheses are
+$$
+H_0 : \alpha_3 = 0 \ \ \, {\rm versus} \ \ \, H_1 : \alpha_3 \ne 0.
+$$
+The test statistic is
+$$
+F := \frac{\frac{{\rm SSE}(\Omega) - {\rm SSE}\left(\Omega'\right)}{(n - k) - (n - p)}}{\frac{{\rm SSE}\left(\Omega'\right)}{n - p}} = \frac{\frac{7.4736363 - 3.4230352}{(8 - 3) - (8 - 4)}}{\frac{3.4230352}{8 - 4}} \approx 4.7333.
+$$
+Since $F < 21.20 \approx F_{0.01;\,1,\,4}$, we do {\em not\/} reject $H_0$ at $\alpha = 0.01$. There is insufficient evidence to indicate that $\alpha_3$ is non-zero. Hence the model $\Omega$ is better.
+\end{enumerate}
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\noindent {\bf \underline{Question 3} (12 points)}
+
+\begin{enumerate}
+\item[(a)]
+The SSPE is
+$$
+\sum_{i=1}^5 \sum_{j=1}^{n_i} y_{ij}^2 - \sum_{i=1}^5 \frac{y_{i\,\cdot}^2}{n_i} = 85.54 - \left[\frac{(4.3)^2}{2} + \frac{(5.4)^2}{2} + \frac{(7.8)^2}{3} + \frac{(5.1)^2}{2} + \frac{(8.4)^2}{3}\right] = \fbox{$4.91$}.
+$$
+\item[(b)]
+The hypotheses are
+$$
+H_0 : E(Y) = \beta_0 + \beta_1 x \ \, \mbox{(i.e.~there is {\em no\/} lack of fit)}
+$$
+versus
+$$
+H_1 : E(Y) \ne \beta_0 + \beta_1 x \ \, \mbox{(i.e.~there is lack of fit)}.
+$$
+The SSE of the fitted simple linear regression model is given by
+\begin{eqnarray*}
+{\rm SSE} & = & S_{yy} - \frac{(S_{xy})^2}{S_{xx}} \\
+& = & \sum_{i=1}^5 \sum_{j=1}^{n_i} y_{ij}^2 - 12\,\overline{y}^2 - \frac{\left(\sum_{i=1}^5 \sum_{j=1}^{n_i} x_i y_{ij} - 12\,\overline{x}\,\overline{y}\right)^2}{\sum_{i=1}^5 \sum_{j=1}^{n_i} x_{i}^2 - 12\,\overline{x}^2} \\
+& = & 85.54 - 12\left(\frac{31}{12}\right)^2 - \frac{\left(128.27 - 12 \times \frac{48.7}{12}\times\frac{31}{12}\right)^2}{211.83 - 12\left(\frac{48.7}{12}\right)^2} \\
+& \approx & 5.02959417.
+\end{eqnarray*}
+The test statistic is given by
+$$
+F := \frac{{\rm MSLF}}{{\rm MSPE}} = \frac{\frac{{\rm SSE} - {\rm SSPE}}{(n-p)-(n-k)}}{\frac{{\rm SSPE}}{n-k}} = \frac{\frac{5.02959417 - 4.91}{(12 - 2) - (12 - 5)}}{\frac{4.91}{12 - 5}} \approx 0.0568.
+$$
+As $F < 4.35 \approx F_{0.05;\,3,\,7}$, we do {\em not\/} reject $H_0$ at the $5\%$ level of significance. There is insufficient evidence that a simple linear regression model is inadequate.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

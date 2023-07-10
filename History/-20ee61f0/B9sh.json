@@ -1,0 +1,280 @@
+// testing
+// again
+// hi 
+// again
+// 123
+//gg
+//
+{
+    "editor.matchBrackets": "never",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.snippetSuggestions": "top",
+    "editor.insertSpaces": false,
+    
+    "editor.tokenColorCustomizations": {
+    // "comments": "#23b93c", # change comment color globally
+        "[One Dark Pro]": {
+            "comments": "#23b93c",
+        },
+        "[Monokai]": {
+            "comments": "#23b93c",
+            // "functions": "#FF0000",
+            // "variables": "#FF0000",
+        },
+        "[Brogrammer]": {
+            "comments": "#23b93c",
+            // "functions": "#FF0000"
+            // "variables": "#FF0000"
+        },
+        "[Monokai Pro]": {
+            "comments": "#23b93c",
+            // "functions": "#FF0000"
+            // "variables": "#FF0000"
+        },
+    },
+
+    "workbench.colorCustomizations": {
+        // the following is for One Dark Pro only!
+        "[One Dark Pro]": {
+        // "[Monokai]": {
+            // "editorLineNumber.foreground": ,
+            // "editor.selectionBackground": "#135564",
+            // "editor.selectionHighlightBackground": "#135564",
+
+            // "editor.selectionBackground": "#ffffff",
+            // "editor.selectionHighlightBackground": "#8f967ca8",
+            // "editor.selectionHighlightBackground": "#dfdfdf",
+
+            // "editor.selectionBorder": "#135564",
+
+            // "editor.wordHighlightBorder":"#d81bd8",
+            // "editor.selectionHighlightBorder":"#d81bd8",
+            // "tab.unfocusedActiveBorder": "#000000",
+            // "tab.activeBorderTop": "#ff0000",
+            // "activeTabBackground": "#ff0000",
+            // "editor.background": "#000000",
+            // "editor.background": "#f3f1f1",
+
+            "editor.findMatchBackground": "#00cc44a8", //Current SEARCH MATCH
+            "editor.findMatchBorder": "#00cc44a8", //Current SEARCH MATCH
+
+            "editor.selectionBackground": "#135564",
+            "editor.findMatchHighlightBackground": "#ff7b00a1", //Other SEARCH MATCHES
+            "editor.findMatchHighlightBorder": "#ff7b00a1", //Other SEARCH MATCHES
+            "tab.activeBorder": "#ff0000",
+            "tab.activeBackground": "#34613b",
+            "editorWhitespace.foreground": "#bdb2b2fb",
+
+            "editorCursor.foreground": "#d81bd8",
+            "terminalCursor.foreground": "#d81bd8",
+
+            "editor.background": "#080808",
+
+            // to use 
+            "editor.foreground": "#f3f1f1",
+            "tab.inactiveForeground": "#ffffff",
+            "tab.unfocusedInactiveForeground": "#c5bfbf",
+            "tab.activeForeground": "#ffffff",
+            "tab.unfocusedActiveForeground": "#c5bfbf",
+            "editorLineNumber.activeForeground":"#d81bd8",
+            "scrollbarSlider.activeBackground": "#e3f89542",
+            "scrollbarSlider.background": "#e3f89542",
+            "editorCodeLens.foreground":"#be101e",
+            "statusBar.foreground":"#dad3d3",
+        }
+    },
+
+    "workbench.editor.tabSizing": "shrink",
+    
+    "latex-workshop.view.pdf.viewer": "tab",
+    // "latex-workshop.view.pdf.viewer": "external",
+
+    "latex-workshop.view.pdf.external.viewer.command": "C:/Program Files/SumatraPDF/SumatraPDF.exe",
+    "latex-workshop.view.pdf.external.viewer.args": [
+        "-forward-search",
+        "%TEX%",
+        "%LINE%",
+        "-reuse-instance",
+        "-inverse-search",
+        "\"C:/.../Microsoft VS Code/Code.exe\" \"C:/.../Microsoft VS Code/resources/app/out/cli.js\" -gr \"%f\":\"%l\"",
+        "%PDF%"
+    ],
+
+    "markdown.extension.list.indentationSize": "inherit",
+    "cSpell.ignoreWords": [
+        "quantile",
+        "quantitle"
+    ],
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "cSpell.userWords": [
+        "arange",
+        "dendrogram",
+        "discretization",
+        "discretize",
+        "hypergeometric",
+        "moodle",
+        "multinomial",
+        "numpy",
+        "overfitting",
+        "pythonic"
+    ],
+    // "python.languageServer": "Pylance",
+    // "python.languageServer": "Microsoft",
+    "editor.cursorWidth": 3,
+    // "editor.renderWhitespace": "all", 
+
+    
+    "editor.glyphMargin": false,
+    // "editor.lineNumbers": "off",
+    "editor.folding": false,
+    // "editor.lineDecorationsWidth": 0, // undocumented
+    // "editor.lineNumbersMinChars": 0,  // undocumented
+    // "editor.renderLineHighlight": "all",
+    "editor.renderLineHighlight": "gutter",
+    "editor.renderControlCharacters": false,
+    "scrollkey.line1": 5,
+    "scrollkey.line2": 15,
+    "kite.showWelcomeNotificationOnStartup": false,
+    "python.defaultInterpreterPath": "/Users/whlin/miniforge3/envs/data_science/bin/python",
+    "editor.mouseWheelZoom": true,
+    "jupyter.askForKernelRestart": false,
+    "jupyter.alwaysTrustNotebooks": true,
+    "sync.autoDownload": false,
+    "bookmarks.sideBar.expanded": true,
+    "remove-empty-lines.allowedNumberOfEmptyLines": 0,
+    // "python.languageServer": "Pylance",
+    "code-runner.runInTerminal": true,
+    "code-runner.saveFileBeforeRun": true,
+    "C_Cpp.updateChannel": "Insiders",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe",
+    "editor.fontSize": 15,
+    // "python.dataScience.sendSelectionToInteractiveWindow": true,
+    
+    // for dealing with file names with spaces : https://github.com/formulahendry/vscode-code-runner/issues/248
+    // "code-runner.executorMap": {
+
+    //     "cpp": "cd $dir && g++ \"$fileName\" -o \"$fileNameWithoutExt.exe\" && & \"$dir$fileNameWithoutExt.exe\""
+    // },
+
+    "macros": {
+        "copyWithoutNewLine": [
+            "cursorHome",
+            "cursorEndSelect",
+            "editor.action.clipboardCopyAction",
+            "cancelSelection",
+        ],
+        "cutWithoutNewLine": [
+            "cursorHome",
+            "cursorEndSelect",
+            "editor.action.clipboardCutAction"
+        ]
+    },
+    "jupyter.jupyterCommandLineArguments": [
+    
+    ],
+    "tabnine.experimentalAutoImports": true,
+    "notebook.cellToolbarLocation": {
+        "jupyter-notebook": "right"
+    },
+    "editor.smoothScrolling": true,
+    "security.workspace.trust.enabled": false,
+    "mssql.connections": [
+        {
+            "server": "{{put-server-name-here}}",
+            "database": "{{put-database-name-here}}",
+            "user": "{{put-username-here}}",
+            "password": ""
+        }
+    ],
+    // 
+
+    "jupyter.enableNativeInteractiveWindow": false,
+    "editor.copyWithSyntaxHighlighting": false,
+    "markdown.preview.scrollEditorWithPreview": false,
+    "editor.mouseWheelScrollSensitivity": 1.5,
+    "notebook.lineNumbers": "on",
+    "terminal.integrated.inheritEnv": false,
+
+
+
+    "r.bracketedPaste": true,
+    "r.alwaysUseActiveTerminal": true,
+    "r.rterm.mac": "/opt/anaconda3/bin/radian",
+    "r.sessionWatcher": true,
+    // "r.lsp.path": "/Library/Frameworks/R.framework/Versions/3.6/Resources/R",
+    "r.lsp.debug": true,
+    "r.lsp.diagnostics": true,
+    "r.rterm.option": [
+    "--no-save",
+    "--no-restore",
+    "--r-binary=/Library/Frameworks/R.framework/Versions/3.6/Resources/R"
+    ],
+
+    // The number of spaces a tab is equal to.
+    "editor.tabSize": 4,
+    
+    // Insert spaces when pressing Tab.
+    "editor.insertSpaces": true,
+
+    // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
+    "editor.detectIndentation": true,
+    "python.testing.pytestEnabled": true,
+
+    // "files.defaultLanguage": "${activeEditorLanguage}"
+    "files.defaultLanguage": "python",
+    "bracketPairColorizer.depreciation-notice": false,
+    "notebook.markup.fontSize": 14,
+    "workbench.colorTheme": "One Dark Pro",
+    "notebook.navigation.allowNavigateToSurroundingCells": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "julia.symbolCacheDownload": true,
+    "workbench.editor.navigationScope": "editorGroup",
+    "hexeditor.columnWidth": 16,
+    "hexeditor.showDecodedText": true,
+    "hexeditor.defaultEndianness": "little",
+    "hexeditor.inspectorType": "aside",
+    "editor.wordWrap": "on",
+    "autoDocstring.docstringFormat": "numpy",
+    "python.formatting.provider": "yapf",
+    "notebook.diff.ignoreMetadata": true,
+    "workbench.list.horizontalScrolling": true,
+    "editor.minimap.enabled": false,
+    "editor.guides.bracketPairs": true,
+    "oneDarkPro.bold": true,
+    "sync.gist": "a6fe974ec1eb7e5afcbe02494d7d934a",
+    "julia.enableTelemetry": false,
+    "window.commandCenter": false,
+    "julia.environmentPath": "",
+    // "julia.environmentPath": "",
+    // "julia.environmentPath": "",
+    // "notebook.undoRedoPerCell": false // change default language to python
+    "[markdown]": {
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        },
+        "editor.insertSpaces": false
+    },
+    "markdown-preview-enhanced.enableScriptExecution": true,
+    "markdown-preview-enhanced.previewTheme": "github-dark.css",
+    "terminal.integrated.fontSize": 14,
+    "update.mode": "manual",
+    // "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "terminal.integrated.shell.windows": "",
+    "jupyter.interactiveWindow.creationMode": "single",
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "notebook.output.textLineLimit": 3,
+    "notebook.output.scrolling": true,
+    // "terminal.integrated.automationShell.windows": ""
+}
+
+// end

@@ -1,0 +1,31 @@
+product_id,product_class,brand_name,is_low_fat,is_recyclable,promotion_id,cost_in_dollars,customer_id
+1,ACCESSORIES,Fort West,N,N,1,2,1
+1,ACCESSORIES,Fort West,N,N,2,2,10
+1,ACCESSORIES,Fort West,N,N,2,3,2
+1,ACCESSORIES,Fort West,N,N,1,2,2
+1,ACCESSORIES,Fort West,N,N,1,2,2
+2,DRINK,Fort West,N,Y,2,10,2
+2,DRINK,Fort West,N,Y,2,12,3
+2,DRINK,Fort West,N,Y,1,10,10
+2,DRINK,Fort West,N,Y,1,11,3
+2,DRINK,Fort West,N,Y,3,13,1
+3,FOOD,Fort West,Y,N,3,6,3
+3,FOOD,Fort West,Y,N,3,5,1
+3,FOOD,Fort West,Y,N,3,6,2
+3,FOOD,Fort West,Y,N,3,7,3
+3,FOOD,Fort West,Y,N,1,6,1
+4,DRINK,Golden,Y,Y,2,2,2
+5,FOOD,Golden,Y,N,2,8,1
+5,FOOD,Golden,Y,N,1,7,10
+5,FOOD,Golden,Y,N,2,8,1
+5,FOOD,Golden,Y,N,2,8,15
+6,FOOD,Lucky Joe,N,Y,1,4,1
+6,FOOD,Lucky Joe,N,Y,2,2,1
+8,FURNITURE,Lucky Joe,N,Y,2,4,3
+9,ELECTRONICS,Lucky Joe,N,Y,3,1,2
+9,ELECTRONICS,Lucky Joe,N,Y,1,1,10
+9,ELECTRONICS,Lucky Joe,N,Y,1,2,3
+10,FURNITURE,American Home,N,Y,1,3,2
+10,FURNITURE,American Home,N,Y,1,3,1
+10,FURNITURE,American Home,N,Y,2,2,3
+11,FURNITURE,American Home,N,Y,1,5,1

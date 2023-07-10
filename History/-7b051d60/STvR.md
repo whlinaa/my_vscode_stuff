@@ -1,0 +1,47 @@
+## new (andrew ng, ML course)
+- questions for decision tree:
+    - How to choose what feature to split on at each node?
+        - maximize purity 
+- when stop splitting
+    - when splitting a node will result in the tree exceeding a maximum depth
+    - improvement in purity score below threshold
+    - number of examples in a node below a threshold
+- plot the entropy function 
+- when entropy uses base 2? we want the peek to be 1, if we use other bases, the peak won't be 1!
+- reduction in impurity = information gain 
+- why bother calculating information gain (i.e., reduction in entropy)? Because one of the stopping criteria is the reduction in entropy is small 
+- can recursive algo be multithreaded?
+- for categorical, we will one-hot encode it, so the tree is still binary
+    - a feature can be chosen again, under this formulation
+- a feature can be chosen by the left and right subtree at the same level too
+- in regression tree, instead of trying to reduce the entropy of a node, we try to reduce the `variance` of the y values of the node.
+- MSE basically the same as variance, without the scaling 
+- in regression, we measure the reduction in variance (by finding variance at root) 
+- one cons of using DT is that the model can be sensitive to small changes to the data (high variance)
+    - i.e., changing the values of one single example can cause the splitting features to be completely different
+    - sol: use ensemble
+- tree emsemble
+    - `with replacement` part is critical
+    - setting `n_trees` large will never hurt performance, but beyond a certain point, we have a diminishing returns, and won't be much better if larger than 100
+- andrew ng's video: he talked about bagged tree
+- problem: if we do ensemble, very often the splitting will be the same across all trees
+- aim: make each tree (in terms of its splitting and samples) different from other trees
+- for random forest, choose `n_feat` to be sqrt(n)
+- why SRS-WR works?
+    - the WR procedure causes the algo to explore a lot of small changes to the data already and it's training different decision trees and is averaging over all of those changes to the data that the sampling with replacement procedure causes. and so this means that any little changes further to the training set makes it less likely to have a huge impact on the overall output of the overall random forest algorithm
+- deliberate practice: 
+    - 
+    - how about making it more likely to select substandard class examples for training?
+- what is Kernel smoother?
+    - https://en.wikipedia.org/wiki/Kernel_smoother
+- difference between interaction and correlated
+    - https://stats.stackexchange.com/questions/113733/what-is-the-difference-between-collinearity-and-interaction
+    - An interaction may arise when considering the relationship among three or more variables, and describes a situation in which the simultaneous influence of two variables on a third is not additive. Most commonly, interactions are considered in the context of regression analyses.
+    - The presence of interactions can have important implications for the interpretation of statistical models. If two variables of interest interact, the relationship between each of the interacting variables and a third "dependent variable" depends on the value of the other interacting variable. In practice, this makes it more difficult to predict the consequences of changing the value of a variable, particularly if the variables it interacts with are hard to measure or difficult to control.
+- boosted tree:
+    - when picking an example, with higher probability pick an example that were misclassified in the previous iteration
+        - like
+- why pick the one with largest information gain instead of directly picking the one with smallest weighted entropy?
+    - because we need a stopping criteria in terms of information gain!
+    - in terms of weighted entropy is not sufficient. It can be that the smallest weight entropy is really small, but the information gain is close to zero!
+-  

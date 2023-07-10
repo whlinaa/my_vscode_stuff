@@ -1,0 +1,156 @@
+
+# new (andrew ng, ML course)
+- questions for decision tree:
+    - How to choose what feature to split on at each node?
+        - maximize purity 
+- when stop splitting
+    - when splitting a node will result in the tree exceeding a maximum depth
+    - improvement in purity score below threshold
+    - number of examples in a node below a threshold
+- plot the entropy function 
+- when entropy uses base 2? we want the peek to be 1, if we use other bases, the peak won't be 1!
+- reduction in impurity = information gain 
+- why bother calculating information gain (i.e., reduction in entropy)? Because one of the stopping criteria is the reduction in entropy is small 
+- can recursive algo be multithreaded?
+- for categorical, we will one-hot encode it, so the tree is still binary
+    - a feature can be chosen again, under this formulation
+- a feature can be chosen by the left and right subtree at the same level too
+- in regression tree, instead of trying to reduce the entropy of a node, we try to reduce the `variance` of the y values of the node.
+- MSE basically the same as variance, without the scaling 
+- in regression, we measure the reduction in variance (by finding variance at root) 
+- one cons of using DT is that the model can be sensitive to small changes to the data (high variance)
+    - i.e., changing the values of one single example can cause the splitting features to be completely different
+    - sol: use ensemble
+- tree emsemble
+    - `with replacement` part is critical
+    - setting `n_trees` large will never hurt performance, but beyond a certain point, we have a diminishing returns, and won't be much better if larger than 100
+- andrew ng's video: he talked about bagged tree
+- problem: if we do ensemble, very often the splitting will be the same across all trees
+- aim: make each tree (in terms of its splitting and samples) different from other trees
+- for random forest, choose `n_feat` to be sqrt(n)
+- why SRS-WR works?
+    - the WR procedure causes the algo to explore a lot of small changes to the data already and it's training different decision trees and is averaging over all of those changes to the data that the sampling with replacement procedure causes. and so this means that any little changes further to the training set makes it less likely to have a huge impact on the overall output of the overall random forest algorithm
+- deliberate practice: 
+    - 
+    - how about making it more likely to select substandard class examples for training?
+- what is Kernel smoother?
+    - https://en.wikipedia.org/wiki/Kernel_smoother
+- difference between interaction and correlated
+    - https://stats.stackexchange.com/questions/113733/what-is-the-difference-between-collinearity-and-interaction
+    - An interaction may arise when considering the relationship among three or more variables, and describes a situation in which the simultaneous influence of two variables on a third is not additive. Most commonly, interactions are considered in the context of regression analyses.
+    - The presence of interactions can have important implications for the interpretation of statistical models. If two variables of interest interact, the relationship between each of the interacting variables and a third "dependent variable" depends on the value of the other interacting variable. In practice, this makes it more difficult to predict the consequences of changing the value of a variable, particularly if the variables it interacts with are hard to measure or difficult to control.
+- boosted tree:
+    - when picking an example, with higher probability pick an example that were misclassified in the previous iteration
+        - like
+- why pick the one with largest information gain instead of directly picking the one with smallest weighted entropy?
+    - because we need a stopping criteria in terms of information gain!
+    - in terms of weighted entropy is not sufficient. It can be that the smallest weight entropy is really small, but the information gain is close to zero!
+
+
+
+## from ritvikmath
+- ROC curve is a two dimensional object, and AUC-ROC is a single number. We'll lose a lot of the dynamics of ROC if we reduce it to a single number 
+    - actually, why not compare the minimum distance between the roc curve (1,1) entry?
+    - high auc => when we increase the TPR, FPR increase at a lower rate
+    - for a naive model, to increase TPR, we need to increase FPR at the same rate 
+- FPR: error rate on the negative class
+- FNR: error rate on the positive class 
+- when plotting, instead of showing the mean, we can show the entire distribution of that value!
+    - e.g., originally, show the mean claim amount at contract year 10. We can instead show the entire distribution in contract year 10.
+- exponential and hinge loss: they are used for classifier that output a number between -inf and +inf, not only probability!
+- in MAP, when we assume that the parameter follows some distribution, then how come this won't affect response y, which depends on the parameter??
+- for likelihood function: P(known | unknown) 
+    - given A happens. What is the most likely state of B that would produce the event that A happened?
+        - P(A | B)
+    - what is the likelihood of seeing the known event, given the unknown
+- posterior: P(unknown | known) = P(known | unknown) P(unknown)/P(known)
+- MLE: treat prior as flat!
+- prior: P(unknown)
+- markov chain
+    - must have a steady-state vector
+    - steady-state vector may not be unique
+    - the MC may not converge to a steady-state vector
+    - a steady-state vector just means:
+        - IF we start at this vector, we will stay at this vector forever.
+    - how to deal with the situation where sum of prob = 1?
+- when we say bayesian approach, it just means that when we estimate the parameters, we don't just consider the likelihood. We also take the prior into consideration:
+    - MLE: P(data | parameter)
+    - Bayesian: P(parameter) P(parameter | data)
+    - prior belief gets updated after we get data
+    - e.g., Bayesian: P(offer)P(offer | +ve feedback)
+    - e.g., MLE: P(+ve feedback|offer) vs P(+ve feedback|no offer)
+- monte carlo
+    - for a biased coin P(head) = p, what is the expected number of times to get 2 heads in a row?
+    - three cases:
+        - win the first round
+        - lose first round 
+    - slow, when getting a success requires lots of time
+    - if have parameter, need to try every value to get a graph. 
+- collaborative filtering:
+    - for a user whose rating we want to predict: 
+        - get the cosine similarity between this user and other user
+        - take the weighted average of the ratings of all other users, with weight = similarity
+- problems with collaborative filtering:
+    - sparsity: too many missing values
+    - scalability: calculating similarity is very slow
+    - gray and black sheep problems: some user is in the border of two clusters. Some user may not fit in any cluster
+- can we use collaborative filtering to do imputation?
+- if a simple model can perform just as well as a complicated one, then the simpler one is preferred, since it can hold up better over time.  
+- for matrix multiplication, think of AB as # ways to go from cities in staring point to cities in destination. 
+- what do we mean by 1-U = U, when U is uniform(0,1)?
+- in decision tree, we if I make decision based on flipping a biased coin, instead of majority??
+- when we see the sample proportion is 50% with n=10, and another is 40%, with n=100, we need to consider the standard error of the sample proportion. If we do plus/minus one standard error, then it turns out they could have the same proportion!
+- in addition to classification and regression problems, we also have ranking problems 
+- scaling may not affect the predictability, but may affect the interpretability of our model (how you interprets the coefficients)
+    - if our model involves distance, should do scaling
+- missing value
+    - missing completely at random (MCAR)
+    - if we impute by median/mean, we are reducing the variance, since most of them have the same value close to mean
+    - hot deck method: fill in missing values by looking at examples similar to that example
+        - for a female, fill in the missing values by the mean of the female records only.
+    - 
+- multiple imputation
+    - for i in 1 to k:
+        - run a regression based on a subsample of non-missing values 
+- one powerful idea: in MCMC, we don't do uniform sampling. If the current sample is a good one, then in the next step, we should search in the vicinity of that sample! So, the current sample depends on the previous sample!
+- rnaking problem:
+    - the docs are related to each other. If we use classification to output a probability for each document, then we are treating each document as independent
+- bias-variance trade off
+- imbalanced data
+- geometric interpretation of linear combination
+- linear tree = regression tree, but each child no long just outputs a horizontal line, but a ordinary line!
+- sigmoid function
+    - why not use a straight line with constant slope?
+    - if x increases from 0 to 1, the probability should increase by a large amount, compared with x increases from 9 to 10! Because at x=9, we already have lots of evidence, and so getting more evidence won't change our belief much.
+    - for the derivative, we see that the probability goes up the most when p = 1/2
+- why take log in maximum likelihood?
+    - if not, then the product of many numbers between zero and one will be very close to 0. So, by taking log, this quantity will not be close to zero!
+- we shouldn't say we take derivative of a matrix, since it's like taking derivative of a constant. 
+    - when we have Ax, we should say we take derivative of a transformation from R^n to R^m
+    - if we have d/dx Ax = A, then we treat each function derivative as a row vector! 
+    - when we have function whose range is real number, we use a column vector to represent it. But if we have range being R^n, treat each function derivative as row vector.
+    - if we have 3 different functions and 4 variables, then derivative matrix size is 3x4
+- why softmax function needs to take exponential function?
+    - there are some problems if we just do summation without exponential!
+        - can't deal with negative numbers
+        - x=0 => prob = 0. No good!
+        - not addition invariant! (0,1,2) => (100, 101, 102) gives very different probability!
+    - softmax is a R^n->R^n functions. We can take derivatives
+- in multi-arm bandit, when doing exploitation, we should consider the number of times we have explored it. For example, for distribution one, if we sample it 100 times, and sample mean is 50, and for another distribution, we only sample it once, and the sample mean is 49, it doesn't mean that the first distribution is better!
+- distance between two distributions: 
+    - Bhattacharyya dist
+    - KL divergence
+    - Hellinger distance
+- when we need to do AB, where A is a rank one matrix aa^T, then we can reduce the time complexity to O(n^2)!
+- triangular distribution with three parameters (a,b,c)
+- in Jacobian, J_ij = df_i/dx_j !
+- for word embedding, need to remove stop words (I, is)
+- difference in difference: 
+- svm dual problem is good when:
+    - n>>m, e.g., for image data
+    - note that w = \sum \alpha_i y_i x_i. Since we know that only support vectors will contribute to the margin (margin = 2/||w||), so the alpha of all non-support vectors must be zero, since they can't contribute to the margin!
+    - in primal, we need to deal with each x_i, and so n*m
+    - but in dual, we only need to deal with dot products of each pair. So, n*n
+    - important observation: in dual, x_i only shows up as inner product, but in primal, it's not!! 
+<!-- - a model has high variance: small change in data => big change in parameter  -->
+- MAP estimate is just the one that maximize the posterior. Just like when we do MLE, we choose the one that maximize the likelihood function

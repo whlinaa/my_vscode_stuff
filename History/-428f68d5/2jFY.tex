@@ -1,0 +1,254 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,10pt,addpoints]{exam}
+
+
+% \usepackage{examStyle}
+\usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2311}
+\newcommand{\term}{Spring 2023}
+\newcommand{\examnum}{Assignment 1}
+% \newcommand{\examdate}{1/1/2014}
+\newcommand{\dueTime}{23 Mar 5:00pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+\textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\item You may use the facts and theorems introduced in lectures and tutorials. All other facts/theorems that are not covered must be rigorously proved before being used. 
+\item Unless otherwise stated, all answers are to be presented in 4 decimal places or in simplest fraction.
+\end{itemize}
+
+\subsection*{Submission guidelines}
+\begin{itemize}
+\item DO NOT convert this .pdf file to any other file format, such as .word.
+\item Submit your work to Moodle. Email submission is NOT accepted. 
+\item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+\item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+\item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+\item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+% \item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. 
+%In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% \item You may type your solutions using a computer.
+
+\item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+\item Name your file by your full English name. For example, if your name is Chan Tai Man, then your file name is Chan Tai Man.
+\item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+\item The maximum submission size is 20MB.
+% \item The maximum submission size is 20MB. A well-scanned submission should have a size well below that limit. 
+\end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+\begin{questions}
+\question[40]
+Let $X$ be a continuous random variable whose cumulative distribution function is given by
+$$
+F(x)=\left\{\begin{array}{lll}
+0 & \text { for } & x<0, \\
+a x^2+b x & \text { for } & 0 \leq x \leq 1, \\
+1 & \text { for } & x>1 .
+\end{array}\right.
+$$
+Let $Y = X+1$. It is given that $\mathrm{E}(X)=\frac{7}{12}$.
+\begin{parts}
+\part Find the values of $a$ and $b$.
+\vspace*{4in}
+\part Find $E(X^r)$, where $r$ is some positive integer.
+\vspace*{4in}
+\part Find $Var(X^2)$.
+\vspace*{4in}
+\part Find the median of $X$.
+\vspace*{4in}
+% \part Find the mode of $X$.
+% \part Find the pdf of $X$.
+% \part Find the cumulative distribution function of the random variable $Y=X+R+1$, where $R$ is the last digit of your student ID. 
+\part Find the cumulative distribution function of $Y$.
+\vspace*{4in}
+\part Find the pdf of $Y$.
+\vspace*{4in}
+\end{parts}
+% \vspace*{\stretch{1}}
+% \newpage
+
+\newpage
+\question[20]~
+\begin{parts}
+\part Let $X$ be a discrete random variable whose cumulative distribution function $F(x)$ is given by
+$$
+F(x)=\left\{\begin{array}{llr}
+0 & \text { for } & x<-1 \\
+0.06 & \text { for } & -1 \leq x<0 \\
+0.22 & \text { for } & 0 \leq x<1 \\
+1 & \text { for } & x \geq 1
+\end{array}\right.
+$$
+Find the probability mass function of $X$.
+\newpage
+
+\part 
+Let $Y$ be a discrete random variable whose probability mass function $\mathrm{g}(y)$, where $y$ is real, is given by
+$$
+g(y)= \begin{cases}0.3 & \text { for } y=2 \\ 0.2 & \text { for } y=4 \\ 0.5 & \text { for } y=6 \\ 0 & \text { otherwise. }\end{cases}
+$$
+Write down the cumulative distribution function of $Y$.
+\end{parts}
+\newpage
+
+% \question[10]
+% Let $X_1,X_2,...,X_n$ be a random sample from the geometric distribution with parameter $p$. Let 
+% $$\tilde{X} = \frac{n\overline{X}+\sqrt{n}/2}{n+\sqrt{n}}.$$
+% % $$\overline{X} = \frac{1}{n}\sum_i^n X_i$$ and $$\tilde{X} = \frac{n\overline{X}+\sqrt{n}/2}{n+\sqrt{n}}$$
+
+% Prove or disprove: $\tilde{X}$ is an unbiased estimator of $1/p$.
+% prove or disprove: $$ is an unbiased estimator of $1/p$.
+% \end{parts}
+% 
+% \begin{parts}
+  % \part prove or disprove: $\overline{X}$ is an unbiased estimator of $1/p$.
+  % \part prove or disprove: $\tilde{X}$ is an unbiased estimator of $1/p$.
+  
+  % . What $\tilde{X}$ tends to as $n\rightarrow\infty$?
+% \end{parts}
+% 
+% \begin{parts}
+%   \part prove or disprove: $$ is an unbiased estimator of $1/p$.
+% \end{parts}
+% Let $X_1,X_2,...,X_n$ be a random sample from the geometric distribution with parameter $p$. Let $$\overline{X} = \frac{1}{n}\sum_i^n X_i$$ and $$\tilde{X} = \frac{n\overline{X}+\sqrt{n}/2}{n+\sqrt{n}}$$
+% \begin{parts}
+%   \part prove or disprove: $\overline{X}$ is an unbiased estimator of $1/p$.
+%   \part prove or disprove: $\tilde{X}$ is an unbiased estimator of $1/p$.
+  
+%   % . What $\tilde{X}$ tends to as $n\rightarrow\infty$?
+% \end{parts}
+
+
+\question[40] Water Supplies Department tests the drinking water of homeowners for contaminants such as zinc and iron. The zinc and iron levels in water specimens collected for a sample of 11 residents are shown in the following table. Assume that both zinc and iron levels in water specimens are normally distributed.
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+\hline Zinc (mg/L) & $1.32$ & 0 & $1.31$ & $0.92$ & $0.66$ & 3 & $1.32$ & $4.09$ & $4.45$ & 0 & $3.21$ \\
+\hline Iron (mg/L) & $0.485$ & $0.222$ & $0.875$ & $0.508$ & $0.904$ & $0.221$ & $0.283$ & $0.475$ & $0.13$ & $0.22$ & $0.743$ \\
+\hline
+\end{tabular}
+\begin{parts}
+
+\part Construct a $99 \%$ confidence interval for the mean zinc level in water specimens.
+\vspace*{5in}
+\part Suppose that population standard deviation of iron level is $0.24 \mathrm{mg} / \mathrm{L}$.
+\begin{subparts}
+  \subpart Construct a $95 \%$ confidence interval for the mean iron level in water specimens.
+  \vspace*{5in}
+  \subpart For quality control purposes, we wish to estimate the mean iron level in water specimens to be within $0.025 \mathrm{mg} / \mathrm{L}$ of its true value with a $98 \%$ confidence interval. What sample size should be used?
+  \vspace*{5in}
+\end{subparts}
+\part Develop an approximate $90 \%$ confidence interval for the proportion of water specimens containing more than $0.30 \mathrm{mg} / \mathrm{L}$ of iron.
+\part How many additional samples are required to ensure that, with 0.98 probaility, the absolute difference between the sample proportion for water specimens containing more than $0.30 \mathrm{mg} / \mathrm{L}$ of iron and the population proportion for water specimens containing more than $0.30 \mathrm{mg} / \mathrm{L}$ of iron is less than 0.01?
+\end{parts}
+
+% \question[15]
+% The following data represent the battery life of devices produced by two companies.
+
+% \begin{tabular}{c|rrrrrrr} 
+% Company & \multicolumn{7}{|c}{ Time (minutes) } \\
+% \hline I & 103 & 94 & 110 & 87 & 98 & \\
+% II & 97 & 82 & 123 & 92 & 175 & 88 & 118
+% \end{tabular}
+
+% Compute a $99 \%$ confidence interval for the ratio of variance of battery life by Company I to that of Company II. Assume that battery life of devices produced by two companies are approximately normally distributed. Is there edvidence to suggest that the two varainaces are equal?
+
+
+\end{questions}
+
+
+
+
+
+\end{document}

@@ -1,0 +1,370 @@
+\documentclass[12pt]{article}
+\usepackage{amsfonts, amsmath, amsthm, amstext, amssymb}
+
+\marginparwidth 0pt
+\oddsidemargin -1 truecm
+\evensidemargin  0pt
+\marginparsep 0pt
+\topmargin -2 truecm
+\linespread{1.2}
+\textheight 25.2 truecm
+\textwidth 18.2 truecm
+\newenvironment{remark}{\noindent{\bf Remark }}{\vspace{0mm}}
+\newenvironment{remarks}{\noindent{\bf Remarks }}{\vspace{0mm}}
+\newenvironment{question}{\noindent{\bf Question }}{\vspace{0mm}}
+\newenvironment{questions}{\noindent{\bf Questions }}{\vspace{0mm}}
+\newenvironment{note}{\noindent{\bf Note }}{\vspace{0mm}}
+\newenvironment{summary}{\noindent{\bf Summary }}{\vspace{0mm}}
+\newenvironment{back}{\noindent{\bf Background}}{\vspace{0mm}}
+\newenvironment{conclude}{\noindent{\bf Conclusion}}{\vspace{0mm}}
+\newenvironment{concludes}{\noindent{\bf Conclusions}}{\vspace{0mm}}
+\newenvironment{dill}{\noindent{\bf Description of Dill's model}}{\vspace{0mm}}
+\newenvironment{maths}{\noindent{\bf Mathematics needed}}{\vspace{0mm}}
+\newenvironment{object}{\noindent{\bf Objective}}{\vspace{0mm}}
+\newenvironment{notes}{\noindent{\bf Notes }}{\vspace{0mm}}
+\newenvironment{theorem}{\noindent{\bf Theorem }}{\vspace{0mm}}
+\newenvironment{example}{\noindent{\bf Example }}{\vspace{0mm}}
+\newenvironment{examples}{\noindent{\bf Examples }}{\vspace{0mm}}
+\newenvironment{illu}{\noindent{\bf Illustration}}{\vspace{0mm}}
+\newenvironment{illus}{\noindent{\bf Illustrations}}{\vspace{0mm}}
+\newenvironment{lemma}{\noindent{\bf Lemma }}{\vspace{0mm}}
+\newenvironment{solution}{\noindent{\it Solution}}{\vspace{2mm}}
+\newcommand{\QED}{\fbox{}}
+\newcommand{\ds}{\displaystyle}
+
+
+\begin{document}
+
+\baselineskip 18 pt
+
+\begin{center}
+{\bf \large Data Science Fundamental Workshop 2021--2022}
+\end{center}
+
+\begin{center}
+{\bf \large Topic 2: Review of Indefinite Integration}
+\end{center}
+
+\vspace{0.2cm}
+
+\section{Indefinite Integrals}
+
+\begin{enumerate}
+\item[1.]
+Let $f$ be a function defined on an interval $I$. A function $F$ defined on $I$ is called an {\bf anti-derivative} (or a {\bf primitive function}) of $f$ if
+$$
+\frac{dF}{dx} = F'(x) = f(x)  \ \ \ \mbox{for all $x$ in $I$}.
+$$
+
+\item[2.]
+If $F$ is an anti-derivative of $f$, i.e.~$F'(x) = f(x)$, then
+$$
+F(x) + C,
+$$
+where $C$ is any constant, is a whole class of functions having the same derivative. Thus, the {\bf indefinite integral} of $f$, written as $\ds \int f(x) \, dx$, is defined by
+$$
+\int f(x) \, dx = F(x) + C.
+$$
+We refer to $f(x)$ as the {\em integrand\/} and to $\ds \int$ as the {\em integral sign\/}. The arbitrary constant $C$ is called the {\em constant of integration\/}.
+
+\vspace{0.2cm}
+
+\begin{notes}
+	\begin{enumerate}
+		\item[(a)]
+		 It follows from the above definition that $\ds \int f'(x) \, dx = f(x) + C$.
+		 \item[(b)] 
+		 In general, if $u$ is a differentiable function of $x$, then
+		 \begin{equation}\label{eq4.1}
+		 \int f(u) \, du = F(u) + C.
+		 \end{equation}
+		\end{enumerate}
+\end{notes}
+
+\item[3.]
+Regarding integration as the reverse process of differentiation, we have the following formulae of indefinite integrals.
+\begin{enumerate}
+\item[(a)]
+$\scriptsize \ds \int \alpha \, dx = \alpha x + C$ \, ($\alpha$ is a constant)
+\item[(b)]
+$\small \ds \int x^r \, dx = \frac{x^{r+1}}{r+1} + C$ \, ($r \ne -1$)
+\item[(c)]
+$\ds \int \frac{1}{x} \, dx = \ln|x| + C$
+\item[(d)]
+$\ds \int a^x \, dx = \frac{a^x}{\ln a} + C$ \, ($0 < a \ne 1$)
+\item[(e)]
+$\ds \int \sin x \, dx = -\cos x + C$
+\item[(f)]
+$\ds \int \cos x \, dx = \sin x + C$
+\item[(g)]
+$\ds \int \sec^2 x \, dx = \tan x + C$
+\item[(h)]
+$\ds \int \csc^2 x \, dx = -\cot x + C$
+\item[(i)]
+$\ds \int \sec x\tan x \, dx = \sec x + C$
+\item[(j)]
+$\ds \int \csc x\cot x \, dx = -\csc x + C$
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\begin{notes}
+\begin{enumerate}
+\item[(a)]
+We customarily write $\ds \int 1 \, dx = \int dx$.
+\item[(b)]
+An important case of the formula in (d) is $\ds \int e^x \, dx = e^x + C$.
+\item[(c)]
+In view of \eqref{eq4.1}, the above formulae can be written as $\ds \int u^r \, du = \frac{u^{r+1}}{r+1} + C$ ($r \ne -1$), $\ds \int \frac{1}{u}\,du = \ln|u| + C$, $\ds \int \sin u \, du = -\cos u + C$, etc., where $u$ is a differentiable function of $x$.
+\end{enumerate}
+\end{notes}
+
+\item[4.]
+If $\alpha$ and $\beta$ are any constants, then
+$$
+\int \left[\alpha f(x) \pm \beta g(x)\right] dx = \alpha\int f(x) \, dx \pm \beta\int g(x) \, dx.
+$$
+
+\begin{note}
+\, In general, $\ds \int f(x)g(x) \, dx \ne \left[\ds \int f(x) \, dx\right]\left[\ds \int g(x) \, dx\right]$ and $\ds \int \frac{f(x)}{g(x)} \, dx \ne \frac{\ds \int f(x) \, dx}{\ds \int g(x) \, dx}$.
+\end{note}
+
+\vspace{0.3cm}
+
+\begin{examples}
+Evaluate the following integrals.
+\begin{enumerate}
+\item[(a)]
+$\ds \int \left(1 + \frac{2}{x^3} - 2e^x\right) dx$
+\item[(b)]
+$\ds \int \frac{x^2(x - 1)}{\sqrt{x}} \, dx$
+\item[(c)]
+$\ds \int (\csc^2 x + 5\sin x) \, dx$
+\item[(d)]
+$\ds \int \left(2\tan^2 x - \frac{3}{x} - \frac{4}{x^4}\right) dx$
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\begin{solution}
+\begin{enumerate}
+\item[(a)]
+Integrating term by term, we have
+\begin{eqnarray*}
+\int \left(1 + \frac{2}{x^3} - 2e^x\right) dx & = & \int dx + 2\int x^{-3} \, dx - 2\int e^x \, dx \\
+& = & x + 2 \cdot \frac{x^{-3 + 1}}{-3 + 1} - 2e^x + C \\
+& = & \fbox{$\ds x - \frac{1}{x^2}  - 2e^x + C$}.
+\end{eqnarray*}
+\item[(b)]
+Write $\ds \frac{x^2(x - 1)}{\sqrt{x}} = \frac{x^3 - x^2}{x^{\frac{1}{2}}} = x^{\frac{5}{2}} - x^{\frac{3}{2}}$. Then
+\begin{eqnarray*}
+\int \frac{x^2(x - 1)}{\sqrt{x}} \, dx & = & \int \left(x^{\frac{5}{2}} - x^{\frac{3}{2}}\right) dx \\
+& = & \int x^{\frac{5}{2}} \, dx - \int x^{\frac{3}{2}} \, dx \\
+& = & \frac{x^{\frac{5}{2} + 1}}{\frac{5}{2} + 1} - \frac{x^{\frac{3}{2} + 1}}{\frac{3}{2} + 1} + C \\
+& = & \fbox{$\ds \frac{2}{7}x^{\frac{7}{2}} - \frac{2}{5}x^{\frac{5}{2}} + C$}.
+\end{eqnarray*}
+\item[(c)]
+$\ds \int (\csc^2 x + 5\sin x) \, dx = \int \csc^2 x \, dx + 5\int \sin x\, dx = \fbox{$\ds -\cot x - 5\cos x + C$}$
+\item[(d)]
+Since $1 + \tan^2 x = \sec^2 x$, we have
+\begin{eqnarray*}
+\int \left(2\tan^2 x - \frac{3}{x} - \frac{4}{x^4}\right) dx & = & \int \left[2\left(\sec^2 x - 1\right) - \frac{3}{x} - 4x^{-4}\right] dx \\
+& = & 2\int \sec^2 x \, dx - 2\int dx - 3\int \frac{1}{x}\,dx - 4\int x^{-4}\,dx \\
+& = & 2\tan x - 2x - 3\ln|x| - 4 \cdot \frac{x^{-4+1}}{-4+1} + C \\
+& = & \fbox{$\ds 2\tan x - 2x - 3\ln|x| + \frac{4}{3x^3} + C$}.
+\end{eqnarray*}
+\end{enumerate}
+\end{solution}
+\end{examples}
+
+\item[5.]
+Two useful results
+\begin{enumerate}
+	\item[(a)]
+	If $\ds \int f(x) \, dx = F(x) + C$, then
+	$$
+	\int f(\alpha x + \beta) \, dx = \frac{1}{\alpha}F(\alpha x + \beta) + C
+	$$
+	for all constants $\alpha$ and $\beta$ with $\alpha \ne 0$.
+	\vspace{0.2cm}
+	\item[(b)]
+	$\ds \int \frac{f'(x)}{f(x)} \, dx = \ln\left|f(x)\right| + C$
+\end{enumerate}
+
+\vspace{0.3cm}
+
+\begin{examples}
+Evaluate the following integrals.
+\begin{enumerate}
+\item[(a)]
+$\ds \int \frac{1}{\cos^2(7x + 2)} \, dx$
+\item[(b)]
+$\ds \int \sqrt{4 - 5x} \, dx$
+\item[(c)]
+$\ds \int \frac{1}{(3x - 1)^3} \, dx$
+\item[(d)]
+$\ds \int \left(e^x + e^{-x}\right)^2 \, dx$
+\item[(e)]
+$\ds \int \frac{3x-1}{3x^2 - 2x + 1} \, dx$
+\item[(f)]
+$\ds \int \frac{\sin x}{2 + 5\cos x} \, dx$
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\begin{solution}
+\begin{enumerate}
+\item[(a)]
+Since $\ds \int \sec^2 x \, dx = \tan x + C$, it follows that
+$$
+\int \frac{1}{\cos^2(7x + 2)} \, dx = \int \sec^2(7x + 2) \, dx = \fbox{$\ds \frac{1}{7}\tan(7x+2) + C$}.
+$$
+\item[(b)]
+Since $\ds \int x^{\frac{1}{2}} \, dx = \frac{2}{3}x^{\frac{3}{2}} + C$, it follows that
+$$
+\int \sqrt{4 - 5x} \, dx = \int (4 - 5x)^{\frac{1}{2}} \, dx = -\frac{1}{5} \cdot \frac{2}{3}(4 - 5x)^{\frac{3}{2}} + C = \fbox{$\ds -\frac{2}{15}(4 - 5x)^{\frac{3}{2}} + C$}.
+$$
+\item[(c)]
+Since $\ds \int x^{-3} \, dx = -\frac{1}{2x^2} + C$, it follows that
+$$
+\int \frac{1}{(3x - 1)^3} \, dx = \int (3x - 1)^{-3} \, dx = \frac{1}{3}\left[-\frac{1}{2(3x - 1)^2}\right] + C = \fbox{$\ds -\frac{1}{6(3x-1)^2} + C$}.
+$$
+\item[(d)]
+Since $\ds \int e^x \, dx = e^x + C$, it follows that
+\begin{eqnarray*}
+\int \left(e^x + e^{-x}\right)^2 \, dx & = & \int \left(e^{2x} + 2e^x e^{-x} + e^{-2x}\right) dx \\
+& = & \int \left(e^{2x} + e^{-2x} + 2\right) dx \\
+& = & \int e^{2x} \, dx + \int e^{-2x} \, dx + 2\int dx \\
+& = & \fbox{$\ds \frac{1}{2}e^{2x} - \frac{1}{2}e^{-2x} + 2x + C$}.
+\end{eqnarray*}
+\item[(e)]
+Since $\ds \frac{d}{dx}\left(3x^2 - 2x + 1\right) = 6x - 2$, it follows that
+$$
+\int \frac{3x-1}{3x^2 - 2x + 1} \, dx = \frac{1}{2}\int \frac{6x-2}{3x^2 - 2x + 1} \, dx = \fbox{$\ds \frac{1}{2}\ln|3x^2 - 2x + 1| + C$}.
+$$
+\item[(f)]
+Since $\ds \frac{d}{dx}(2 + 5\cos x) = -5\sin x$, it follows that
+$$
+\int \frac{\sin x}{2 + 5\cos x} \, dx = -\frac{1}{5}\int \frac{-5\sin x}{2 + 5\cos x} \, dx = \fbox{$\ds -\frac{1}{5}\ln|2 + 5\cos x| + C$}.
+$$
+\end{enumerate}
+\end{solution}
+\end{examples}
+\end{enumerate}
+
+\section{Integration by Substitution}
+
+\begin{enumerate}
+\item[1.]
+Let $f$, $g$ and $F$ be functions such that $F' = f$. The chain rule for differentiating a composition of two functions gives
+$$
+\frac{d}{dx}\left(F(g(x))\right) = F'\left(g(x)\right)g'(x) = f\left(g(x)\right)g'(x).
+$$
+If we integrate both the right and left hand sides of the above equality, then
+\begin{equation}\label{eq4.2}
+\int f\left(g(x)\right)g'(x) \, dx = F(g(x)) + C.
+\end{equation}
+This is known as the {\bf integration by substitution} formula.
+
+\item[2.]
+Steps of integration by substitution
+\begin{enumerate}
+\item[(a)]
+Choose a substitution that appears to simplify the integrand. For example, try to select $u$ so that $du$ is a factor in the integrand.
+\item[(b)]
+Express the integrand entirely in terms of $u$ and $du$, completely eliminating the original variable and its differential.
+\item[(c)]
+Evaluate the transformed integral, if possible.
+\item[(d)]
+Express the anti-derivative obtained in the above step in terms of the original variable.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+\begin{examples}
+Evaluate the following integrals.
+\begin{enumerate}
+\item[(a)]
+$\ds \int x(3x+2)^8 \, dx$ \, ({\sf Hint: Let $u = 3x+2$})
+\item[(b)]
+$\ds \int \frac{1}{1 + \sqrt{x}} \, dx$ \, ({\sf Hint: Let $u = \sqrt{x}$})
+\item[(c)]
+$\ds \int \frac{x^3}{\sqrt{x^2 + 1}} \, dx$ \, ({\sf Hint: Let $u = x^2 + 1$})
+\item[(d)]
+$\ds \int \frac{\sin^3 x}{\cos^4 x} dx$ \, ({\sf Hint: Let $u = \cos x$})
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\begin{solution}
+\begin{enumerate}
+\item[(a)]
+Let $u = 3x + 2$. Then, $\ds x = \frac{u - 2}{3}$ and $\ds dx = \frac{1}{3}\,du$. Thus,
+\begin{eqnarray*}
+\int x\left(3x + 2\right)^8 \, dx & = & \int \left(\frac{u - 2}{3}\right)u^8 \cdot \frac{1}{3}\,du \\
+& = & \frac{1}{9}\int (u - 2)u^8 \, du \\
+& = & \frac{1}{9}\int \left(u^9 - 2u^8\right) du \\
+& = & \frac{1}{9}\left(\int u^9 \, du - 2\int u^8 \, du\right) \\
+& = & \frac{1}{9}\left(\frac{u^{10}}{10} - \frac{2u^9}{9}\right) + C \\
+& = & \fbox{$\ds \frac{(3x + 2)^{10}}{90} - \frac{2(3x + 2)^9}{81} + C$}.
+\end{eqnarray*}
+\item[(b)]
+Let $u = \sqrt{x}$. Then, $x = u^2$ and $dx = 2u\,du$. Thus,
+\begin{eqnarray*}
+\int \frac{1}{1 + \sqrt{x}} \, dx & = & \int \frac{1}{1 + u} \cdot 2u \, du \\
+& = & 2\int \frac{1 + u - 1}{1 + u} \, du \\
+& = & 2\int \left(1 - \frac{1}{1+u}\right) du \\
+& = & 2\left(\int du - \int \frac{1}{1+u}\,du\right) \\
+& = & 2(u - \ln|1 + u|) + C \\
+& = & \fbox{$\ds 2\left(\sqrt{x} - \ln\left|1 + \sqrt{x}\right|\right) + C$}.
+\end{eqnarray*}
+\item[(c)]
+Let $u = x^2 + 1$. Then, $\ds x^2 = u - 1$ and $\ds 2x\,dx = du$. Thus,
+\begin{eqnarray*}
+\int \frac{x^3}{\sqrt{x^2 + 1}} \, dx & = & \int \frac{x^2}{\sqrt{x^2 + 1}} \cdot x \, dx \\
+& = & \int \frac{u - 1}{\sqrt{u}} \cdot \frac{1}{2}\,du \\
+& = & \frac{1}{2}\int \left(u^{\frac{1}{2}} - u^{-\frac{1}{2}}\right) du \\
+& = & \frac{1}{2}\left(\int u^{\frac{1}{2}}\,du - \int u^{-\frac{1}{2}} \, du\right) \\
+& = & \frac{1}{2}\left(\frac{u^{\frac{1}{2} + 1}}{\frac{1}{2} + 1} - \frac{u^{-\frac{1}{2} + 1}}{-\frac{1}{2} + 1}\right) + C \\
+& = & \frac{1}{3}u^{\frac{3}{2}} - u^{\frac{1}{2}} + C \\
+& = & \fbox{$\ds \frac{1}{3}\left(x^2 + 1\right)^{\frac{3}{2}} - \left(x^2 + 1\right)^{\frac{1}{2}} + C$}.
+\end{eqnarray*}
+\item[(d)]
+Let $u = \cos x$. Then $du = -\sin x\,dx$ and
+\begin{eqnarray*}
+\int \frac{\sin^3 x}{\cos^4 x} dx & = & \int \frac{\sin^2 x}{\cos^4 x} \cdot \sin x \, dx \\
+& = & \int \frac{1 - \cos^2 x}{\cos^4 x} \cdot \sin x \, dx \\
+& = & \int \frac{1 - u^2}{u^4}\left(-du\right) \\
+& = & \int \frac{u^2 - 1}{u^4} \, du \\
+& = & \int \left(u^{-2} - u^{-4}\right) du \\
+& = & \int u^{-2}\,du - \int u^{-4}\,du \\
+& = & \frac{u^{-2+1}}{-2 + 1} - \frac{u^{-4+1}}{-4 + 1} + C \\
+& = & \fbox{$\ds -\frac{1}{\cos x} + \frac{1}{3\cos^3 x} + C$}. 
+\end{eqnarray*}
+\end{enumerate}
+\end{solution}
+\end{examples}
+
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

@@ -1,0 +1,64 @@
+# echo ".bash_profile"
+# to change to zsh shell: chsh -s /bin/zsh
+# to change to bash shell: chsh -s /bin/bash
+
+# echo "hello" # this line will be run every time we do "source ~/.bash_profile" or opening up terminal 
+
+# source our ~/.bashrc, which contains some command prompt customization
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi 
+
+# TODO: unknown code, auto given by conda.
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/whlin/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/whlin/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/whlin/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/whlin/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+
+export READ_HOST=elephant.mmdsasia.com
+export READ_DB=mma_ds2019
+export READ_USER=ds_read
+export READ_PASS=90cad20b0267cabf353506b5b39c7b5d
+
+# export PATH="$PATH:/Users/MMA2455/AWS/aws-cli"
+# export PATH="$PATH:/Library/Frameworks/R.framework/Versions/3.6/Resources" # for company mac 
+export PATH="$PATH:/Library/Frameworks/R.framework/Versions/4.1/Resources"  # for my M1 mac
+
+export PATH="~/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"  # for brew
+export PATH="/opt/homebrew/bin:$PATH" # for brew
+export PATH="/opt/homebrew/sbinexport:$PATH" # for brew
+
+# Add Visual Studio Code (code)
+# export PATH="~/miniforge3/bin:$PATH"  # commented out by conda initialize # for miniforge3
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin" # add `code` to PATH
+export PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin" # add `subl` to PATH
+export PATH="$PATH:/Applications/Google Chrome.app/Contents/MacOS/" # add `Google Chrome` to PATH
+
+
+
+# important: the path will not be searched recursively...
+# export PYTHONPATH="$PATHONPATH:/Users/whlin/OneDrive - HKUST Connect/Documents/python/my_modules" 
+# export PYTHONPATH="$PATHONPATH:/Users/whlin/OneDrive - HKUST Connect/Documents/python/my_modules" 
+export PYTHONPATH="/Users/whlin/OneDrive - HKUST Connect/Documents/python/my_modules" 
+# export PYTHONPATH="/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/python/code_from_others/clrsPython/Chapter 10:$PYTHONPATH" 
+
+
+conda activate data_science
+conda config --set auto_activate_base False # disable showing (base) at the beginning in terminal. https://askubuntu.com/questions/1026383/why-does-base-appear-in-front-of-my-terminal-prompt
+
+
+
+s3_home='~/Desktop'

@@ -1,0 +1,142 @@
+\documentclass[11pt]{article}
+\marginparwidth 0pt
+\oddsidemargin -1.4 truecm
+\evensidemargin  0pt
+\marginparsep 0pt
+\topmargin -2.5truecm
+\textheight 26truecm
+\textwidth 18.7 truecm
+\linespread{1.3}
+\usepackage{amsthm,amssymb,amsfonts,amsmath,amstext}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newenvironment{remark}{\noindent{\bf Remark}}{\vspace{3mm}}
+\newenvironment{remarks}{\noindent{\bf Remarks }}{\vspace{0mm}}
+\newenvironment{notes}{\noindent{\bf Notes}}{\vspace{0mm}}
+\newenvironment{note}{\noindent{\bf Note}}{\vspace{0mm}}
+\newenvironment{solution}{\noindent{\it Solution}}{\vspace{2mm}}
+\newenvironment{question}{\noindent{\bf Question}}{\vspace{0mm}}
+\newenvironment{questions}{\noindent{\bf Questions}}{\vspace{0mm}}
+\newenvironment{example}{\noindent{\bf Example }}{\vspace{0mm}}
+\newenvironment{examples}{\noindent{\bf Examples }}{\vspace{0mm}}
+\newenvironment{illu}{\noindent{\bf Illustration}}{\vspace{0mm}}
+\newenvironment{illus}{\noindent{\bf Illustrations}}{\vspace{0mm}}
+\newcommand{\QED}{\fbox{}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\bs}{\boldsymbol}
+\DeclareMathOperator{\var}{Var}
+
+\begin{document}
+
+% \begin{center}
+% \vspace{0.6cm}
+% {\large \bf Data Science Fundamental Workshop 2021--2022}\\
+% \vspace{0.3cm}
+% {\large \bf Worksheet 4}\\
+% \end{center}
+
+\vspace{0.3cm}
+
+\begin{enumerate}
+\item
+If $X$ is a random variable such that $E(X) = 2$ and $\var(X) = 3$, find $E[(X - 2)(2X + 1)]$ and $\var(2X - 5)$.
+
+\item
+Let the random variable $X$ have the probability mass function
+$$
+f(x) = \frac{(|x| + 1)^2}{9} \quad \mbox{for $x = -1, 0, 1$}.
+$$ 
+Find $E(X)$ and $E\left(X^2\right)$.
+
+\item
+Let $X$ be a random variable with the probability density function given by
+$$
+f(x) = \left\{\begin{array}{cl}
+\ds \frac{2}{9}(3-x) & \mbox{for $0 < x < 3$}, \\
+0 & \mbox{otherwise}.
+\end{array}
+\right.
+$$
+\begin{enumerate}
+\item[(a)]
+What is the cumulative distribution function of $X$?
+\item[(b)]
+Find $P(0 < X \leq 1)$.
+\item[(c)]
+Compute the mean and variance of $X$.
+\end{enumerate}
+
+\item
+Let $X$ be a random variable with the probability density function given by
+$$
+f(x) = \left\{\begin{array}{cl}
+a x^{-4} & \mbox{for $x > 1$}, \\
+0 & \mbox{otherwise},
+\end{array}
+\right.
+$$
+where $a$ is a constant. Find
+\begin{enumerate}
+\item[(a)]
+the value of $a$.
+\item[(b)]
+the cumulative distribution function of $X$.
+\item[(c)]
+$P(X > 3 \mid X > 2)$.
+\item[(d)]
+the mean and variance of $X$.
+\end{enumerate}
+
+\item
+The logistic distribution is associated with the cumulative distribution function $\ds F(x) = \frac{1}{1 + e^{-x}}$ for all $x \in {\mathbb R}$. Find the probability density function of the logistic distribution and show that its graph is symmetric about $x=0$.
+
+\item
+Let $X$ be a random variable with the cumulative distribution function
+$$
+F(x) = \left\{\begin{array}{cl}
+0 & \mbox{for $x < 0$}, \\
+x^2 & \mbox{for $\ds 0 \leq x < \frac{1}{2}$},\\
+x + b & \mbox{for $\ds \frac{1}{2} \leq x < c$},\\
+1 & \mbox{for $x \geq c$}.
+\end{array}
+\right.
+$$
+\begin{enumerate}
+\item[(a)]
+Find the values of $b$ and $c$.
+\item[(b)]
+Find the probability density function of $X$.
+\item[(c)]
+Compute $\ds P\left(0 < X < \frac{3}{4}\right)$, $P(2X + 1 > 2)$ and $\ds P\left(X^2 < \frac{1}{4}\right)$.
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

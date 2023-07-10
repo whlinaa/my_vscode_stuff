@@ -1,0 +1,205 @@
+\documentclass[12pt]{article}
+\usepackage{amsfonts, amsmath, amsthm, amstext, amssymb}
+
+\marginparwidth 0pt
+\oddsidemargin -1 truecm
+\evensidemargin  0pt
+\marginparsep 0pt
+\topmargin -3.2truecm
+\linespread{1.3}
+\textheight 26.2 truecm
+\textwidth 18.6 truecm
+\newenvironment{remark}{\noindent{\bf Remark }}{\vspace{0mm}}
+\newenvironment{remarks}{\noindent{\bf Remarks }}{\vspace{0mm}}
+\newenvironment{question}{\noindent{\bf Question }}{\vspace{0mm}}
+\newenvironment{questions}{\noindent{\bf Questions }}{\vspace{0mm}}
+\newenvironment{note}{\noindent{\bf Note }}{\vspace{0mm}}
+\newenvironment{summary}{\noindent{\bf Summary }}{\vspace{0mm}}
+\newenvironment{back}{\noindent{\bf Background}}{\vspace{0mm}}
+\newenvironment{conclude}{\noindent{\bf Conclusion}}{\vspace{0mm}}
+\newenvironment{concludes}{\noindent{\bf Conclusions}}{\vspace{0mm}}
+\newenvironment{dill}{\noindent{\bf Description of Dill's model}}{\vspace{0mm}}
+\newenvironment{maths}{\noindent{\bf Mathematics needed}}{\vspace{0mm}}
+\newenvironment{object}{\noindent{\bf Objective}}{\vspace{0mm}}
+\newenvironment{notes}{\noindent{\bf Notes }}{\vspace{0mm}}
+\newenvironment{theorem}{\noindent{\bf Theorem }}{\vspace{0mm}}
+\newenvironment{example}{\noindent{\bf Example }}{\vspace{0mm}}
+\newenvironment{examples}{\noindent{\bf Examples }}{\vspace{0mm}}
+\newenvironment{lemma}{\noindent{\bf Lemma }}{\vspace{0mm}}
+\newenvironment{solution}{\noindent{\it Solution}}{\vspace{2mm}}
+\newcommand{\QED}{\fbox{}}
+\newcommand{\ds}{\displaystyle}
+
+\usepackage{graphicx}
+\graphicspath{{converted_graphics/}}
+
+\begin{document}
+
+\begin{flushright}
+Name\line(1, 0){150} \ \ Student ID\line(1, 0){100}
+\end{flushright}
+
+\baselineskip 18 pt
+
+\begin{center}
+{\bf \large CCN2237 2015--2016 Semester One 101A Quiz (29 Sep 2015)}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{notes}
+\begin{enumerate}
+\item[{\sf (a)}]
+{\sf Please answer ALL questions.}
+\item[{\sf (b)}]
+{\sf Show the working steps clearly.}
+\item[{\sf (c)}]
+{\sf Correct your answers to FOUR decimal places if necessary.}
+\end{enumerate}
+\end{notes}
+
+\vspace{0.3cm}
+
+\noindent An experiment is conducted to study how different dosages of a new drug affect the duration of relief from the allergic symptoms. Fourteen (i.e.~$n = 14$) patients are chosen randomly in this experiment. Each patient receives a specified dosage of the drug and is asked to report back as soon as the protection of the drug seems to wear off. The observations are recorded in the following table, which shows the dosage $x$ (in milligrams) and duration of relief $y$ (in hours) for each patient.
+\begin{center}
+\begin{tabular}{ccc}
+{\sf Drug Dosage} $x$ & & {\sf Duration of Relief} $y$ \\ \hline
+3 & & 9 \\
+3 & & 5 \\
+3 & & 14 \\
+4 & & 12 \\
+5 & & 9 \\
+5 & & 14 \\
+6 & & 16 \\
+7 & & 22 \\
+8 & & 18 \\
+8 & & 24 \\
+9 & & 22 \\
+10 & & 28 \\
+10 & & 26 \\
+10 & & 26
+\end{tabular}
+\end{center}
+A simple linear regression model is fitted to the above data.
+
+\vspace{0.2cm}
+
+\begin{enumerate}
+\item[(a)]
+({\em 2 points\/})~Find the equation of the estimated regression line for the given data.
+
+\vspace{1.7cm}
+
+\item[(b)]
+({\em 2 points\/})~Find the coefficient of correlation and interpret its meaning.
+
+\newpage
+
+\item[(c)]
+Let $\sigma^2$ be the error variance of the model.
+\begin{enumerate}
+\item[(i)]
+({\em 3 points\/})~Find an unbiased point estimate for $\sigma^2$.
+\item[(ii)]
+({\em 3 points\/})~Find a $95\%$ confidence interval for $\sigma^2$.
+\end{enumerate}
+
+\vspace{15cm}
+
+\item[(d)]
+({\em 5 points\/})~Test whether the above data provide sufficient evidence to indicate that the slope of the actual regression line is less than three at the $5\%$ level of significance.
+
+\vspace{10cm}
+
+\item[(e)]
+({\em 4 points\/})~Find a $98\%$ prediction interval for the duration of relief of a patient who has been prescribed 8\,milligrams of the new drug.
+
+\vspace{10cm}
+
+\item[(f)]
+({\em 6 points\/})~Compile an analysis-of-variance (ANOVA) table for the data and test, at the $1\%$ level of significance, whether a linear relationship between drug dosage and duration of relief exists.
+
+\vspace{10cm}
+
+\end{enumerate}
+
+\newpage
+
+\begin{center}
+\underline{\bf Useful Formulae for Reference}
+\end{center}
+
+\begin{enumerate}
+\item[1.]
+\begin{enumerate}
+\item[(a)]
+A $100(1 - \alpha)\%$ confidence interval for $\beta_0$
+$$
+\widehat{\beta_0} \pm t_{\frac{\alpha}{2};\,n - 2}\sqrt{\frac{{\rm MSE}\sum x_i^2}{nS_{xx}}}
+$$
+\item[(b)]
+A $100(1 - \alpha)\%$ confidence interval for $\beta_1$
+$$
+\widehat{\beta_1} \pm t_{\frac{\alpha}{2};\,n - 2}\sqrt{\frac{{\rm MSE}}{S_{xx}}}
+$$
+\end{enumerate}
+\item[2.]
+\begin{enumerate}
+\item[(a)]
+Test statistic for $\beta_0$
+$$
+\frac{\widehat{\beta_0} - c}{\sqrt{\frac{{\rm MSE}\sum x_i^2}{nS_{xx}}}}
+$$
+\item[(b)]
+Test statistic for $\beta_1$
+$$
+\frac{\widehat{\beta_1} - c}{\sqrt{\frac{{\rm MSE}}{S_{xx}}}}
+$$
+\end{enumerate}
+\item[3.]
+A $100(1 - \alpha)\%$ confidence interval for $E(Y_0)$ when $X = x_0$
+$$
+\widehat{\beta_0} + \widehat{\beta_1}x_0 \pm t_{\frac{\alpha}{2};\,n - 2}\sqrt{{\rm MSE}\left[\frac{1}{n} + \frac{\left(x_0 - \overline{x}\right)^2}{S_{xx}}\right]}
+$$
+\item[4.]
+A $100(1 - \alpha)\%$ prediction interval for $Y_0$ when $X = x_0$
+$$
+\widehat{\beta_0} + \widehat{\beta_1}x_0 \pm t_{\frac{\alpha}{2};\,n - 2}\sqrt{{\rm MSE}\left[1 + \frac{1}{n} + \frac{\left(x_0 - \overline{x}\right)^2}{S_{xx}}\right]}
+$$
+\end{enumerate}
+
+\newpage
+
+\vspace{0.8cm}
+
+\centerline{\includegraphics[width=18.5cm,height=25cm,keepaspectratio]{table2}}
+
+\newpage
+
+\vspace{3.5cm}
+
+\centerline{\includegraphics[width=17.5cm,height=24.8cm,keepaspectratio]{table3a}}
+
+\newpage
+
+\centerline{\includegraphics[width=19.4cm,height=25.2cm,keepaspectratio]{table4}}
+
+\begin{center}
+{\bf \large  End of Paper}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

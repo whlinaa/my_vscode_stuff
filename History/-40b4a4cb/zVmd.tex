@@ -1,0 +1,414 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,11pt,addpoints]{exam}
+\usepackage{examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+\newcommand{\class}{SEHH 2241}
+\newcommand{\term}{Fall 2020}
+\newcommand{\examnum}{Assignment 1}
+% \newcommand{\examdate}{1/1/2014}
+\newcommand{\dueTime}{8 May (Fri) 11:59pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+\textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+\item Thisd assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item All your answers must be written in the the space provided.
+\item Write your answers neatly. Unclear answers will not be marked.
+\end{itemize}
+
+\subsection*{Submission guidelines}
+\begin{itemize}
+\item Submit your work to Moodle. Email submission is NOT accepted. 
+\item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+\item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+\item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+\item If you don’t have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+\item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. %In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% \item You may type your solutions using a computer.
+
+\item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+\item There is no requirement on the file name. 
+\item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+\end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+\begin{questions}
+\question[20]~
+
+\begin{parts}
+\part Write a truth table for the statement $(r\rightarrow (p \wedge \sim q)) \leftrightarrow ((\sim r\vee q)\oplus\sim p )$. Then, determine whether the statement is a tautology, contradiction, or contingency. 
+% \fillwithlines{4in}
+% \makeemptybox{\stretch{1}}
+% \makeemptybox{3in}
+
+\part Use a truth table to determine the validity of the following argument.
+\begin{enumerate}
+  \item $(p\oplus q)\leftrightarrow r$
+  \item $q$
+  \item $s\vee r$ /$\therefore~ \sim(p\wedge \sim r)$
+  % \item $s\vee r$ /$\therefore~ \sim(p\wedge \sim r)$
+\end{enumerate}
+% \makeemptybox{5in}
+\part Determine the validity of the following argument. If it is valid, use the logical rules introduced in class to prove that it is valid. If it is invalid, give a set of truth values for the variables to show that it is invalid. 
+\begin{enumerate}
+  \item $(o\rightarrow r)\rightarrow s$
+  \item $(p\rightarrow r)\rightarrow \sim s$ /$\therefore~\sim r$
+  % \item $s\vee r$ /$\therefore~ \sim(p\wedge \sim r)$
+\end{enumerate}
+% \makeemptybox{3in}
+\part Complete the missing entries in the tables.  % 1718 mid
+
+\begin{tabular}{c|p{0.3\textwidth}|l}
+  \rownumber &$\sim p\vee q$ & premise \\
+  \hline
+  \rownumber & $\sim r\vee s$ & premise\\
+  \hline
+  \rownumber & $~$ &1 add\\
+  \hline
+  \rownumber &$\sim p\vee(q\vee s)$ &\\
+  \hline
+  \rownumber & $~$  & 4 commutative\\
+  \hline
+  \rownumber & $(\sim r \vee s)\vee q$  &\\
+  \hline
+  \rownumber & $~$  &6 associative\\
+  \hline
+  \rownumber & $\sim r \vee (q\vee s)$  &7 commutative\\
+  \hline
+  \rownumber & $(q\vee s)\vee \sim r$  &8 commutative\\
+  \hline
+  \rownumber & $~$  &5,9 conj\\
+  \hline
+  \rownumber & $(q\vee s)\vee (\sim p\wedge \sim r)$  &\\
+  \hline
+  \rownumber & $~$  &\\
+  \hline
+  \rownumber & $~$  &\\
+  \hline
+  \rownumber & $(p\vee r)\rightarrow (q\vee s)$  &
+\end{tabular}
+\part Write a truth table for the statement below. You need to write at least the three main connective columns.
+
+\begin{tabular}{c|c|c|c}
+$p$ &$q$& $r$ &$[(\sim r \wedge q) \leftrightarrow \sim p] \oplus \neg[r \rightarrow(p \vee \sim q)]$\\
+\hline
+T&T&T&\\
+\hline
+T&T&F&\\
+\hline
+T&F&T&\\
+\hline
+T&F&F&\\
+\hline
+F&T&T&\\
+\hline
+F&T&F&\\
+\hline
+F&F&T&\\
+\hline
+F&F&F&\\
+ 
+\end{tabular}
+\part Prove the following logical equivalences using equivalence rules.
+\begin{enumerate}
+  \item[(a)] $(p\rightarrow q)\wedge(p\rightarrow r)\equiv p\rightarrow(q\wedge r)$
+  \item[(b)] $(p\rightarrow q)\vee(p\rightarrow r)\equiv p\rightarrow(q\vee r)$
+  \item[(c)] $(p\rightarrow r)\wedge(q\rightarrow r)\equiv (p\vee q)\rightarrow r$
+  \item[(d)] $(p\rightarrow r)\vee(q\rightarrow r)\equiv (p\wedge q)\rightarrow r$
+\end{enumerate}
+\part Are the following ``distribution rules" for XOR correct?	Prove or disprove:
+\begin{enumerate}
+  \item[(a)] $p\wedge(q\oplus r)\equiv(p\wedge q)\oplus(p\wedge r)$
+  \item[(b)] $p\vee(q\oplus r)\equiv(p\vee q)\oplus(p\vee r)$
+\end{enumerate}
+\part 	Show that each of the followings is a tautology:
+\begin{itemize}
+  \item[(a)] $(\neg q\wedge (p\rightarrow q))\rightarrow\neg p$
+  \item[(b)] $(p\wedge q)\rightarrow(p\vee q)$
+\end{itemize}
+\end{parts}
+
+\newpage
+\question[30]~
+\begin{parts}
+% Q10, ex3.7, CZ
+\part Prove that if $a$ and $b$ are positive real numbers, then $\sqrt{a}+\sqrt{b} \neq \sqrt{a+b}$.
+% \fillwithlines{4in}
+\part Prove that $\sqrt{2}+\sqrt{37460123}$ is an irrational number or rational number. Do not assume that $\sqrt{37460123}$ is irrational or rational. You may, however, take for granted that $\sqrt{2}$ is irrational, since this has been proved in class. 
+% \part Prove that $\sqrt{2}+\sqrt{37460123+d_7+d_8}$ is an irrational number or rational number, where $d_7$ and $d_8$ are the 7th and 8th digits of your student ID. Do not assume that $\sqrt{37460123}$ is irrational or rational. You may, however, take for granted that $\sqrt{2}$ is irrational, since this has been proved in class. 
+% \fillwithlines{4in}
+\part Prove that there is no rational solution for the equation $x^3+x^2+999=0$.
+% \fillwithlines{4in}
+% ASM 1
+\part Prove by contraposition that if $x^2-3x+2<0$, then $1<x<2$.
+% ASM 1
+\part Prove by cases that $n^3-n$ is a multiple of 3, where $n\in\N$.
+\part Prove that $\frac{2}{\frac{1}{x}+\frac{1}{y}}\le\sqrt{xy}$, where $x$ and $y$ are positive real numbers. 
+% \part Prove that $\frac{x+y}{2}\ge \sqrt{x+y}$, where $x$ and $y$ are positive real numbers. 
+\part Prove that $x^2+\frac{1}{x^2}\ge 2$, where $x$ is a nonzero real number. 
+\part Prove that $\sqrt{\frac{x^2+y^2}{2}}\ge \frac{x+y}{2}$, where $x$ and $y$ are positive real numbers. 
+\part Suppose that $2x=y^2+6$, where $x,y\in\Z$. Prove or disprove that $x$ can always be expressed as the sum of three squares.  % difficult 
+\end{parts}
+
+\question[20]~
+\begin{parts}
+\part Prove or disprove that $A\times B\neq B\times A$, for any sets $A$ and $B$. % disprove. when $A=\emptyset$ or $B=\emptyset$, we have $A\times B= B\times A$
+% \fillwithlines{4in}
+\part Determine whether each of the following statements is true or false. Note that in this question $R$ is the last digit of your student ID (e.g.,if your student ID is 17023586 A, then your $R=8$ ), and $A$ is a nonempty set. Note that we define $A^{0}$ to be the empty set $\emptyset$.
+\begin{subparts}
+  \subpart $\{a, b\} \in\{a, b, c,\{a, b\}, R\}$
+  \subpart $\{a, b\} \subseteq\{a, b,\{a, b\}, R\}$
+  \subpart $\{a, b\} \subseteq P(\{a, b,\{a, b\}, R\})$
+  \subpart $\{\{a, b\}\} \in P(\{a, b,\{a, b\}, R\})$
+  \subpart $\{a, b,\{a, b\}\}-\{a, b\}=\{a, b\}$
+  \subpart $ A^{R+3}=A^{R+1} \times A^{2}$
+  \subpart $ \emptyset \in \emptyset \times A^{R}$
+  \subpart $ \emptyset=\emptyset \times \emptyset^{R}$  
+\end{subparts} 
+\part  Let $A, B,$ and $C$ be sets. Prove the following statemnet by \textbf{logical rules}: 
+\[A-(B \cup C)=(A-B) \cap(A-C).\]
+% \fillwithlines{4in}
+\part Let $A=\{-1,2,0,1,2,3,4\}, B=\{5,6\},C=\{3,7,8,9\}$. Find
+\begin{subparts}
+  \subpart $(B\times A\times C)\cap (B\times C\times A)$
+  \subpart $|P(A\times A\times (B \cup C)\times C|$
+  \subpart $P(A\cap C)\cup \{\{\emptyset\}\}$
+\end{subparts}
+\part Let $U=\{1,2,3,4,5,6,7\}, A=\{1,2,4,5\},B=\{1,3,4,6\}$. Find
+\begin{subparts}
+  \subpart $A-U$
+  \subpart $\overline{A}\cap(B\cup\{\emptyset\})$
+  \subpart $\overline{B}\times (A-B)$
+  \subpart $|B\times(\overline{A\cap B})|$
+  \subpart $P( \overline{ A\cup B})$
+  \subpart $|P( A\times\overline{B}\times A)|$
+\end{subparts}
+\part Is it possible to find two distinct sets $A$ and $B$ such that $P(A-B)=P(B-A)$? If yes, find them. If not, prove it. % not possible
+\part Determine whether the following statements are true or false. % Q25 CH2, revision. CZ
+\begin{subparts}
+  \subpart $\{x\} \in\{\{x\}\}$
+  \subpart $\{(x, y)\} \subseteq\{x, y\}$
+  \subpart $\{x,\{x\}\} \subseteq\{\{x\},\{\{x\}\}\}$
+  \subpart $\{x,\{y\}\} \in\{x,\{y\}\}$
+  \subpart $\{(x,\{x\})\} \subseteq\{x,\{x\}\}$
+  \subpart $x \in\{\{x\},\{\{x\}\}\}$
+  \subpart $\{(\{x\},\{y\})\} \subseteq\{\{x\},\{y\}\}$
+  \subpart $\{x\} \in\{x,\{x,\{x\}\}\}$
+\end{subparts} 
+\part Let $A=\{1,\{1\}\}$ and $B=\{1,2,\{2\}\}$. Determine the following. % Q22 CH2, revision. CZ
+\begin{subparts}
+	\subpart $A \times B$ 
+	\subpart $B \times A$
+	\subpart $A \times A$
+	\subpart $\mathcal{P}(A)$
+	\subpart $\mathcal{P}(B)$
+\end{subparts}
+
+
+
+
+
+% \part For a set $A,$ the power set $\mathcal{P}(A)$ contains three distinct elements $\emptyset, B$ and $C$
+
+% (a) Determine another set belonging to $\mathcal{P}(A)$.
+% (b) Is there yet another set belonging to $\mathcal{P}(A) ?$
+
+
+% \part Let $A$ and $B$ be two sets. For each of the sets listed in $(a)-(e)$ below, determine whether
+% (1) the set is always a subset of $A$
+% (2) the set is always a subset of $B$
+% (3) $A$ is always a subset of the set,
+% (4) $B$ is always a subset of the set,
+% (5) none of the above.
+% $($ a $) A \cap B$
+% (b) $A \cup B$
+% (c) $A-B$
+% (d) $B-A$
+% (e) $A \oplus B$
+\end{parts}
+
+
+
+\question[20]~
+\begin{parts}
+\part Prove by mathematical induction that $n^n>n!$ for every integer $n\ge 2$. % Q11, CZ
+\part Prove by mathematical induction that $\frac{1}{\sqrt[3]{1}}+\frac{1}{\sqrt[3]{2}}+\cdots+\frac{1}{\sqrt[3]{n}}>(n+1)^{2/3}$ for every integer $n\ge 4$. % Q13, CZ
+\part Prove by mathematical induction that $\frac{1}{\sqrt{1}}+\frac{1}{\sqrt{2}}+\cdots+\frac{1}{\sqrt{n}}>\sqrt{n+1}$ for every integer $n\ge 3$. % Q11, CZ
+\part Prove by mathematical induction that $n^4+2n^3-n^2+14n$ is divisible by 8, where $n\in\Z^+$.
+\part Prove by mathematical induction that $(5n+24)6^n+1$ is divisible by 25, where $n\in\Z^+$.
+
+% \fillwithlines{4in}
+\part .
+% \fillwithlines{4in}
+\end{parts}
+
+\question[20]~
+\begin{parts}
+\part given a function in set notation form, find its inverse.
+\part A function $f:A\rightarrow B $ is a subset of $A\times B$, where $A$ and $B$ are two nonempty sets. % yes
+% \fillwithlines{4in}
+\part Let $A,B$ and $C$ be nonempty sets and let $f:A \rightarrow B$ and $g: B\rightarrow C$ be two functions. For each of the following statements, determine whether it is (1) always true, (2) always false, or (3) true only for some particular $A,B$ and $C$. 
+%Prove your answers if you believe that a statement is always true or always false. If you believe it is true only for some particular $A,B$ and $C$, give the specific  
+\begin{subparts}
+  \subpart if both $f$ and $g$ are one-to-one, then so is $f\circ g$.
+  \subpart if both $f$ and $g$ are onto, then so is $f\circ g$.
+\end{subparts}
+
+
+\part Let $f: \mathbb{R}-\{0\} \rightarrow \mathbb{R}-\{0\}$ be defined by $f(x)=\frac{1}{2 x} .$ Determine whether $f$ is (a) one-to-one, (b) onto. % CZ Q15, S5.4. 1-1 and onto
+\part A function $f: \mathbb{Z} \rightarrow \mathbb{Z}$ is defined by $f(x)=3 x+5 .$ 
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \subpart Is $f$ onto?
+\end{subparts}
+\part For $A=\{1,2,3\},$ let $f: A \rightarrow A$ be the function defined by $f=\{(1,2),(2,3),(3,3)\}$. Determine whether $f^{-1}$ exists. Explain.  
+\part For $A=\{a, b, c\}$ and $B=\{w, x, y, z\},$ let $f: A \rightarrow B$ be the function defined by $f(a)=y,$ $f(b)=z$ and $f(c)=w .$ 
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \subpart Is $f$ onto?
+  \subpart Does $f^{-1}$ exist?
+\end{subparts}
+
+\part A function $f: \mathbb{Z} \rightarrow \mathbb{Z}$ is defined by
+$$
+f(n)=\left\{\begin{array}{cl}
+n & \text { if } n \geq 0 \\
+n-1 & \text { if } n<0 \text { and } n \neq-10 \\
+n+1 & \text { if } n=-10
+\end{array}\right.
+$$
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \subpart Is $f$ onto?
+\end{subparts}
+% \fillwithlines{4in}
+
+\part Let $f: \R\times\R\rightarrow\R\times\R$ be defined by $f(x,y)=(3y,-5x^3)$.
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \subpart Is $f$ onto?
+\end{subparts}
+\part Let $f: \Q\times\Q\rightarrow\R$ be defined by $f(x,y)=x+\sqrt{2}y$.
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \subpart Is $f$ onto?
+\end{subparts}
+\part Let $f: P(\{1,2,3,4\})\rightarrow \{0,1,2,3,4,5\}$ be defined by $f(S)=|S|$.
+\begin{subparts}
+  \subpart Is $f$ one-to-one?
+  \subpart Is $f$ onto?
+\end{subparts}
+\end{parts}
+
+
+
+
+\question[20]~
+
+\begin{parts}
+\part 
+% \makeemptybox{3in}
+\part
+% \makeemptybox{5in}
+\begin{subparts}
+\subpart .
+% \fillwithlines{3in}
+\subpart .
+% \makeemptybox{3in}
+\end{subparts}
+\part .
+% \makeemptybox{3in}
+\part .
+\end{parts}
+
+
+
+\end{questions}
+
+
+
+
+
+\end{document}

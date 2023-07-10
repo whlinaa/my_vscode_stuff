@@ -1,0 +1,216 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,10pt,addpoints]{exam}
+
+\usepackage{amsthm, amsmath, amssymb, amsfonts,  graphicx}
+
+% \usepackage{examStyle}
+% \usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2311}
+\newcommand{\term}{Spring 2023}
+\newcommand{\examnum}{midterm}
+% \newcommand{\examdate}{1/1/2014}
+% \newcommand{\dueTime}{23 Mar 5:00pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+% \textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\item You may use the facts and theorems introduced in lectures and tutorials. All other facts/theorems that are not covered must be rigorously proved before being used. 
+\item Unless otherwise stated, all answers are to be presented in 4 decimal places or in simplest fraction.
+\end{itemize}
+
+% \subsection*{Submission guidelines}
+% \begin{itemize}
+% \item DO NOT convert this .pdf file to any other file format, such as .word.
+% \item Submit your work to Moodle. Email submission is NOT accepted. 
+% \item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+% \item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+% \item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+% \item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+% % \item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. 
+% %In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% % \item You may type your solutions using a computer.
+
+% \item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+% \item Name your file by your full English name. For example, if your name is Chan Tai Man, then your file name is Chan Tai Man.
+% \item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+% \item The maximum submission size is 20MB.
+% % \item The maximum submission size is 20MB. A well-scanned submission should have a size well below that limit. 
+% \end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+\begin{questions}
+  \question
+  A factory produces a batch of iron solid spheres. Let $X$ be the radius (in $\mathrm{cm}$) of a randomly selected sphere, whose volume is $\frac{4}{3} \pi X^3$. The probability density function of $X$ is given by
+  $$
+  f(x)=\left\{\begin{array}{cl}
+  3 x^2 & \text { for } \sqrt[3]{26} \leq x \leq k \\
+  0 & \text { otherwise }
+  \end{array}\right.
+  $$
+  where $k$ is a constant greater than $\sqrt[3]{26}$.
+  \begin{enumerate}
+    \item Find $k$.
+    \item Find the cdf of $X$.
+    \item Find $E(X)$.
+    % \item Find $V(X)$.
+    \item Find the mean volume of the iron spheres.
+    % \item Find the variance of volume of the iron spheres.
+    % \item Find $\int_{-\infty}^{\infty}P(X>x)dx$
+    % \item $\int_{2}^{3}$
+  \end{enumerate}
+
+\question
+A target consists of three concentric rings $C_1, C_2$ and $C_3$, of radii 1,2 and 3 units respectively. A shot scores 3 points if it falls inside $C_1, 2$ points between $C_1$ and $C_2$, and 1 point between $C_2$ and $C_3$. If the probability density function of $X$, the distance of a shot from the centre, is $e^{-x}$, for $0\le x < \infty$, find the probability of each possible score, and find the expected value of the score for a single shot.
+
+\question
+The principal of a school wants to study the economic profile of the families of students. Let $X$ (in hundred thousand dollars) be the family annual income of a randomly selected student. It is known that a probability density function of $X$ is given by
+$$
+f(x)=\left\{\begin{array}{cc}
+k e^{\frac{-1}{2}(x-1.3)^2} & \text { for } x \geq 0 \\
+0 & \text { otherwise }
+\end{array}\right.
+$$
+where $k$ is a positive constant.
+(a) Using the standard normal distribution table, find the value of $k \sqrt{2 \pi}$.
+(4 marks)
+(b) For $x \geq 0$, show that
+$$
+\mathrm{F}(x)=1-k \sqrt{2 \pi} \cdot \mathrm{P}(Z>x-1.3)
+$$
+(3 marks)
+(c) This year the principal classifies the students of the school into three categories:
+
+
+\begin{tabular}{|c|c|c|}
+\hline Category & Family annual income & Percentage of students \\
+\hline$A$ & $0 \leq x \leq a$ & $20 \%$ \\
+\hline$B$ & $a<x \leq b$ & $40 \%$ \\
+\hline$C$ & $x>b$ & $40 \%$ \\
+\hline
+\end{tabular}
+
+\begin{enumerate}
+  \item Estimate the values of $a$ and $b$.
+  \item The principal is preparing the budget for the coming year. He plans to subsidise $\$ 500$ and $\$ 200$ to each student in Categories $A$ and $B$ respectively but nothing to Category $C$ students. The distribution of $X$ is expected to be unchanged in the coming year but the definition of the categories is changed in the way that both $a$ and $b$ are increased by $5 \%$. Find the expected subsidy to a randomly selected student from the school correct to the nearest dollar.
+\end{enumerate}
+
+
+% \question[20]
+% To estimate the perimeter $p$ of a circular ring, its diameter $\mu$ is measured ten times, and the sample mean is 12.5. It is known that these measurements can be modelled by a normal distribution with mean $\mu \mathrm{cm}$ and standard deviation $0.01 \mathrm{~cm}$.
+
+% \begin{parts}
+%   \part Find a $95 \%$ confidence interval for $\mu$.
+%   \part The perimeter $p$ is to be estimated by
+%   $$
+%   \hat{p}=\pi \overline{x},
+%   $$  
+%   where $\bar{x}$ is the sample mean of the above ten measurements.
+
+%   Find a $95 \%$ confidence interval for $p$.
+% % \begin{subparts}
+% %   \subpart Find the standard deviation of $\hat{p}$.
+%   % \subpart Find a $95 \%$ confidence interval for $p$.
+% % \end{subparts}
+% \part An alternative method is to directly measure the perimeter $p$ of the ring ten times. It is assumed that each measurement is normally distributed with mean $p \mathrm{~cm}$ and standard deviation $0.02 \mathrm{~cm}$. 
+
+% In order to attain a $0.99$ probability that the estimate of $p$ lies within $0.01 \mathrm{~cm}$ of the true value, how many additional measurements must be made?
+% \end{parts}
+
+\end{questions}
+
+
+
+
+
+\end{document}

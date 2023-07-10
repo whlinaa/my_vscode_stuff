@@ -1,0 +1,269 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,10pt,addpoints]{exam}
+
+
+% \usepackage{examStyle}
+\usepackage{/Users/whlin/Library/CloudStorage/OneDrive-HKUSTConnect/Documents/Latex/Styles/My_Style/examStyle}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2311}
+\newcommand{\term}{Spring 2023}
+\newcommand{\examnum}{midterm}
+% \newcommand{\examdate}{1/1/2014}
+% \newcommand{\dueTime}{23 Mar 5:00pm}
+% \newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+% \runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+% \textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\item You may use the facts and theorems introduced in lectures and tutorials. All other facts/theorems that are not covered must be rigorously proved before being used. 
+\item If necessary, round your final answer of each part of the question to 4 decimal places.
+\end{itemize}
+
+% \subsection*{Submission guidelines}
+% \begin{itemize}
+% \item DO NOT convert this .pdf file to any other file format, such as .word.
+% \item Submit your work to Moodle. Email submission is NOT accepted. 
+% \item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+% \item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+% \item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+% \item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+% % \item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. 
+% %In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% % \item You may type your solutions using a computer.
+
+% \item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+% \item Name your file by your full English name. For example, if your name is Chan Tai Man, then your file name is Chan Tai Man.
+% \item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+% \item The maximum submission size is 20MB.
+% % \item The maximum submission size is 20MB. A well-scanned submission should have a size well below that limit. 
+% \end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+\newpage
+\begin{questions}
+\question[15]~
+Let $f(x)=\left\{\begin{array}{cl}k|m-x| & 0 \leq x \leq 4 \\ 0 & \text { otherwise }\end{array}\right.$, 
+
+where $k>0$ and $0<m<4$.
+
+Suppose $f(x)$ is the probability density function of a certain random variable $X$ and $m$ is its median. 
+
+\begin{parts}
+\part Find the values of $m$ and $k$.
+\part Find $E(X^r)$, where $r$ is some positive integer.
+\part Find $Var(X^2)$
+\end{parts}
+% \vspace*{\stretch{1}}
+% \newpage
+
+
+\question[10]~
+
+\begin{parts}
+% \part Prove or disprove: $\frac{1}{n}\sum_i^n(X_i - \mu)^2$ is an unbiased estimator of $\sigma^2$.
+\part Let $\mu$ and $\sigma^2>0$ be the population mean and variance, respecitvely, and $X_1,X_2,...,X_n$ be a random sample from the population. Prove or disprove: The sample standard deviation $S$ is an unbiased estimator of $\sigma$.
+\end{parts}
+
+
+
+\question[15]
+A factory used to purchase battieries from $\mathrm{Mr}$ Wong. The life of the batteries is known to follow a normal distribution with mean 1000 hours and standard deviation 100 hours. Mr Lee claims that he can supply the same kind of battery with a longer mean life and the same standard deviation. They factory manager carries out a statistician test to decide whether Mr Lee's claim of longer mean life can be accepted. He inspects a random sample of 15 batteries supplied by Mr Lee.
+\begin{parts}
+\part The manager limits $\alpha$, the probability of committing a Type I error, to $0.05$, and decides to reject the null hypothesis whenever the sample mean is greater than $C$ hours. Determine $C$.
+\part Suppose that true mean life of the batteries supplied by Mr Lee is 1050 hours.
+\begin{subparts}
+  \subpart If the manager applies the same decision rule as in (a), find $\beta$, the probability of committing a Type II error.
+  \subpart In order to make $\alpha=0.05$ and $\beta \leq 0.05$ for the above test, find the minimum sample size required.
+\end{subparts}
+\end{parts}
+
+\question[15]
+An experiment was performed to compare the abrasive wear of two different laminated materials. Twelve pieces of material 1 were tested by exposing each piece to a machine measuring wear. Ten pieces of material 2 were similarly tested. In each case, the depth of wear was observed. The samples of material 1 gave an average (coded) wear of 85 units with a sample standard deviation of 4 , while the samples of material 2 gave an average of 81 with a sample standard deviation of 5. 
+
+\begin{parts}
+% ex 10.6
+\part By computing the p-value, can we conclude at the $0.05$ level of significance that the abrasive wear of material 1 exceeds that of material 2 by more than 2 units? Assume the populations to be approximately normal with equal variances.
+% ex 10.13
+\part In testing for the difference in the abrasive wear of the two materials in (a), we assumed that the two unknown population variances were equal. Were we justified in making this assumption? Use a $0.10$ level of significance.
+\end{parts}
+
+
+\question[10] ~
+% ex 16.5
+\begin{parts} 
+\part The nicotine content of two brands of cigarettes, measured in milligrams, was found to be as follows:
+
+\begin{tabular}{c|cccccccccc} 
+Brand $A$ & $2.1$ & $4.0$ & $6.3$ & $5.4$ & $4.8$ & $3.7$ & $6.1$ & $3.3$ & & \\
+\hline Brand $B$ & $4.1$ & $0.6$ & $3.1$ & $2.5$ & $4.0$ & $6.2$ & $1.6$ & $2.2$ & $1.9$ & $5.4$
+\end{tabular}
+
+Test the hypothesis, at the $0.05$ level of significance, that the median nicotine contents of the two brands are equal against the alternative that they are unequal.
+\end{parts}
+
+\question[10] ~
+A vote is to be taken among the residents of a town and the surrounding county to determine whether a proposed chemical plant should be constructed. The construction site is within the town limits, and for this reason many voters in the county believe that the proposal will pass because of the large proportion of town voters who favor the construction. To determine if there is a significant difference in the proportions of town voters and county voters favoring the proposal, a poll is taken. If 120 of 200 town voters favor the proposal and 240 of 500 county residents favor it, would you agree that the proportion of town voters favoring the proposal is higher than the proportion of county voters? Use an $\alpha=0.05$ level of significance.
+
+\question[10]
+Let $Z\sim N(0, 1)$.
+\begin{parts}
+  \part find $E(Z^4)$
+  \part find $E(Z^{2311})$
+\end{parts}
+
+
+\question[20]~
+\begin{parts}
+\part Let $X$ be a discrete random variable whose distribution function $\mathrm{F}(x)$ is given by
+$$
+F(x)=\left\{\begin{array}{llr}
+0 & \text { for } & x<-1, \\
+0.06 & \text { for } & -1 \leq x<0 \\
+0.22 & \text { for } & 0 \leq x<1 \\
+1 & \text { for } & x \geq 1
+\end{array}\right.
+$$
+Find the probability mass function of $X$.
+\part 
+Let $Y$ be a discrete random variable whose probability mass function $\mathrm{g}(y)$, where $y$ is real, is given by
+$$
+g(y)= \begin{cases}0.3 & \text { for } y=2, \\ 0.7 & \text { for } y=3 \\ 0 & \text { otherwise. }\end{cases}
+$$
+Write down the distribution function of $Y$.
+\end{parts}
+
+\question[20]~
+Let $X_1,X_2,...,X_n$ be a random sample from the geometric distribution with parameter $p$. Let $$\overline{X} = \frac{1}{n}\sum_i^n X_i$$ and $$\tilde{X} = \frac{n\overline{X}+\sqrt{n}/2}{n+\sqrt{n}}$$
+\begin{parts}
+  \part prove or disprove: $\overline{X}$ is an unbiased estimator of $1/p$.
+  \part prove that $\tilde{X}$ is a biased estimator of $1/p$. What $\tilde{X}$ tends to as $n\rightarrow\infty$?
+\end{parts}
+
+
+\question[30]~
+Water Supplies Department tests the drinking water of homeowners for contaminants such as zinc and iron. The zinc and iron levels in water specimens collected for a sample of 11 residents are shown in the following table. Assume that both zinc and iron levels in water specimens are normally distributed.
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+\hline Zinc (mg/L) & $1.32$ & 0 & $1.31$ & $0.92$ & $0.66$ & 3 & $1.32$ & $4.09$ & $4.45$ & 0 & $3.21$ \\
+\hline Iron (mg/L) & $0.485$ & $0.222$ & $0.875$ & $0.508$ & $0.904$ & $0.221$ & $0.283$ & $0.475$ & $0.13$ & $0.22$ & $0.743$ \\
+\hline
+\end{tabular}
+\begin{parts}
+
+\part Construct a $99 \%$ confidence interval for the mean zinc level in water specimens.
+\part Suppose that population standard deviation of iron level is $0.24 \mathrm{mg} / \mathrm{L}$.
+\begin{subparts}
+  \subpart Construct a $95 \%$ confidence interval for the mean iron level in water specimens.
+  \subpart For quality control purposes, we wish to estimate the mean iron level in water specimens to within $0.025 \mathrm{mg} / \mathrm{L}$ of its true value with a $98 \%$ confidence interval. What sample size should be used?
+\end{subparts}
+\part Develop an approximate $90 \%$ confidence interval for the proportion of water specimens containing more than $0.30 \mathrm{mg} / \mathrm{L}$ of iron.
+\part How many additional samples are required to ensure that, with at least 0.98 probaility, the absolute difference between the sample proportion for water specimens containing more than $0.30 \mathrm{mg} / \mathrm{L}$ of iron and the population proportion be less than 0.01?
+\end{parts}
+
+\question[10]
+The following data represent the battery life of devices produced by two companies.
+
+\begin{tabular}{c|rrrrrrr} 
+Company & \multicolumn{7}{|c}{ Time (minutes) } \\
+\hline I & 103 & 94 & 110 & 87 & 98 & \\
+II & 97 & 82 & 123 & 92 & 175 & 88 & 118
+\end{tabular}
+
+Compute a $99 \%$ confidence interval for the ratio of variance of battery life by Company I to that of Company II. Assume that battery life of devices produced by two companies are approximately normally distributed. Is there edvidence to suggest that the two varainaces are equal?
+
+
+\end{questions}
+
+
+
+
+
+\end{document}

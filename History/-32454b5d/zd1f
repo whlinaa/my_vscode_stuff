@@ -1,0 +1,53 @@
+# echo ".bashrc"
+
+# echo "From .bashrc"
+# PS1="\u-> ";
+# export PS1; 
+
+# ----------- command line prompt customization
+## examples
+# PS1="\u@\h \w -> " # whlin@WINGs-MacBook-Air ~ ->
+
+
+orange=$(tput setaf 166);
+yellow=$(tput setaf 150);
+green=$(tput setaf 71);
+white=$(tput setaf 15);
+purple=$(tput setaf 129);
+bold=$(tput bold);
+reset=$(tput sgr0);
+
+# \h: hostname up to the first .
+# \s: name of the shell
+# \t: current time in 24-hr format
+# \u: username of the current user
+# \w: current working directory
+# \W: basename of the current working direcotry
+
+# PS1="\[${bold}\]\n";
+# PS1="\[\]\n"; # if given, then we'll have a new line after each command 
+# PS1="\[\]";
+
+PS1="\n"; # if given, then we'll have a new line after each command 
+PS1+="\[${orange}\]\u"; # user
+# PS1="\[${orange}\]\u";
+PS1+="\[${white}\] at "; # at
+PS1+="\[${yellow}\]\h"; # host
+PS1+="\[${white}\]:" # :
+# PS1+="\[${green}${bold}\]\w";
+# PS1+="\[${purple}${bold}\]\w"; # current working directory
+PS1+="\[${purple}\]\w"; # current working directory
+# PS1+="\[${green}\]\W";
+# PS1+="\n";
+PS1+="\[${reset}${white}\]\$ \[${reset}\]"; # dollar sign  
+# PS1+="\n";
+export PS1;
+
+# ----------- command line prompt customization
+
+# ----------- alias
+alias ls='ls -G'
+# alias ll='ls -lG'
+alias r="radian"
+export CLICOLOR=1 # show file colors. https://stackoverflow.com/questions/1550288/os-x-terminal-colors
+

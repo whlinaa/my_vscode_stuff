@@ -1,0 +1,187 @@
+% good commands:
+% \makeemptybox{5in}
+% \makeemptybox{\fill}
+% \fillwithlines{3in}
+% \fillwithlines{\fill}
+% vspace*{3in} # You can also use the \vspace command, the difference being that space inserted by \vspace will be deleted if it occurs at the top of a new page, whereas space inserted by \vspace* will never be deleted.
+% vspace*{\stretch{1}}
+% If you want to leave all the remaining space on the page blank, you should give the commands
+% \vspace*{\stretch{1}}
+% \newpage
+
+% If you want to equally distribute the blank space among several questions on the page, then just put \vspace*{\stretch{1}} after each of the questions and use \newpage to end the page. You can also distribute the available space in some other ratio. For example, to give one of the questions on the page twice as much space as any of the others, put \vspace*{\stretch{2}} after that question and \vspace*{\stretch{1}} after each of the others.
+
+\documentclass[letterpaper,11pt,addpoints]{exam}
+\usepackage{examStyle}
+\usepackage{pbox}
+\usepackage[top=0.3in, bottom=0.7in, left=0.3in, right=0.4in]{geometry}
+
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+\newcommand{\class}{SEHH 2241}
+\newcommand{\term}{Fall 2020}
+\newcommand{\examnum}{Midterm test}
+\newcommand{\examdate}{1/1/2014}
+% \newcommand{\dueTime}{8 May (Fri) 11:59pm}
+\newcommand{\timelimit}{60 Minutes}
+
+% \pagestyle{headandfoot}
+\pagestyle{foot}
+% \firstpageheader{}{}{}
+% \firstpagefooter{}{Page \thepage\ of \numpages}{}
+\firstpagefooter{}{\thepage\//\numpages}{}
+\runningheader{\class}{\examnum}{\examdate}
+% \runningheadrule
+% \runningfooter{}{Page \thepage\ of \numpages}{}
+\runningfooter{}{\thepage\//\numpages}{}
+
+
+\setlength\linefillheight{.25in} % controls the line spacing of \fillwithlines. defaults to .25in
+
+% for automatic numbering of tables
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+% https://tex.stackexchange.com/questions/351108/how-to-continue-lines-on-next-page-in-exam-class-fillwithlinesw
+\makeatletter
+\def\fillwithlines#1{%
+  \begingroup
+  \ifhmode
+    \par
+  \fi
+  \hrule height \z@
+  \nobreak
+  \setbox0=\hbox to \hsize{\hskip \@totalleftmargin
+          \vrule height \linefillheight depth \z@ width \z@
+          \linefill}%
+  % We use \cleaders (rather than \leaders) so that a given
+  % vertical space will always produce the same number of lines
+  % no matter where on the page it happens to start:
+  \dimen0=\ht0
+  \loop\ifdim\dimen0<#1\relax
+    \advance\dimen0 by \ht0
+    \copy0\space
+  \repeat
+  \endgroup
+}
+\makeatother
+
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\class & Name (English): & \makebox[2in]{\hrulefill}\\
+\term &Student ID: & \makebox[2in]{\hrulefill}\\
+\examnum &Class: & \makebox[2in]{\hrulefill}\\
+% \textbf{\examdate} &&\\
+% \textbf{Time Limit: \timelimit} &&
+% \textbf{\c{Due time: \dueTime}} &&
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+
+% \subsection*{Before attempting the assignment, please read the following carefully.}
+\begin{itemize}
+% \item This assessment contains \numpages\ pages (including this cover page) and \numquestions\ questions.
+\item All your answers must be written in the the space provided.
+\item You must write your answers using the notations introduced in class.
+\item Show all your steps clearly for all questions. 
+% \item All your answers should be exact. If exact values cannot be obtained, round your final answers to four decimal places.
+\item Write your answers neatly. Unclear answers will not be marked.
+\end{itemize}
+
+\subsection*{Submission guidelines}
+\begin{itemize}
+\item Submit your work to Moodle. Email submission is NOT accepted. 
+\item \underline{SCAN} the ENTIRE file (including the front page) and saved it as ONE single PDF file. That is, even if you did not attempt some questions, you still need to scan that empty pages. Also, do not scan a portion of a page only---we need the ENTIRE page. 
+\item Scan the file IN THE ORDER OF THE PAGES. That is, page 1 should come before page 2, and page 2 should come before page 3 and so on. 
+\item Make sure that your work is properly scanned. Over-sized, blurred or upside-down pages will NOT be graded.
+\item If you do not have access to a scanner, you may use a mobile app (e.g., CamScanner) to scan it. The scanning by a physical scanner is highly preferable, though.  
+\item You may use a tablet (e.g., iPad) to write down your answers. However, you must ensure that your file can be opened using Adobe Reader on a Windows machine. If the file cannot be opened, no marks will be given. %In particular, \textbf{do not use the software \underline{Onenote} to do the assignment, because there will be difficulty printing out your assignment. }
+% \item You may type your solutions using a computer.
+
+\item Upload the PDF and double check the integrity of your file. Occasionally the scanned file may appear differently on the Moodle system.
+\item There is no requirement on the file name. 
+\item Late submission, regardless of the reasons, will not be accepted. Submit your work to Moodle some time ahead of the deadline. Late submissions due to slow internet speed, for instance, will not be accepted.
+\end{itemize}
+
+
+
+% \begin{center}
+% % Grade Table (for teacher use only)\\
+% \addpoints
+% \gradetable[v][questions]
+% \end{center}
+
+% \noindent
+% \rule[2ex]{\textwidth}{2pt}
+
+
+
+
+\newpage
+\begin{questions}
+
+
+\question[15]~
+\begin{parts}
+% difficult... needs to use MI twice.
+\part Prove by mathematical induction that $n^4+2n^3-n^2+14n$ is divisible by 8, where $n\in\Z^+$.
+
+\end{parts}
+
+
+\question[20]~
+
+\begin{parts}
+
+
+
+  \part[12]Fill in the 12 blanks in the table below.  % 1718 mid
+
+  \begin{tabular}{c|P{0.3\textwidth}|l}
+    \rownumber &$\sim p\vee q$ & premise \\
+    \hline
+    \rownumber & $\sim r\vee s$ & premise\\
+    \hline
+    \rownumber & \c{\textbf{(blank 1)}} &1 add\\
+    \hline
+    \rownumber &$\sim p\vee(q\vee s)$ & \c{\textbf{(blank 2)}}\\
+    \hline
+    \rownumber & \c{\textbf{(blank 3)}}  & 4 commutative\\
+    \hline
+    \rownumber & $(\sim r \vee s)\vee q$  &\c{\textbf{(blank 4)}}\\
+    \hline
+    \rownumber & \c{\textbf{(blank 5)}}  &6 associative\\
+    \hline
+    \rownumber & $\sim r \vee (q\vee s)$  &7 commutative\\
+    \hline
+    \rownumber & $(q\vee s)\vee \sim r$  &8 commutative\\
+    \hline
+    \rownumber & \c{\textbf{(blank 6)}}  &5,9 conj\\
+    \hline
+    \rownumber & $(q\vee s)\vee (\sim p\wedge \sim r)$  &\c{\textbf{(blank 7)}}\\
+    \hline
+    \rownumber & \c{\textbf{(blank 8)}}  &\c{\textbf{(blank 9)}}\\
+    \hline
+    \rownumber & \c{\textbf{(blank 10)}}  &\c{\textbf{(blank 11)}}\\
+    \hline
+    \rownumber & $(p\vee r)\rightarrow (q\vee s)$  &\c{\textbf{(blank 12)}}
+  \end{tabular}
+   
+\end{parts}
+
+\question[10]~
+\begin{parts}
+  \part Prove by contradiction that there is no rational solution for the equation $x^3+x^2+999=0$.
+  % \part Prove that $\sqrt{\frac{x^2+y^2}{2}}\ge \frac{x+y}{2}$, where $x$ and $y$ are positive real numbers. 
+  % \part Prove by contraposition that if $x^2-3x+2<0$, then $1<x<2$.
+\end{parts}
+
+
+\end{questions}
+
+\end{document}
